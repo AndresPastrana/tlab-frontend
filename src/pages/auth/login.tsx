@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { UserRole } from "../../const";
@@ -6,10 +6,12 @@ import { AuthService } from "../../services/AuthService";
 
 const PageLogin = () => {
   const { login, token, user } = useAuth();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
 
     const username = formData.get("username") as string;
@@ -24,6 +26,8 @@ const PageLogin = () => {
       console.log(error);
 
       console.error("Login failed:");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,8 +96,12 @@ const PageLogin = () => {
               </label>
             </div>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">
-                {/* {pending ? "Loading..." : "Login"} */}
+              <button
+                aria-disabled={loading}
+                disabled={loading}
+                className="btn btn-primary"
+              >
+                {loading ? "Loading..." : "Login"}
               </button>
             </div>
           </form>

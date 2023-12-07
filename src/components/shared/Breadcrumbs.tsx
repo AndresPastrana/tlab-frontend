@@ -6,7 +6,7 @@ import { CrumbsItems } from "../../types";
 const Breadcrumbs: FC<CrumbsItems> = ({ items }) => {
   const { pathname } = useLocation();
   return (
-    <div className="text-sm breadcrumbs">
+    <div className="text-sm breadcrumbs my-5">
       <ul>
         {items.map(({ label, href }) => {
           const key = `${pathname}-bredcrumb-${
@@ -24,7 +24,7 @@ const Breadcrumbs: FC<CrumbsItems> = ({ items }) => {
                 </li>
               )}
               {!href && (
-                <li className="border rounded-3xl px-3 py-1 border-gray-100 btn-disabled">
+                <li className="border rounded-3xl px-3 py-1 border-green-800 bg-green-100 text-green-800 btn-disabled">
                   {label}
                 </li>
               )}
