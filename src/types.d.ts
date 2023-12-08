@@ -69,3 +69,35 @@ export type ProfesorTable = Array<Profesor>;
 export interface Student extends Person {
   language_certificate: boolean;
 }
+
+export enum CourtRole {
+  Presidente = "presidente",
+  Secretario = "secretario",
+  Vocal = "vocal",
+  Oponente = "oponente",
+}
+
+interface CourtMember {
+  profesor: {
+    id: string;
+    name: string;
+    lastname: string;
+  };
+  role: CourtRole;
+  _id: string;
+}
+
+export interface Court {
+  id: string;
+  name: string;
+  members: CourtMember[];
+}
+export type Courts = Court[];
+
+export type CourtData = {
+  name: string;
+  members: {
+    role: CourtRole;
+    profesor: string;
+  }[];
+};

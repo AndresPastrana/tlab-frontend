@@ -9,12 +9,14 @@ import StudentsView from "../pages/admin/students/StudentsView";
 import CreateStudentView from "../pages/admin/students/CreateStudentView";
 import HistoryView from "../pages/admin/students/HistoryView";
 import EditStudentView from "../pages/admin/students/EditStudentView";
+import CourtsView from "../pages/admin/courts/CourtsView";
 
 export const AdminRoutes: RouteObject = {
   path: "/admin",
   element: <AdminLayout />,
   children: [
     { path: "personas/", element: <PagePersonas /> },
+    { path: "courts/", element: <CourtsView /> },
     { path: "personas/profesors", element: <ProfesorView /> },
     { path: "personas/students", element: <StudentsView /> },
     { path: "personas/profesors/create", element: <CreateProfesorsView /> },

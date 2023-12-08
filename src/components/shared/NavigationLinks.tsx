@@ -3,6 +3,7 @@ import {
   // CalendarDaysIcon,
   // BookOpenIcon,
   UserGroupIcon,
+  UserIcon,
 } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 
@@ -17,6 +18,12 @@ const NavigationLinks = () => {
     {
       href: "/admin/personas",
       label: "Personas",
+      Icon: UserIcon,
+    },
+
+    {
+      href: "/admin/courts",
+      label: "Tribunales",
       Icon: UserGroupIcon,
     },
   ];

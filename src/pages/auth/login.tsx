@@ -82,7 +82,7 @@ const PageLogin = () => {
                 <span className="label-text">Contrasena</span>
               </label>
               <input
-                defaultValue="s5Nv4V8o"
+                defaultValue="0bz2Neyw"
                 type="password"
                 name="password"
                 placeholder="Escribe tu contarsena aqui"
