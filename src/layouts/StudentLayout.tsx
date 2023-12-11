@@ -1,41 +1,20 @@
 import NavbarHorizontal from "../components/shared/NavbarHorizontal";
-import NavbarVertical from "../components/shared/NavbarVertical";
 import { Outlet } from "react-router-dom";
+import NavbarVertical from "../components/shared/NavbarVertical";
 import NavigationLinks from "../components/shared/NavigationLinks";
-import {
-  HomeModernIcon,
-  UserIcon,
-  UserGroupIcon,
-  DocumentTextIcon,
-} from "@heroicons/react/24/solid";
+import { HomeModernIcon } from "@heroicons/react/24/solid";
 
 const links = [
   {
-    href: "/admin",
+    href: "/student",
     label: "Home",
     Icon: HomeModernIcon,
   },
-
-  {
-    href: "/admin/personas",
-    label: "Personas",
-    Icon: UserIcon,
-  },
-
-  {
-    href: "/admin/courts",
-    label: "Tribunales",
-    Icon: UserGroupIcon,
-  },
-
-  {
-    href: "/admin/proyectos",
-    label: "Proyectos",
-    Icon: DocumentTextIcon,
-  },
 ];
 
-const AdminLayout = () => {
+const StudentLayout = () => {
+  //TODO: Protect the admin routes here
+
   return (
     //TODO: Protect the admin routes here
     <div className="drawer">
@@ -57,4 +36,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default StudentLayout;

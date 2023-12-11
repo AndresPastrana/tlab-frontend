@@ -43,12 +43,12 @@ const PageLogin = () => {
     }
 
     if (user?.role === UserRole.Profesor) {
-      navigate("/admin", { replace: true });
+      navigate("/professor", { replace: true });
       return;
     }
 
     if (user?.role === UserRole.Student) {
-      navigate("/admin", { replace: true });
+      navigate("/student", { replace: true });
       return;
     }
   }, [user, token, navigate]);

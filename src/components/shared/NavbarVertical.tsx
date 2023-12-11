@@ -1,4 +1,5 @@
-import NavigationLinks from "./NavigationLinks";
+import { ReactNode } from "react";
+
 const OvrelayLayer = () => {
   return (
     <label
@@ -9,20 +10,20 @@ const OvrelayLayer = () => {
   );
 };
 
-const Sidemenu = () => {
+const Sidemenu = ({ children }: { children: ReactNode }) => {
   return (
     <ul className="menu p-4 w-80 min-h-full bg-base-200">
       {/* Sidebar content here */}
-      <NavigationLinks />
+      {children}
     </ul>
   );
 };
 
-const NavbarVertical = () => {
+const NavbarVertical = ({ children }: { children: ReactNode }) => {
   return (
     <div className="drawer-side">
       <OvrelayLayer />
-      <Sidemenu />
+      <Sidemenu>{children}</Sidemenu>
     </div>
   );
 };

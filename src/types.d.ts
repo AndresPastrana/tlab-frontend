@@ -101,3 +101,43 @@ export type CourtData = {
     profesor: string;
   }[];
 };
+
+interface PersonBasicInfo {
+  id: string;
+  name: string;
+  lastname: string;
+}
+
+type Tutors = [PersonBasicInfo];
+type Student = PersonBasicInfo;
+
+interface TesisProjectResponse {
+  id: string;
+  tutors: Array<Schema.Types.ObjectId>;
+  student: Schema.Types.ObjectId;
+  topic: string;
+  general_target: string;
+  scientific_problem: string;
+  functional_requirements: string[];
+  status: TesisProjectStatus;
+  approval: {
+    isApprove: boolean;
+    recommendations: string[];
+    approvedBy: Schema.Types.ObjectId | null;
+    date: Date | null;
+  };
+  ancient: boolean;
+}
+
+export type PopulatedTesisResponse = Omit<
+  TesisProjectResponse,
+  "tutors" | "student"
+> & {
+  student: Student;
+  tutors: Tutors;
+};
+
+export type CreateProjectData = Pick<
+  TesisProjectResponse,
+  "topic" | "general_target" | "scientific_problem"
+> & { student?: string; tutors?: string[] };

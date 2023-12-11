@@ -1,4 +1,4 @@
-import NavigationLinks from "./NavigationLinks";
+import { ReactNode } from "react";
 
 const DrawerButton = () => {
   return (
@@ -30,7 +30,7 @@ const DrawerButton = () => {
 const MenuBanner = () => {
   return <div className="flex-1  text-xl">Tesis Lab</div>;
 };
-const NavbarHorizontal = () => {
+const NavbarHorizontal = ({ children }: { children: ReactNode }) => {
   return (
     <div className="w-full navbar bg-base-100 p-0 m-0">
       {/* Drawer Button */}
@@ -39,7 +39,8 @@ const NavbarHorizontal = () => {
       <div className="flex-none hidden lg:block">
         <ul className="menu menu-horizontal">
           {/* Navbar menu content here */}
-          <NavigationLinks />
+          {children}
+          {/* <NavigationLinks /> */}
         </ul>
       </div>
     </div>

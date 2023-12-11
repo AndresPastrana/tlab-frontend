@@ -1,12 +1,15 @@
 import useSWR from "swr";
 import axios, { AxiosError } from "axios";
-import { Student, ApiResponse, ErrorResponse } from "../types";
+import {
+  Student,
+  ApiResponse,
+  ErrorResponse,
+  PopulatedTesisResponse,
+} from "../types";
 import { useAuth } from "./useAuth";
-import { useNavigate } from "react-router-dom";
 const API_BASE_URL = `${import.meta.env.VITE_API}${
   import.meta.env.VITE_STUDENTS
 }`;
-console.log(API_BASE_URL);
 
 interface FetcherOptions {
   token: string;
@@ -41,7 +44,7 @@ const fetcher = async (url: string, options: FetcherOptions) => {
 };
 
 export const useStudents = (active: boolean = false) => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const tk = token as string;
   const { data, error, mutate, isLoading } = useSWR(API_BASE_URL, () =>
     fetcher(API_BASE_URL, { token: tk, active })
@@ -135,6 +138,43 @@ export const useStudents = (active: boolean = false) => {
     }
   };
 
+  const getStudentProject = async () => {
+    try {
+      const url = `${import.meta.env.VITE_API}${
+        import.meta.env.VITE_PROJECT
+      }/byMember?active=true&memberId=${user?.userId}&memberType=${user?.role}`;
+
+      console.log(url);
+
+      const response = await axios.get<ApiResponse<PopulatedTesisResponse>>(
+        url,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        return response.data.data;
+      } else {
+        throw new Error(response.data.msg);
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError<ApiResponse<ErrorResponse>>;
+      if (axiosError.response) {
+        throw new Error(axiosError.response.data.msg);
+      } else if (axiosError.request) {
+        throw new Error("No response received from the server");
+      } else {
+        throw new Error("Request failed");
+      }
+    }
+  };
+
+  // TODO: Get student project info
+  // Gtes all the info of the project related wit the student
+
   return {
     students: data || [],
     error,
@@ -143,5 +183,6 @@ export const useStudents = (active: boolean = false) => {
     createStudent,
     updateStudent,
     deleteStudent,
+    getStudentProject,
   };
 };
