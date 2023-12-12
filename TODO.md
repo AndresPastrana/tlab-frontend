@@ -2,14 +2,41 @@
 
 ## Tarea General: Proyecto de Tesis CRUD
 
+### General
+
+- **Tiempo Total:** 7:30 AM 8:30 AM
+
+[DONE] 1. **Cretae a new hook called useProject info to hanldle any related project with an student or a professor**
+
+### Vista: Student View (8:35 AM - 9:45 am)
+
+[DONE] 1. **Integrate the new hook**
+
+- Replace the new created hook to load the info of the project
+- **Tiempo asignado:** 30 min
+
+[DONE] 2. **Actualizar requisitos funcionales del Proyecto**
+
+- Solo si el proyecto está pendiente de aprobación
+- **Tiempo asignado:** 1h:30m
+
 ### Vista: Admin View
 
 - **Tiempo Total:** 7:30 AM - 11:30 AM
 
-1. **Create the use projects hook**
+1. **Refactor the FormProject Component**
 
-   - Create a new project
-   - List all the projects
+- Get a project by id Load default values if any are recived
+- **Tiempo asignado:** 30min + 5 min break
+
+2. **Edit Proyect**
+
+- Get a project by id Load default values if any are recived
+
+- **Tiempo asignado:** 30min + 5 min break
+
+3. **Finish the use projects hook**
+
    - Get a project by id
    - Update Project (Basic info)
 
@@ -21,53 +48,12 @@
 
    - **Tiempo asignado:** 1hora + 5 min break
 
-2. **Crear un Proyecto de Tesis UI and hook integration**
+4. **Editar Proyecto de Tesis**
 
-   - Insertar información básica y asignar un estudiante y tutores
-   - **Tiempo asignado:** 1hora + 5 min
-
-   _5 min descanso_
-
-3. **Listar todos los Proyectos de Tesis UI and hook integration**
-
-   - **Tiempo asignado:** 40 min
-
-   _5 min descanso_
-
-4. **Ver detalles de un Proyecto de Tesis**
-
-   - Ver toda la información detallada
+   - Editar la info basica del proyecto de tesis
    - **Tiempo asignado:** 40 min
 
    _20 min descanso_
-
-### Vista: Student View (11:00 AM - 1:00 PM)
-
-1. **Diseño básico y enrutamiento**
-
-   - **Tiempo asignado:** 40 min
-
-   _5 min descanso_
-
-2. **Ver su Proyecto de Tesis**
-
-   - Revisar si tiene asignado un proyecto
-   - **Tiempo asignado:** 40 min
-
-   _5 min descanso_
-
-3. **Finalizar detalles y tareas pendientes**
-
-   - **Tiempo asignado:** 30 min
-
-   _40 min descanso_
-
-4. **Actualizar requisitos funcionales del Proyecto**
-
-   - Solo si el proyecto está pendiente de aprobación
-   - **Tiempo asignado:** 40 min
-
-   _5 min descanso_
 
 ### Vista: Profesores View (Tarde)
 

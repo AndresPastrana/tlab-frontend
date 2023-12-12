@@ -108,9 +108,15 @@ interface PersonBasicInfo {
   lastname: string;
 }
 
-type Tutors = [PersonBasicInfo];
+type Tutors = PersonBasicInfo[];
 type Student = PersonBasicInfo;
 
+export interface Approval {
+  isApprove: boolean;
+  recommendations: string[];
+  approvedBy: Schema.Types.ObjectId | null;
+  date: Date | null;
+}
 interface TesisProjectResponse {
   id: string;
   tutors: Array<Schema.Types.ObjectId>;
@@ -120,12 +126,7 @@ interface TesisProjectResponse {
   scientific_problem: string;
   functional_requirements: string[];
   status: TesisProjectStatus;
-  approval: {
-    isApprove: boolean;
-    recommendations: string[];
-    approvedBy: Schema.Types.ObjectId | null;
-    date: Date | null;
-  };
+  approval: Approval | null;
   ancient: boolean;
 }
 

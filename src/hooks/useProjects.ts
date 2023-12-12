@@ -7,6 +7,8 @@ import {
   PopulatedTesisResponse,
 } from "../types"; // Adjust the import based on your actual path
 import { useAuth } from "./useAuth"; // Adjust the import based on your actual path
+import { UserRole } from "../const";
+import { useCallback } from "react";
 
 const API_BASE_URL = import.meta.env.VITE_API;
 
@@ -43,7 +45,7 @@ const fetcher = async (url: string, { token, ...options }: FetcherOptions) => {
  * @returns {Object} An object containing projects data, loading state, and error information.
  */
 export const useProjects = (active: boolean = true) => {
-  const { token } = useAuth(); // Assuming useAuth returns the token
+  const { token, user } = useAuth(); // Assuming useAuth returns the token
 
   const projectsUrl = `${API_BASE_URL}${
     import.meta.env.VITE_PROJECT
@@ -57,7 +59,7 @@ export const useProjects = (active: boolean = true) => {
     projectsUrl,
     (url: string) => fetcher(url, { token: token as string }) // Pass token as a parameter
   );
-
+  UserRole.Student;
   /**
    * Creates a new project.
    * @param {Object} data - Project data including "topic", "general_target", and "scientific_problem".
@@ -101,6 +103,47 @@ export const useProjects = (active: boolean = true) => {
     }
   };
 
+  /**
+   * Gets projects information based on the member ID and type.
+   * @param {string} memberId - The ID of the member (student or professor).
+   * @param {UserRole.Student | UserRole.Profesor} memberType - The type of the member (student or professor).
+   * @returns {Promise<PopulatedTesisResponse | PopulatedTesisResponse[]>} A promise that resolves to the projects data.
+   * @throws {Error} If there is an issue fetching projects.
+   */
+  const fetchProjectsByMemberId = useCallback(
+    async (): Promise<PopulatedTesisResponse | PopulatedTesisResponse[]> => {
+      try {
+        if (!user) {
+          throw new Error("User is undefined or null");
+        }
+
+        const url = `${API_BASE_URL}${
+          import.meta.env.VITE_PROJECT
+        }/byMember?active=${active}&memberId=${user.userId}&memberType=${
+          user.role
+        }`;
+
+        const resp = await axios.get<
+          ApiResponse<PopulatedTesisResponse | PopulatedTesisResponse[]>
+        >(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (resp.data.success) {
+          return resp.data.data;
+        } else {
+          throw new Error(resp.data.msg || "Failed to fetch projects");
+        }
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+        throw new Error("Failed to fetch projects");
+      }
+    },
+    [token, user, active] // Include dependencies in the dependency array
+  );
+
   return {
     projects: projects || [],
     isLoading: !projects && !error,
@@ -108,7 +151,6 @@ export const useProjects = (active: boolean = true) => {
     error,
 
     createNewProject,
-
-    // Other CRUD functions
+    getProjectsInfoByMemberId: fetchProjectsByMemberId,
   };
 };
