@@ -121,7 +121,7 @@ export const NewCourtForm: React.FC<NewCourtFormProps> = () => {
           type="submit"
           aria-disabled={reqState.loading}
           disabled={reqState.loading}
-          className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded-full focus:outline-none w-full"
+          className="btn bg-green-700 hover:bg-green-800 font-medium text-gray-50 px-4 py-2 rounded-full focus:outline-none w-full"
         >
           {reqState.loading ? "Loading..." : "Crear corte"}
         </button>

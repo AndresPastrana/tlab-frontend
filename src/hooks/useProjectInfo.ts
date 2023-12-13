@@ -38,12 +38,10 @@ const fetcher = async (url: string, { token, ...options }: FetcherOptions) => {
  * @param {UserRole} memberType - The role of the member (Student or Profesor).
  * @returns {Object} An object containing project information, loading state, and error information.
  */
-export const useProjectInfo = (
-  active: boolean = true,
-  memberType: UserRole.Student | UserRole.Profesor
-) => {
+export const useProjectInfo = (active: boolean = true) => {
   const { token, user } = useAuth(); // Assuming useAuth returns the token
-
+  const memberType =
+    user?.role === UserRole.Student ? UserRole.Student : UserRole.Profesor;
   // Construct the URL with query parameters
   const url = `${API_BASE_URL}${
     import.meta.env.VITE_PROJECT

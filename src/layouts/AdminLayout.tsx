@@ -7,6 +7,7 @@ import {
   UserIcon,
   UserGroupIcon,
   DocumentTextIcon,
+  ClipboardDocumentIcon,
 } from "@heroicons/react/24/solid";
 
 const links = [
@@ -17,9 +18,9 @@ const links = [
   },
 
   {
-    href: "/admin/personas",
-    label: "Personas",
-    Icon: UserIcon,
+    href: "/admin/evaluaciones",
+    label: "Evaluaciones",
+    Icon: ClipboardDocumentIcon,
   },
 
   {
@@ -32,6 +33,11 @@ const links = [
     href: "/admin/proyectos",
     label: "Proyectos",
     Icon: DocumentTextIcon,
+  },
+  {
+    href: "/admin/personas",
+    label: "Personas",
+    Icon: UserIcon,
   },
 ];
 

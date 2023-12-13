@@ -19,36 +19,43 @@ const SelectProfessors: React.FC = () => {
             {/* Access the selected options directly from the DOM */}
           </span>
         </label>
-        <select
-          name="selectedProfessors"
-          id="professors"
-          className="select select-multiple select-bordered w-full"
-          multiple // Enable multiple selection
-          defaultValue={[]}
-        >
-          {/* Default Option */}
-          <option value="" disabled>
-            Selecciona profesores
-          </option>
+        {/* Loading */}
+        {isLoading && !error && professors.length === 0 && (
+          <p>Loading professors</p>
+        )}
 
-          {/* Loading */}
-          {isLoading && !error && professors.length === 0 && (
-            <p>Loading professors</p>
-          )}
+        {/* Error */}
+        {!isLoading && error && <p>Error cargando los profesores</p>}
 
-          {/* Error */}
-          {!isLoading && error && <p>Error cargando los profesores</p>}
+        {/* All ok */}
+        {!isLoading && !error && professors.length >= 1 && (
+          <select
+            name="selectedProfessors"
+            id="professors"
+            className="select select-multiple select-bordered w-full"
+            multiple // Enable multiple selection
+            defaultValue={[]}
+          >
+            {/* Default Option */}
+            <option value="" disabled>
+              Selecciona profesores
+            </option>
 
-          {/* Professors list */}
-          {!isLoading &&
-            !error &&
-            professors.length > 0 &&
-            professors.map((professor: Professor) => (
-              <option className="py-1" key={professor.id} value={professor.id}>
-                {professor.name} {professor.lastname}
-              </option>
-            ))}
-        </select>
+            {/* Professors list */}
+            {!isLoading &&
+              !error &&
+              professors.length > 0 &&
+              professors.map((professor: Professor) => (
+                <option
+                  className="py-1"
+                  key={professor.id}
+                  value={professor.id}
+                >
+                  {professor.name} {professor.lastname}
+                </option>
+              ))}
+          </select>
+        )}
       </div>
     </>
   );

@@ -12,6 +12,8 @@ import EditStudentView from "../pages/admin/students/EditStudentView";
 import CourtsView from "../pages/admin/courts/CourtsView";
 import ProyectsView from "../pages/admin/proyects/ProyectsView";
 import CreateProyectView from "../pages/admin/proyects/CreateProyectView";
+import Evaluaciones from "../pages/admin/evaluaciones/Evaluaciones";
+import { EvaluationsFilterProvider } from "../context/EvaluationFilterContext";
 
 export const AdminRoutes: RouteObject = {
   path: "/admin",
@@ -28,7 +30,14 @@ export const AdminRoutes: RouteObject = {
       path: "proyectos/create",
       element: <CreateProyectView />,
     },
-
+    {
+      path: "evaluaciones/",
+      element: (
+        <EvaluationsFilterProvider>
+          <Evaluaciones />
+        </EvaluationsFilterProvider>
+      ),
+    },
     {
       path: "personas/profesors/edit/:id",
       element: <EditProfesorView />,

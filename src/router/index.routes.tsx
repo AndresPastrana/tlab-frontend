@@ -3,6 +3,8 @@ import { AdminRoutes } from "./admin.routes";
 import { Root } from "./root.router";
 import { AuthRoutes } from "./auth.routes";
 import { StudentRoutes } from "./student.routes";
+import { ProfessorRoutes } from "./professor.routes";
+import CreateSubmission from "../pages/student/CreateSubmission";
 // import PageLogin from "../pages/auth/login";
 
 export const router = createBrowserRouter([
@@ -10,4 +12,9 @@ export const router = createBrowserRouter([
   AdminRoutes,
   AuthRoutes,
   StudentRoutes,
+  ProfessorRoutes,
+  {
+    path: "/test",
+    element: <CreateSubmission />,
+  },
 ]);

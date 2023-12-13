@@ -9,9 +9,13 @@ interface ProyectInfoProps {
 
 const ProyectInfo: React.FC<ProyectInfoProps> = ({ proyect }) => {
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">{proyect.topic}</h1>
+    <div className="p-5 card shadow-lg mt-3">
+      <h2 className="text-lg font-semibold mb-4">
+        Titulo del Proyecto:{" "}
+        <span className="font-medium ml-3 text-lg">{proyect.topic}</span>
+      </h2>
 
+      <div className="divider"></div>
       <div className="mb-4">
         <p className="text-gray-700">
           <span className="font-bold">General Target:</span>{" "}
@@ -22,10 +26,7 @@ const ProyectInfo: React.FC<ProyectInfoProps> = ({ proyect }) => {
           {proyect.scientific_problem}
         </p>
       </div>
-
-      {/* Display Approval Info */}
-      <ApprovalInfo approvalInfo={proyect.approval} />
-
+      <div className="divider"></div>
       {/* Display Functional Requirements */}
       <FunctionalRequirements
         onUpdateRequirements={(req) => {
@@ -34,6 +35,9 @@ const ProyectInfo: React.FC<ProyectInfoProps> = ({ proyect }) => {
         status={proyect.status}
         functionalRequirements={proyect.functional_requirements}
       />
+      <div className="divider"></div>
+      {/* Display Approval Info */}
+      <ApprovalInfo approvalInfo={proyect.approval} />
     </div>
   );
 };

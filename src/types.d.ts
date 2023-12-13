@@ -142,3 +142,21 @@ export type CreateProjectData = Pick<
   TesisProjectResponse,
   "topic" | "general_target" | "scientific_problem"
 > & { student?: string; tutors?: string[] };
+
+export interface Evaluation {
+  id: string;
+  type: EvalType;
+  status: EvalStatus;
+  endDate: Date;
+  description: string;
+}
+
+export enum EvalStatus {
+  Open = "open",
+  Close = "close",
+}
+
+export enum EvalType {
+  CorteEvaluativo = "corte_evaluativo",
+  Predefensa = "predefensa",
+}

@@ -1,4 +1,5 @@
 import { TesisProjectStatus, UserRole } from "../../const";
+import { useAuth } from "../../hooks/useAuth";
 import { useProjectInfo } from "../../hooks/useProjectInfo";
 import DynamicTextInputs from "../shared/DynamicTextInputs";
 
@@ -13,10 +14,8 @@ export const FunctionalRequirements: React.FC<FunctionalRequirementsProps> = ({
   onUpdateRequirements,
   status,
 }) => {
-  const { updateFrequirements, projects } = useProjectInfo(
-    true,
-    UserRole.Student
-  );
+  const { user } = useAuth();
+  const { updateFrequirements, projects } = useProjectInfo(true);
   const projectId = !Array.isArray(projects) ? projects.id : "";
 
   const handleRequirementsChange = (newRequirements: string[]) => {
@@ -36,25 +35,27 @@ export const FunctionalRequirements: React.FC<FunctionalRequirementsProps> = ({
     <div className="mb-4">
       <h3 className="text-lg font-bold mb-2">Functional Requirements:</h3>
 
-      {/* Allow to add new or edit FR if the project has been not aproved  */}
-      {status === TesisProjectStatus.Pending && (
-        <DynamicTextInputs
-          onSubmit={updateFr}
-          initialInputs={functionalRequirements}
-          onInputsChange={handleRequirementsChange}
-        />
+      {/* Allow to add new or edit FR if the project has been not aproved and if the loged user is a studnent */}
+      {status === TesisProjectStatus.Pending &&
+        user?.role === UserRole.Student && (
+          <DynamicTextInputs
+            onSubmit={updateFr}
+            initialInputs={functionalRequirements}
+            onInputsChange={handleRequirementsChange}
+          />
+        )}
+      {/* Just show the fr if the user is diferent from a student */}
+      {user?.role !== UserRole.Student && (
+        <ul>
+          {functionalRequirements.map((requirement, index) => (
+            <li key={index} className="text-gray-700">
+              {requirement}
+            </li>
+          ))}
+        </ul>
       )}
 
-      {/* {status !== TesisProjectStatus.Pending && (
-          <div>
-            <h3 className="text-lg font-bold mb-2">Functional Requirements:</h3>
-            {functionalRequirements.map((requirement, index) => (
-              <p key={index} className="text-gray-700">
-                {requirement}
-              </p>
-            ))}
-          </div>
-        )} */}
+      {/* Approval Button */}
     </div>
   );
 };

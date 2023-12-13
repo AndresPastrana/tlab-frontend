@@ -1,9 +1,16 @@
 import { useState } from "react";
 import FormProject from "../../../components/admin/projects/FormProject";
-import { CreateProjectData } from "../../../types";
+import { CreateProjectData, CrumbItem } from "../../../types";
 import { useProjects } from "../../../hooks/useProjects";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../../../components/shared/ErrorMessage";
+import Breadcrumbs from "../../../components/shared/Breadcrumbs";
+
+const items: CrumbItem[] = [
+  { label: "Home", href: "/admin" },
+  { label: "Proyectos", href: "/admin/proyectos" },
+  { label: "Crear nuevo proyecto" },
+];
 
 const CreateProyectView = () => {
   const [loading, setLoading] = useState(false);
@@ -25,6 +32,7 @@ const CreateProyectView = () => {
   };
   return (
     <div>
+      <Breadcrumbs items={items} />
       <FormProject onSubmit={handleSubmit}>
         <button
           disabled={loading}

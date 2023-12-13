@@ -28,7 +28,16 @@ const DrawerButton = () => {
 };
 
 const MenuBanner = () => {
-  return <div className="flex-1  text-xl">Tesis Lab</div>;
+  return (
+    <div className="flex-1 text-xl font-medium text-green-700">
+      <span className="text-4xl md:text-5xl lg:text-6xl font-extrabold">
+        Tesis
+      </span>
+      <span className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-500">
+        Lab
+      </span>
+    </div>
+  );
 };
 const NavbarHorizontal = ({ children }: { children: ReactNode }) => {
   return (

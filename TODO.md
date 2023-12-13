@@ -1,81 +1,89 @@
-# Proyecto de Tesis CRUD
-
-## Tarea General: Proyecto de Tesis CRUD
-
-### General
-
-- **Tiempo Total:** 7:30 AM 8:30 AM
-
-[DONE] 1. **Cretae a new hook called useProject info to hanldle any related project with an student or a professor**
-
-### Vista: Student View (8:35 AM - 9:45 am)
-
-[DONE] 1. **Integrate the new hook**
-
-- Replace the new created hook to load the info of the project
-- **Tiempo asignado:** 30 min
-
-[DONE] 2. **Actualizar requisitos funcionales del Proyecto**
-
-- Solo si el proyecto está pendiente de aprobación
-- **Tiempo asignado:** 1h:30m
+[Miercoles]
 
 ### Vista: Admin View
 
-- **Tiempo Total:** 7:30 AM - 11:30 AM
+- Modulo Gestionar evaluaciones
 
-1. **Refactor the FormProject Component**
+* Main Layout and routing
+* Crear nueva evaluacion
+* Cerrar evaluacion
+* Listar Evaluaciones activas
+* See all the submission of af an evaluation
 
-- Get a project by id Load default values if any are recived
-- **Tiempo asignado:** 30min + 5 min break
+### Vista: Admin View
 
-2. **Edit Proyect**
-
-- Get a project by id Load default values if any are recived
-
-- **Tiempo asignado:** 30min + 5 min break
-
-3. **Finish the use projects hook**
-
-   - Get a project by id
-   - Update Project (Basic info)
-
-   <!-- The Url for this will be diferents  -->
-
-   - Get a project by member id
-   - Update Project (Aprove the project)
-   - Update Project (Approve fucntional requirements)
-
-   - **Tiempo asignado:** 1hora + 5 min break
-
-4. **Editar Proyecto de Tesis**
-
-   - Editar la info basica del proyecto de tesis
-   - **Tiempo asignado:** 40 min
-
-   _20 min descanso_
+- See evalutions
+- Open or close
+- Make submision of an evaluation
+- Edit submision if an evauation is open
 
 ### Vista: Profesores View (Tarde)
 
-- **Tiempo Total:** 2:00 PM - 4:00 PM
+1. **Aprobar Proyecto (si está pendiente)**
+   -Solamente mostrar el boton para aprobar un proyecto de tesis si es un professor
+   -Create the function in the cusmtom hook to approve the project
+   -Show confirm alert to approve a project
+   -Show error or succes alert when the project is aproved
+   -Show approval info correctly
 
-1. **Crear el Layout Principal y Enrutamiento**
+2. Create new filter to filter by status (Aproved or Not aproved)
 
-   - **Tiempo asignado:** 40 min
+3. Indicator to show the total of projects and the number of search results
 
-   _5 min descanso_
+[Jueves]
 
-2. **Listar Proyectos de Tesis Vinculados**
+### Vista: Admin View
 
-   - **Tiempo asignado:** 40 min
+- Crear una nueva defensa de un proyecto determiando
+  [UI Tasks]
 
-   _5 min descanso_
+* Select the proyect
+* Agregar evaluacion
+* Agregar recomendaciones
+* Subir Documento
+* Subir ppt
 
-3. **Ver Detalles de un Proyecto de Tesis**
+[Backed task]
+1- Take of the request
+the eval in base a 5,
+the recoms as an string
+the doc
+the ppt
 
-   - **Tiempo asignado:** 40 min
+2- Extract:
+the stduent data ,
+the tutors data ,
+the topic of the proyect,
 
-   _20 min descanso_
+3- Upload the files and get the url (and endpoint of my backed that will send the document)
 
-4. **Aprobar Proyecto (si está pendiente)**
-   - **Tiempo asignado:** 40 min
+4- Create the new Defese wit the data we have
+
+5- Set the project as ancient=true and status=closed
+6- Deactivate the related student
+
+7- Send the doc con el acta de defensa
+
+[VIERNES]
+
+- Modulo eArchivo
+
+* Main layout and routing
+* Buscar estudiantes tanto activos como no activos y poder ver su historial
+  .Backend endpoint to get the historial of a student
+  .Add the functionality inside a Service
+
+* Buscar y descargar documentos de tesis por cualquier termino de busqueda
+  Backend endpoint to get a list of documents for a seach tearm
+
+[SABADO]
+
+[Secondary]
+-Add serach functionality in students and profesors
+-Delete and edit court
+-Edit,,delete, and see historial btn in large screen
+
+### Vista: Profesores View (Tarde)
+
+4. Fix routes
+5. Dashboard Page
