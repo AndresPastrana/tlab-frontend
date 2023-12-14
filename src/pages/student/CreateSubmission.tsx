@@ -1,13 +1,17 @@
 import axios from "axios";
 import React from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 const FileUploadComponent: React.FC = () => {
+  const { user } = useAuth();
   const handleUpload = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    // const jsonData = Object.fromEntries(formData.entries());
+    const jsonData = Object.fromEntries(formData.entries());
+    console.log(jsonData);
+
     try {
       const resp = await axios.post(
         "http://localhost:23274/api/evaluaciones/submissions",
@@ -26,6 +30,7 @@ const FileUploadComponent: React.FC = () => {
 
   return (
     <div>
+      <p>{user?.userId}</p>
       <h2>File Upload Component</h2>
       <form encType="multipart/form-data" onSubmit={handleUpload}>
         <div>
@@ -36,14 +41,19 @@ const FileUploadComponent: React.FC = () => {
         </div>
         <div>
           <label>
-            Title:
-            <input className="input" type="text" name="title" />
+            Evaluacion:
+            <input
+              className="input"
+              type="text"
+              name="evaluation_id"
+              value="6579c9253888e45ea4280a13"
+            />
           </label>
         </div>
         <div>
           <label>
-            Description:
-            <textarea className="textarea" name="description" />
+            Estudinate:
+            <input className="input" name="student_id" value={user?.userId} />
           </label>
         </div>
         <button type="submit">Upload</button>

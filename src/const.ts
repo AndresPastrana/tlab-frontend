@@ -73,7 +73,7 @@ export enum TesisProjectStatus {
 }
 
 export enum EvalType {
-  CorteEvaluativo = "corte evaluativo",
+  CorteEvaluativo = "corte_evaluativo",
   Predefensa = "predefensa",
 }
 

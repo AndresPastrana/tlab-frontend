@@ -160,3 +160,12 @@ export enum EvalType {
   CorteEvaluativo = "corte_evaluativo",
   Predefensa = "predefensa",
 }
+
+export interface Submission {
+  id: string;
+  evaluation_id: Schema.Types.ObjectId; // Reference to the evaluation it belongs to
+  student_id: Schema.Types.ObjectId; // Reference to the student (foreign key)
+  file: string;
+  score: number;
+  recoms: string;
+}

@@ -2,6 +2,7 @@ import { RouteObject } from "react-router-dom";
 import StudentLayout from "../layouts/StudentLayout";
 import StudentMainView from "../pages/student/StudentMainView";
 import WelcomePage from "../pages/student/WelcomePage";
+import StudentsEvaluationsComponent from "../pages/student/StudentsEvaluationsComponent";
 
 export const StudentRoutes: RouteObject = {
   path: "/student",
@@ -10,6 +11,6 @@ export const StudentRoutes: RouteObject = {
   children: [
     { index: true, element: <WelcomePage /> },
     { path: "proyecto/", element: <StudentMainView /> },
-    { path: "evaluaciones/", element: <h1>Student</h1> },
+    { path: "evaluaciones/", element: <StudentsEvaluationsComponent /> },
   ],
 };

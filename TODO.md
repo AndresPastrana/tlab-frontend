@@ -1,20 +1,27 @@
-[Miercoles]
+[Jueves]
 
 ### Vista: Admin View
 
 - Modulo Gestionar evaluaciones
 
-* Main Layout and routing
-* Crear nueva evaluacion
-* Cerrar evaluacion
-* Listar Evaluaciones activas
+* Crear nueva evaluacion (FRONT END) (Modal window)
+
+* Editar evaluacion (FRONT END)
+
+- Cerrar evaluacion,Change the end date or the evaluation type
+
 * See all the submission of af an evaluation
 
-### Vista: Admin View
+- Listar todos los envios de una evaluacion
+- Calificar los envios y hacer recomendaciones
 
-- See evalutions
-- Open or close
-- Make submision of an evaluation
+* Ver el historial de un estduiante
+
+- Cuando fue aprovado su proyecto de tesis y sus evaluaciones (Backend y front end)
+
+### Vista: Student View
+
+- Make submision of an evaluation that has no submittion
 - Edit submision if an evauation is open
 
 ### Vista: Profesores View (Tarde)
@@ -27,10 +34,9 @@
    -Show approval info correctly
 
 2. Create new filter to filter by status (Aproved or Not aproved)
-
 3. Indicator to show the total of projects and the number of search results
 
-[Jueves]
+[VIERNES]
 
 ### Vista: Admin View
 
@@ -56,15 +62,12 @@ the tutors data ,
 the topic of the proyect,
 
 3- Upload the files and get the url (and endpoint of my backed that will send the document)
-
 4- Create the new Defese wit the data we have
-
 5- Set the project as ancient=true and status=closed
 6- Deactivate the related student
-
 7- Send the doc con el acta de defensa
 
-[VIERNES]
+[SABADO]
 
 - Modulo eArchivo
 
@@ -76,7 +79,7 @@ the topic of the proyect,
 * Buscar y descargar documentos de tesis por cualquier termino de busqueda
   Backend endpoint to get a list of documents for a seach tearm
 
-[SABADO]
+[DOMINGO]
 
 [Secondary]
 -Add serach functionality in students and profesors
