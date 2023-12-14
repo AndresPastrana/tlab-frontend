@@ -2,14 +2,12 @@ import React from "react";
 
 import ProyectInfo from "../../components/student/ProyectInfo";
 import { useProjectInfo } from "../../hooks/useProjectInfo";
-import { UserRole } from "../../const";
 
 const StudentMainView: React.FC = () => {
-  const { isLoading, projects } = useProjectInfo(true, UserRole.Student);
+  const { isLoading, projects } = useProjectInfo(true);
 
   return (
     <div>
-      <h1>StudentMainView</h1>
       {isLoading && "Loading"}
       {!Array.isArray(projects) && <ProyectInfo proyect={projects} />}
 

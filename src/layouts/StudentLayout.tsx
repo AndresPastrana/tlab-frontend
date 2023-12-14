@@ -1,8 +1,12 @@
 import NavbarHorizontal from "../components/shared/NavbarHorizontal";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import NavbarVertical from "../components/shared/NavbarVertical";
 import NavigationLinks from "../components/shared/NavigationLinks";
-import { HomeModernIcon } from "@heroicons/react/24/solid";
+import {
+  ClipboardDocumentIcon,
+  DocumentTextIcon,
+  HomeModernIcon,
+} from "@heroicons/react/24/solid";
 
 const links = [
   {
@@ -10,10 +14,21 @@ const links = [
     label: "Home",
     Icon: HomeModernIcon,
   },
+  {
+    href: "/student/project",
+    label: "Proyecto",
+    Icon: DocumentTextIcon,
+  },
+  {
+    href: "/student/evaluaciones",
+    label: "Evaluaciones",
+    Icon: ClipboardDocumentIcon,
+  },
 ];
 
 const StudentLayout = () => {
   //TODO: Protect the admin routes here
+  const { pathname } = useLocation();
 
   return (
     //TODO: Protect the admin routes here
@@ -21,17 +36,22 @@ const StudentLayout = () => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/*Navbar */}
-        <NavbarHorizontal>
-          <NavigationLinks links={links} />
-        </NavbarHorizontal>
+        {pathname !== "/student" && (
+          <NavbarHorizontal>
+            <NavigationLinks links={links} />
+          </NavbarHorizontal>
+        )}
+
         {/* Page content here */}
         <>
           <Outlet />
         </>
       </div>
-      <NavbarVertical>
-        <NavigationLinks links={links} />
-      </NavbarVertical>
+      {pathname !== "/student" && (
+        <NavbarVertical>
+          <NavigationLinks links={links} />
+        </NavbarVertical>
+      )}
     </div>
   );
 };

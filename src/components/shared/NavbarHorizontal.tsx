@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import UserAvatar from "./UserAvatar";
 
 const DrawerButton = () => {
   return (
@@ -30,10 +31,10 @@ const DrawerButton = () => {
 const MenuBanner = () => {
   return (
     <div className="flex-1 text-xl font-medium text-green-700">
-      <span className="text-4xl md:text-5xl lg:text-6xl font-extrabold">
+      <span className="text-2xl md:text-3xl lg:text-4xl font-extrabold">
         Tesis
       </span>
-      <span className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-500">
+      <span className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-blue-500">
         Lab
       </span>
     </div>
@@ -46,10 +47,11 @@ const NavbarHorizontal = ({ children }: { children: ReactNode }) => {
       <DrawerButton />
       <MenuBanner />
       <div className="flex-none hidden lg:block">
-        <ul className="menu menu-horizontal">
+        <ul className="menu menu-horizontal flex items-center">
           {/* Navbar menu content here */}
           {children}
           {/* <NavigationLinks /> */}
+          <UserAvatar />
         </ul>
       </div>
     </div>
