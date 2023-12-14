@@ -1,9 +1,39 @@
+import { Link } from "react-router-dom";
 import { Evaluation } from "../../../types";
+import { EyeIcon } from "@heroicons/react/24/outline";
+import { ReactElement } from "react";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import { log } from "console";
 
 interface EvaluationListProps {
   evaluations: Evaluation[];
+  handleSetEditMode: (id: string) => void;
   // TODO: hanlde create evaluation function
 }
+
+export const BtnWithTooltip = ({
+  href,
+  tooltip,
+  icon: Icon,
+  onClick = () => {},
+}: {
+  href: string;
+  tooltip: string;
+  icon: ReactElement;
+  onClick?: () => void; // Optional onClick function
+}) => {
+  return (
+    <Link to={href}>
+      <button
+        onClick={() => onClick()}
+        className="tooltip btn btn-square bg-transparent border flex items-center justify-center shadow-none"
+        data-tip={tooltip}
+      >
+        {Icon}
+      </button>
+    </Link>
+  );
+};
 
 const EvaluationListSmall: React.FC<EvaluationListProps> = ({
   evaluations,
@@ -31,6 +61,7 @@ const EvaluationListSmall: React.FC<EvaluationListProps> = ({
 
 const EvaluationListLarge: React.FC<EvaluationListProps> = ({
   evaluations,
+  handleSetEditMode,
 }) => {
   return (
     <div className="hidden md:block container mx-auto mt-8">
@@ -42,6 +73,7 @@ const EvaluationListLarge: React.FC<EvaluationListProps> = ({
               <th className="border p-2">Description</th>
               <th className="border p-2">Status</th>
               <th className="border p-2">Cierra en</th>
+              <th className="border p-2">Aciones</th>
             </tr>
           </thead>
           <tbody>
@@ -53,6 +85,21 @@ const EvaluationListLarge: React.FC<EvaluationListProps> = ({
                 <td className="border">
                   {evaluation.endDate.toLocaleString()}
                 </td>
+                <td className="flex gap-1">
+                  <BtnWithTooltip
+                    href=""
+                    icon={<EyeIcon className="w-4 h-4" />}
+                    tooltip="Ver envios"
+                  />
+                  <BtnWithTooltip
+                    href=""
+                    icon={<PencilSquareIcon className="w-4 h-4" />}
+                    tooltip="Editar"
+                    onClick={() => {
+                      handleSetEditMode(evaluation.id);
+                    }}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -62,11 +109,22 @@ const EvaluationListLarge: React.FC<EvaluationListProps> = ({
   );
 };
 
-const EvaluacionesTables: React.FC<EvaluationListProps> = ({ evaluations }) => {
+const EvaluacionesTables: React.FC<EvaluationListProps> = ({
+  evaluations,
+  handleSetEditMode,
+}) => {
+  console.log(handleSetEditMode);
+
   return (
     <>
-      <EvaluationListSmall evaluations={evaluations} />
-      <EvaluationListLarge evaluations={evaluations} />
+      <EvaluationListSmall
+        evaluations={evaluations}
+        handleSetEditMode={handleSetEditMode}
+      />
+      <EvaluationListLarge
+        evaluations={evaluations}
+        handleSetEditMode={handleSetEditMode}
+      />
     </>
   );
 };

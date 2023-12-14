@@ -71,8 +71,8 @@ export const useEvaluations = () => {
   };
 
   const editEvaluation = async (
-    id: string,
-    updatedEvaluation: Partial<Evaluation>
+    updatedEvaluation: Partial<Evaluation>,
+    id: string
   ) => {
     try {
       const response = await axios.put<ApiResponse<Evaluation>>(
@@ -87,7 +87,6 @@ export const useEvaluations = () => {
       if (response.data.success) {
         // Handle success as needed
         mutate(); // Trigger a re-fetch of the evaluations data
-        return response.data.data;
       }
 
       throw new Error("Failed to update evaluation");

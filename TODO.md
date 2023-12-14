@@ -4,8 +4,6 @@
 
 - Modulo Gestionar evaluaciones
 
-* Crear nueva evaluacion (FRONT END) (Modal window)
-
 * Editar evaluacion (FRONT END)
 
 - Cerrar evaluacion,Change the end date or the evaluation type

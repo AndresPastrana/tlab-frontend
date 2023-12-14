@@ -1,6 +1,6 @@
 import { useEvaluations } from "../../../hooks/useEvaluaciones";
 import { useEvaluationsFilters } from "../../../context/EvaluationFilterContext";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { Modal } from "../../../components/shared/Dialog";
 import EvaluacionesTables from "../../../components/admin/evaluaciones/EvaluacionesTables";
 import { Header } from "../../../components/admin/evaluaciones/Header";
@@ -8,31 +8,58 @@ import SearchResultsBadge from "../../../components/admin/evaluaciones/SearchRes
 import { FormEvaluation } from "../../../components/admin/evaluaciones/FormEvaluation";
 import { Evaluation } from "../../../types";
 import { toast } from "sonner";
+import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
 
-interface CreateEvaluationBTNProps {
+interface ReusableButtonProps {
   onClick: () => void;
+  className?: string;
+  buttonText?: string;
+  Icon?: ReactElement; // Change to the specific ReactElement type for the icon
 }
 
-const CreateEvaluationBTN: React.FC<CreateEvaluationBTNProps> = ({
+const ReusableButton: React.FC<ReusableButtonProps> = ({
   onClick,
+  className = "",
+  buttonText = "Create Evaluation",
+  Icon,
 }) => {
   return (
-    <div>
+    <div className="flex justify-between">
       <button
         onClick={onClick}
-        className="bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mt-4"
+        className={`bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded mt-4 ${className} flex items-center justify-between`}
       >
-        Create Evaluation
+        {buttonText}
+        {Icon && <span className="ml-4 ">{Icon}</span>}
       </button>
     </div>
   );
 };
 
 const Evaluaciones = () => {
+  const {
+    evaluations: allEvaluations,
+    createEvaluation,
+    isLoading,
+    isError,
+    error,
+    editEvaluation,
+  } = useEvaluations();
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeEvaluation, setActiveEvaluation] = useState<Evaluation | null>(
     null
   );
+
+  const { filters } = useEvaluationsFilters();
+
+  const evaluations = allEvaluations.filter(
+    (evaluation) =>
+      (!filters.status || evaluation.status === filters.status) &&
+      (!filters.type || evaluation.type === filters.type)
+  );
+
+  const results = evaluations.length >= 1 ? evaluations : allEvaluations;
 
   const reset = () => {
     setActiveEvaluation(null);
@@ -41,6 +68,14 @@ const Evaluaciones = () => {
 
   const handleCreateEval = () => {
     setIsDialogOpen(true);
+  };
+
+  const setEditMode = (id: string) => {
+    const activeEval = evaluations.find((e) => e.id === id);
+    if (activeEval) {
+      setActiveEvaluation(activeEval);
+      setIsDialogOpen(true);
+    }
   };
 
   const onModalClose = () => {
@@ -64,24 +99,26 @@ const Evaluaciones = () => {
     }
   };
 
-  const {
-    evaluations: allEvaluations,
-    createEvaluation,
-    isLoading,
-    isError,
-    error,
-  } = useEvaluations();
+  const saveEditeEvaluation = async (data: FormData) => {
+    const newEval: Partial<Evaluation> = {
+      description: data.get("description"),
+      endDate: data.get("endDate"),
+      status: data.get("status"),
+      type: data.get("type"),
+    };
 
-  const { filters } = useEvaluationsFilters();
-  console.log(filters);
+    try {
+      console.log(newEval);
+      console.log(activeEvaluation?.id);
 
-  const evaluations = allEvaluations.filter(
-    (evaluation) =>
-      (!filters.status || evaluation.status === filters.status) &&
-      (!filters.type || evaluation.type === filters.type)
-  );
-
-  const results = evaluations.length >= 1 ? evaluations : allEvaluations;
+      if (activeEvaluation?.id) {
+        await editEvaluation(newEval, activeEvaluation.id);
+        console.log("all ok");
+      }
+    } catch (err) {
+      toast.error("Error al crear la nueva evaluacion");
+    }
+  };
 
   return (
     <>
@@ -93,14 +130,20 @@ const Evaluaciones = () => {
         results={evaluations.length}
         total={allEvaluations.length}
       />
-      <EvaluacionesTables evaluations={results} />
-      <CreateEvaluationBTN onClick={handleCreateEval} />
+      <EvaluacionesTables
+        handleSetEditMode={setEditMode}
+        evaluations={results}
+      />
+      <ReusableButton
+        onClick={handleCreateEval}
+        Icon={<ArrowUpRightIcon className="w-4 h-4 text-white-200 font-bold" />}
+      />
 
       <Modal open={isDialogOpen} onClose={onModalClose} hasCloseBtn>
         {/*TODO:  Create a form to create a new evaluation */}
         <FormEvaluation
           evaluation={activeEvaluation}
-          onSubmit={saveEvaluation}
+          onSubmit={activeEvaluation ? saveEditeEvaluation : saveEvaluation}
         />
         {/* This for will be the same for editing, so it will have default values in case that recives a evaluation.This form will also recive the action to execute when submit */}
       </Modal>

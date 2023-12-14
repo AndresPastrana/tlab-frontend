@@ -79,7 +79,7 @@ export const FormEvaluation: FC<EvaluationForm> = ({
           name="endDate"
           className="input"
           type="date"
-          defaultValue={evaluation?.endDate.toISOString().split("T")[0]}
+          defaultValue={(evaluation?.endDate.split("T")[0] as string) || ""}
         />
       </div>
 
