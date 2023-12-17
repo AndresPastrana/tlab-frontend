@@ -6,9 +6,10 @@ import EvaluacionesTables from "../../../components/admin/evaluaciones/Evaluacio
 import { Header } from "../../../components/admin/evaluaciones/Header";
 import SearchResultsBadge from "../../../components/admin/evaluaciones/SearchResultsBadge";
 import { FormEvaluation } from "../../../components/admin/evaluaciones/FormEvaluation";
-import { Evaluation } from "../../../types";
+import { CrumbItem, Evaluation } from "../../../types";
 import { toast } from "sonner";
 import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
+import Breadcrumbs from "../../../components/shared/Breadcrumbs";
 
 interface ReusableButtonProps {
   onClick: () => void;
@@ -17,7 +18,7 @@ interface ReusableButtonProps {
   Icon?: ReactElement; // Change to the specific ReactElement type for the icon
 }
 
-const ReusableButton: React.FC<ReusableButtonProps> = ({
+export const ReusableButton: React.FC<ReusableButtonProps> = ({
   onClick,
   className = "",
   buttonText = "Create Evaluation",
@@ -108,9 +109,6 @@ const Evaluaciones = () => {
     };
 
     try {
-      console.log(newEval);
-      console.log(activeEvaluation?.id);
-
       if (activeEvaluation?.id) {
         await editEvaluation(newEval, activeEvaluation.id);
         console.log("all ok");
@@ -120,24 +118,34 @@ const Evaluaciones = () => {
     }
   };
 
+  const items: CrumbItem[] = [
+    { label: "Home", href: "/admin" },
+    { label: "Evaluaciones" },
+  ];
+
   return (
-    <>
+    <div className="">
+      <Breadcrumbs items={items} />
       {isLoading && <p>Loading evaluations...</p>}
       {isError && <p>Error loading evaluations: {error.message}</p>}
       <Header />
 
-      <SearchResultsBadge
-        results={evaluations.length}
-        total={allEvaluations.length}
-      />
-      <EvaluacionesTables
-        handleSetEditMode={setEditMode}
-        evaluations={results}
-      />
-      <ReusableButton
-        onClick={handleCreateEval}
-        Icon={<ArrowUpRightIcon className="w-4 h-4 text-white-200 font-bold" />}
-      />
+      <div className="max-w-5xl">
+        <SearchResultsBadge
+          results={evaluations.length}
+          total={allEvaluations.length}
+        />
+        <EvaluacionesTables
+          handleSetEditMode={setEditMode}
+          evaluations={results}
+        />
+        <ReusableButton
+          onClick={handleCreateEval}
+          Icon={
+            <ArrowUpRightIcon className="w-4 h-4 text-white-200 font-bold" />
+          }
+        />
+      </div>
 
       <Modal open={isDialogOpen} onClose={onModalClose} hasCloseBtn>
         {/*TODO:  Create a form to create a new evaluation */}
@@ -147,7 +155,7 @@ const Evaluaciones = () => {
         />
         {/* This for will be the same for editing, so it will have default values in case that recives a evaluation.This form will also recive the action to execute when submit */}
       </Modal>
-    </>
+    </div>
   );
 };
 

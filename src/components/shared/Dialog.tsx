@@ -36,7 +36,7 @@ export const Modal: FC<Modal> = ({
 
   return (
     <dialog
-      className="p-5 rounded-md w-[300px] min-h-[400px] overflow-hidden"
+      className="p-5 rounded-md  w-10/12  h-5/6 sm:w-8/12 sm:h-4/6 backdrop:bg-gray-950 backdrop:bg-opacity-75 backdrop-blur-sm"
       ref={modalRef}
     >
       {hasCloseBtn && (

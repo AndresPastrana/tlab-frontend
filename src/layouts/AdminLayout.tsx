@@ -8,6 +8,8 @@ import {
   UserGroupIcon,
   DocumentTextIcon,
   ClipboardDocumentIcon,
+  DocumentMagnifyingGlassIcon,
+  ShieldCheckIcon,
 } from "@heroicons/react/24/solid";
 
 const links = [
@@ -35,9 +37,19 @@ const links = [
     Icon: DocumentTextIcon,
   },
   {
+    href: "/admin/defense/",
+    label: "Defensas",
+    Icon: ShieldCheckIcon,
+  },
+  {
     href: "/admin/personas",
     label: "Personas",
     Icon: UserIcon,
+  },
+  {
+    href: "/admin/search",
+    label: "Repositorio",
+    Icon: DocumentMagnifyingGlassIcon,
   },
 ];
 

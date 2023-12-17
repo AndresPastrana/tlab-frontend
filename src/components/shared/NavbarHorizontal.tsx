@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import UserAvatar from "./UserAvatar";
+import Logout from "./buttons/Logout";
 
 const DrawerButton = () => {
   return (
@@ -50,6 +51,7 @@ const NavbarHorizontal = ({ children }: { children: ReactNode }) => {
         <ul className="menu menu-horizontal flex items-center">
           {/* Navbar menu content here */}
           {children}
+          <Logout />
           {/* <NavigationLinks /> */}
           <UserAvatar />
         </ul>

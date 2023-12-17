@@ -3,7 +3,6 @@ import { Evaluation } from "../../../types";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { ReactElement } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { log } from "console";
 
 interface EvaluationListProps {
   evaluations: Evaluation[];
@@ -87,7 +86,7 @@ const EvaluationListLarge: React.FC<EvaluationListProps> = ({
                 </td>
                 <td className="flex gap-1">
                   <BtnWithTooltip
-                    href=""
+                    href={`/admin/evaluaciones/${evaluation.id}/submissions`}
                     icon={<EyeIcon className="w-4 h-4" />}
                     tooltip="Ver envios"
                   />

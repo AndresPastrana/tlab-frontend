@@ -9,7 +9,7 @@ const LinkCard = ({ card_item }: { card_item: LinkCardItem }) => {
   const { href, src, title, text } = card_item;
   return (
     <Link to={href}>
-      <div className=" sm:min-h-[300px] hover:bg-neutral hover:shadow-none hover:bg-opacity-90 hover:border-transparent hover:text-neutral-50 transition-all ease-in-out delay-100 my-7 card card-side bg-base-100 shadow-xl flex flex-col sm:flex sm:flex-row">
+      <div className=" sm:min-h-[300px] transition-transform transform hover:scale-105 ease-in-out delay-100 my-7 card card-side bg-base-100 shadow-xl flex flex-col sm:flex sm:flex-row max-w-6xl mx-auto">
         <figure>
           <img
             className="w-72 h-72 sm:w-80 sm:h-80 max-w-[320px] max-h-[320px]  object-cover"

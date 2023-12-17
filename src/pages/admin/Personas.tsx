@@ -9,7 +9,6 @@ const PagePersonas = () => {
   ];
   return (
     <div>
-      <h2 className="text-center mt-8 mb-4 text-neutral-500">Personas</h2>
       <Breadcrumbs items={items} />
       <div className="flex flex-col gap-3">
         <Cards />

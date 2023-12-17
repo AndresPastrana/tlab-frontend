@@ -4,13 +4,15 @@ import React, { useState } from "react";
 interface DynamicTextInputsProps {
   initialInputs?: string[];
   onInputsChange: (inputs: string[]) => void;
-  onSubmit: (inputs: string[]) => Promise<void>;
+  onSubmit?: (inputs: string[]) => Promise<void>;
+  showBtn?: boolean;
 }
 
 const DynamicTextInputs: React.FC<DynamicTextInputsProps> = ({
   initialInputs = [],
   onInputsChange,
   onSubmit,
+  showBtn,
 }) => {
   const [inputs, setInputs] = useState<string[]>(initialInputs);
 
@@ -36,7 +38,10 @@ const DynamicTextInputs: React.FC<DynamicTextInputsProps> = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    return onSubmit(inputs);
+
+    if (onSubmit) {
+      return onSubmit(inputs);
+    }
   };
 
   return (
@@ -60,9 +65,12 @@ const DynamicTextInputs: React.FC<DynamicTextInputsProps> = ({
           </div>
         ))}
         <div className="flex gap-2">
-          <button className="btn" type="submit">
-            Guardar Requerimientos funcionales
-          </button>
+          {!showBtn && (
+            <button className="btn" type="submit">
+              Guardar Requerimientos funcionales
+            </button>
+          )}
+
           <button
             type="button"
             onClick={handleAddInput}

@@ -21,17 +21,21 @@ export const FormEvaluation: FC<EvaluationForm> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col">
+      <h1 className="text-gray-900 text-xl font-medium">
+        {evaluation ? "Editando evaluacion" : "Creando nueva evaluacion"}
+      </h1>
+      <br className="divider" />
       <div>
         <label className="label" htmlFor="description">
           Description
         </label>
-        <input
+        <textarea
+          rows={2}
           required
           id="description"
           name="description"
-          className="input input-bordered"
-          type="text"
+          className="textarea input-bordered w-full"
           defaultValue={evaluation?.description}
         />
       </div>

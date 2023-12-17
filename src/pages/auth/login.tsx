@@ -4,14 +4,31 @@ import { useNavigate } from "react-router-dom";
 import { UserRole } from "../../const";
 import { AuthService } from "../../services/AuthService";
 
+// Texts for the Login Page
+const loginPageTexts = {
+  title: "¡Inicia sesión ahora!",
+  subtitle:
+    "Potenciando el Futuro: Tesis Lab, tu aliado en el camino hacia el éxito académico en Ingeniería Informática en la Universidad de Pinar del Río.",
+  usernameLabel: "Nombre de usuario",
+  usernamePlaceholder: "Escribe tu nombre de usuario aquí",
+  passwordLabel: "Contraseña",
+  passwordPlaceholder: "Escribe tu contraseña aquí",
+  forgotPasswordLink: "¿Olvidaste tu contraseña?",
+  error: "Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.",
+  buttonText: "Autenticar",
+  loadingText: "Autenticando...",
+};
+
 const PageLogin = () => {
   const { login, token, user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
     const formData = new FormData(e.currentTarget);
 
     const username = formData.get("username") as string;
@@ -19,13 +36,10 @@ const PageLogin = () => {
 
     try {
       const { token, user } = await AuthService.login({ username, password });
-      login(token, user); // Assuming login function from useAuth sets the token and user in context
-      console.log("Login successful. Token:", token);
-      console.log("Decoded User Information:", user);
+      login(token, user);
     } catch (error) {
-      console.log(error);
-
-      console.error("Login failed:");
+      setError(loginPageTexts.error);
+      console.error("Login failed:", error);
     } finally {
       setLoading(false);
     }
@@ -33,9 +47,6 @@ const PageLogin = () => {
 
   useEffect(() => {
     if (!user || !token) return;
-    console.log("Efectttt");
-    console.log(user);
-    console.log(token);
 
     if (user?.role === UserRole.Admin) {
       navigate("/admin", { replace: true });
@@ -43,7 +54,7 @@ const PageLogin = () => {
     }
 
     if (user?.role === UserRole.Profesor) {
-      navigate("/professor", { replace: true });
+      navigate("/profesors", { replace: true });
       return;
     }
 
@@ -57,51 +68,56 @@ const PageLogin = () => {
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
-          <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
+          <h1 className="text-5xl font-bold">{loginPageTexts.title}</h1>
+          <p className="py-6">{loginPageTexts.subtitle}</p>
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form className="card-body" onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label">Nombre de usuario </label>
+              <label className="label">{loginPageTexts.usernameLabel}</label>
               <input
                 defaultValue="userinfoupr"
                 type="text"
                 name="username"
-                placeholder="Escribe tu nombre de usuario aqui"
+                placeholder={loginPageTexts.usernamePlaceholder}
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Contrasena</span>
+                <span className="label-text">
+                  {loginPageTexts.passwordLabel}
+                </span>
               </label>
               <input
                 defaultValue="0bz2Neyw"
                 type="password"
                 name="password"
-                placeholder="Escribe tu contarsena aqui"
+                placeholder={loginPageTexts.passwordPlaceholder}
                 className="input input-bordered"
                 required
               />
               <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
+                  {loginPageTexts.forgotPasswordLink}
                 </a>
               </label>
             </div>
+
+            <div className="form-control mt-4 text-error text-sm font-semibold h-[40px] text-center">
+              {error ? loginPageTexts.error : ""}
+            </div>
+
             <div className="form-control mt-6">
               <button
                 aria-disabled={loading}
                 disabled={loading}
-                className="btn btn-primary"
+                className="btn bg-green-600 text-gray-50 hover:bg-green-800"
               >
-                {loading ? "Loading..." : "Login"}
+                {loading
+                  ? loginPageTexts.loadingText
+                  : loginPageTexts.buttonText}
               </button>
             </div>
           </form>

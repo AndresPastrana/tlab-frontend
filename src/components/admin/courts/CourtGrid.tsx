@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/24/outline"; // Import Heroicons icons
+import { ExclamationTriangleIcon, PlusIcon } from "@heroicons/react/24/outline"; // Import Heroicons icons
 import { useCourts } from "../../../hooks/useCourts";
 import { Court } from "../../../types";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import { DaisyUIMenu } from "./DaisyUiMenu";
 import { NewCourtForm } from "./CreateCourt";
 
 const CourtsGrid = () => {
-  const { courts, isLoading, isError } = useCourts();
+  const { courts, isLoading, isError, mutate } = useCourts();
 
   if (isLoading) {
     return <div className="text-center py-8">Loading...</div>;
@@ -15,14 +15,24 @@ const CourtsGrid = () => {
 
   if (isError) {
     return (
-      <div className="text-center py-8 text-red-500">Error loading courts</div>
+      <div className=" flex flex-col items-center gap-3">
+        <div className="flex mx-auto bg-red-100 w-fit px-10 text-center  text-sm py-3 rounded-lg text-red-700 font-medium items-center gap-3">
+          <ExclamationTriangleIcon className="w-5 h-5" />
+          <span>Error loading courts</span>
+        </div>
+        <span>
+          <button className="btn " onClick={() => mutate()}>
+            Intentar de nuevo
+          </button>
+        </span>
+      </div>
     );
   }
 
   return (
     <div className="text-gray-700">
       {/* <h1 className="text-xl font-semibold mb-6">Courts Information</h1> */}
-      <div className="grid grid-cols-1  lg:grid-cols-2 gap-4 p-4">
+      <div className="grid grid-cols-1  lg:grid-cols-2 gap-10 ">
         {courts.map((court, index) => (
           <CourtCard
             key={court.id}

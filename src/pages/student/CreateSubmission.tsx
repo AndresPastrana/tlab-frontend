@@ -3,7 +3,7 @@ import React from "react";
 import { useAuth } from "../../hooks/useAuth";
 
 const FileUploadComponent: React.FC = () => {
-  const { user } = useAuth();
+  const { token } = useAuth();
   const handleUpload = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -14,11 +14,11 @@ const FileUploadComponent: React.FC = () => {
 
     try {
       const resp = await axios.post(
-        "http://localhost:23274/api/evaluaciones/submissions",
+        "http://localhost:23274/api/defense",
         formData,
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTcxMDcxY2MyM2Q3MjJkYmQxODJkYjIiLCJ1c2VybmFtZSI6InVzZXJpbmZvdXByIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyNDkwMDg1LCJleHAiOjE3MDI1NzY0ODV9.Y35OOi7Gz9EXfbRybPzTQWeE_-GRSmjxpcM9hDQQL7o`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -30,30 +30,18 @@ const FileUploadComponent: React.FC = () => {
 
   return (
     <div>
-      <p>{user?.userId}</p>
       <h2>File Upload Component</h2>
       <form encType="multipart/form-data" onSubmit={handleUpload}>
         <div>
           <label>
-            File:
-            <input className="file-input" type="file" name="form_file" />
+            Doc:
+            <input className="file-input" type="file" name="docFile" />
           </label>
         </div>
         <div>
           <label>
-            Evaluacion:
-            <input
-              className="input"
-              type="text"
-              name="evaluation_id"
-              value="6579c9253888e45ea4280a13"
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Estudinate:
-            <input className="input" name="student_id" value={user?.userId} />
+            Presentacion :
+            <input className="file-input" type="file" name="presFile" />
           </label>
         </div>
         <button type="submit">Upload</button>

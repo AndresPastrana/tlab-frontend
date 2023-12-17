@@ -116,6 +116,7 @@ export const useCourts = () => {
     isLoading: isLoading && !courts && !error,
     isError: !!error,
     error,
+    mutate,
     createCourt,
     updateCourt,
     deleteCourt,

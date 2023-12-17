@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import Logout from "./buttons/Logout";
 
 const OvrelayLayer = () => {
   return (
@@ -15,6 +16,7 @@ const Sidemenu = ({ children }: { children: ReactNode }) => {
     <ul className="menu p-4 w-80 min-h-full bg-base-200">
       {/* Sidebar content here */}
       {children}
+      <Logout />
     </ul>
   );
 };
