@@ -100,3 +100,6 @@ export enum Allowedcollections {
   students = "students",
   docs = "docs",
 }
+// Helper functions for extension validation
+export const textDocumentExtensions = ["pdf", "doc", "docx"]; // Add more as needed
+export const presentationDocumentExtensions = ["ppt", "pptx"]; // Add more as needed

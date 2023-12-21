@@ -1,5 +1,16 @@
 import React, { useState } from "react";
 import DynamicTextInputs from "../../shared/DynamicTextInputs";
+import { isDefenseValid } from "../../../utils/validators";
+import SelectProject from "../../shared/professors/SelectProject";
+import { CrumbItem } from "../../../types";
+import Breadcrumbs from "../../shared/Breadcrumbs";
+import SelectCourt from "../../shared/SelectCourt";
+
+const items: CrumbItem[] = [
+  { label: "Home", href: "/admin" },
+  { label: "Defensas", href: "/defense" },
+  { label: "Crear nueva defensa" },
+];
 
 export const DefenseCreationComponent: React.FC = () => {
   //   const { token } = useAuth();
@@ -19,24 +30,64 @@ export const DefenseCreationComponent: React.FC = () => {
   ) => {
     event.preventDefault();
 
-    const formdata = new FormData(event.currentTarget);
+    const formData = new FormData(event.currentTarget);
 
-    const data = Object.fromEntries(formdata);
-    console.log(data);
+    // Get values from the form data
+    const recoms = formData.get("recoms") as string;
+    const evaluation = parseInt(formData.get("evaluation") as string, 10);
+    const docFile = formData.get("docFile") as File;
+    const presFile = formData.get("presFile") as File;
+    const project = formData.get("project");
+    const court = formData.get("court");
+    // Stringify and append keyWords as a single value
+    const keyWordsString = JSON.stringify(keyWords);
+    formData.append("keyWords", keyWordsString);
+
+    // Validate the defense
+    const defense = {
+      court,
+      project,
+      keyWords,
+      recoms,
+      evaluation,
+      docFile,
+      presFile,
+    };
+
+    const validationResult = isDefenseValid(defense);
+
+    if (validationResult.isValid) {
+      // TODO: Perform further actions, e.g., send to server
+      console.log("Valid defense:", defense);
+    } else {
+      // Handle validation errors, e.g., display to the user
+      console.error("Validation errors:", validationResult.errors);
+    }
   };
 
   return (
     <div>
-      <h2>Crear Nueva Defensa</h2>
+      <Breadcrumbs items={items} />
       <form
         encType="multipart/form-data "
         className="flex flex-col gap-3"
         onSubmit={handleCreateDefense}
       >
+        <div>
+          <label className="">Seleciona el proyecto defendido</label>
+          <SelectProject />
+        </div>
+        <div>
+          <label className="">Seleciona el tribunal de la defensa</label>
+          <SelectCourt />
+        </div>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
           <div className="flex flex-col gap-2  basis-10/12  sm:basis-full w-full">
             <label>Recomendaciones:</label>
             <textarea
+              required
+              minLength={10}
+              maxLength={300}
               placeholder="Recomendaciones para el acta de defensa..."
               name="recoms"
               className=" textarea input-bordered textarea-sm w-full "

@@ -1,5 +1,9 @@
 import { RangoAcademico, Sex } from "../../src/const";
-import { z } from "zod";
+import { ZodError, z } from "zod";
+import {
+  isPresentationDocumentExtension,
+  isTextDocumentExtension,
+} from "./others";
 const emailRegex = /^[a-zA-Z0-9._-]+@(upr\.cu|gmail\.com)$/;
 const phoneRegex = /^[0-9]{8}$/;
 
@@ -279,5 +283,49 @@ export const validateStudentData = (data: unknown) => {
     });
 
     return { isValid: false, errors: fieldErrors };
+  }
+};
+
+const defenseSchema = z.object({
+  keyWords: z.array(z.string().refine((str) => str.trim() !== "")),
+  recoms: z.string().refine((str) => str.trim() !== ""),
+  evaluation: z.number().min(2).max(5),
+  docFile: z.object({
+    name: z.string(),
+    type: z
+      .string()
+      .refine((type) => isTextDocumentExtension(type.split("/")[1])),
+    size: z.number().refine((size) => size <= 50 * 1024 * 1024), // Maximum size is 50 MB
+  }),
+  presFile: z.object({
+    name: z
+      .string()
+      .refine((type) => isPresentationDocumentExtension(type.split(".")[1])),
+
+    size: z.number().refine((size) => size <= 50 * 1024 * 1024), // Maximum size is 50 MB
+  }),
+  court: z.string(),
+  project: z.string(),
+});
+
+interface ValidationResult {
+  isValid: boolean;
+  errors: Record<string, string>;
+}
+
+export const isDefenseValid = (defense: unknown): ValidationResult => {
+  try {
+    defenseSchema.parse(defense);
+    return { isValid: true, errors: {} };
+  } catch (error) {
+    if (error instanceof ZodError) {
+      const errors: Record<string, string> = {};
+      error.errors.forEach((validationError) => {
+        const fieldName = validationError.path[0];
+        errors[fieldName] = validationError.message;
+      });
+      return { isValid: false, errors };
+    }
+    throw error; // Re-throw the error if it's not a ZodError
   }
 };
