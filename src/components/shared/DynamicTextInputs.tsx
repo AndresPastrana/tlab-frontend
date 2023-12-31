@@ -1,4 +1,4 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 
 interface DynamicTextInputsProps {
@@ -48,20 +48,19 @@ const DynamicTextInputs: React.FC<DynamicTextInputsProps> = ({
     <div>
       <form onSubmit={handleSubmit}>
         {inputs.map((input, index) => (
-          <div key={index} className="mb-2">
+          <div key={index} className="mb-2 flex gap-4 items-center">
             <input
               type="text"
               value={input}
               onChange={(e) => handleInputChange(index, e.target.value)}
               className="mr-2 p-2 border border-gray-300 rounded"
             />
-            <button
-              type="button"
+            <span
               onClick={() => handleRemoveInput(index)}
-              className="bg-red-500 text-white p-2 rounded"
+              className="w-fit h-auto btn flex justify-center items-center btn-outline p-2 rounded"
             >
-              Remove
-            </button>
+              <TrashIcon className="w-4 h-4" />
+            </span>
           </div>
         ))}
         <div className="flex gap-2">

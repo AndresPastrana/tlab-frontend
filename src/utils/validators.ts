@@ -1,4 +1,9 @@
-import { RangoAcademico, Sex } from "../../src/const";
+import {
+  RangoAcademico,
+  Sex,
+  presentationDocumentExtensions,
+  textDocumentExtensions,
+} from "../../src/const";
 import { ZodError, z } from "zod";
 import {
   isPresentationDocumentExtension,
@@ -287,25 +292,48 @@ export const validateStudentData = (data: unknown) => {
 };
 
 const defenseSchema = z.object({
-  keyWords: z.array(z.string().refine((str) => str.trim() !== "")),
-  recoms: z.string().refine((str) => str.trim() !== ""),
+  keyWords: z
+    .array(
+      z.string().refine((str) => !/\s/.test(str), {
+        message: "Una palabra clave no puede contener espacios en blanco.",
+      })
+    )
+    .refine((arr) => arr.every((keyword) => keyword !== ""), {
+      message: "Una palabra clave no puede ser un texto vacio",
+    })
+    .refine((arr) => arr.length >= 3, {
+      message: "La lista de palabras clave debe tener al menos 3 elementos.",
+    }),
+  recoms: z
+    .string()
+    .trim()
+    .refine((str) => str.trim() !== ""),
   evaluation: z.number().min(2).max(5),
   docFile: z.object({
     name: z.string(),
     type: z
       .string()
-      .refine((type) => isTextDocumentExtension(type.split("/")[1])),
+      .refine((type) => isTextDocumentExtension(type.split("/")[1]), {
+        message: `Formato no valido, Prueba ${textDocumentExtensions.join(
+          ", "
+        )}`,
+      }),
     size: z.number().refine((size) => size <= 50 * 1024 * 1024), // Maximum size is 50 MB
   }),
   presFile: z.object({
     name: z
       .string()
-      .refine((type) => isPresentationDocumentExtension(type.split(".")[1])),
+      .refine((type) => isPresentationDocumentExtension(type.split(".")[1]), {
+        message: `Formato no valido, Prueba ${presentationDocumentExtensions.join(
+          ", "
+        )} `,
+      }),
 
     size: z.number().refine((size) => size <= 50 * 1024 * 1024), // Maximum size is 50 MB
   }),
   court: z.string(),
   project: z.string(),
+  date: z.string(),
 });
 
 interface ValidationResult {

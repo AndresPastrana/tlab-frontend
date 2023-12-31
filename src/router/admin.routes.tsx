@@ -16,7 +16,7 @@ import Evaluaciones from "../pages/admin/evaluaciones/Evaluaciones";
 import { EvaluationsFilterProvider } from "../context/EvaluationFilterContext";
 import { EvalSubmissions } from "../pages/admin/evaluaciones/EvalSubmissions";
 import DefenseCreationComponent from "../components/admin/defense/CreateNewDefense";
-import Search from "../pages/admin/search/Search";
+import DefenseSearchComponent from "../components/admin/defense/Repository";
 
 export const AdminRoutes: RouteObject = {
   path: "/admin",
@@ -29,8 +29,6 @@ export const AdminRoutes: RouteObject = {
     { path: "personas/profesors/create", element: <CreateProfesorsView /> },
     { path: "personas/students/create", element: <CreateStudentView /> },
     { path: "proyectos/", element: <ProyectsView /> },
-    { path: "search/", element: <Search /> },
-
     {
       path: "proyectos/create",
       element: <CreateProyectView />,
@@ -40,7 +38,7 @@ export const AdminRoutes: RouteObject = {
       path: "defense/",
 
       children: [
-        { index: true, element: <h1>Lista de defensas</h1> },
+        { index: true, element: <DefenseSearchComponent /> },
         {
           path: "create",
           element: <DefenseCreationComponent />,

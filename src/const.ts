@@ -103,3 +103,18 @@ export enum Allowedcollections {
 // Helper functions for extension validation
 export const textDocumentExtensions = ["pdf", "doc", "docx"]; // Add more as needed
 export const presentationDocumentExtensions = ["ppt", "pptx"]; // Add more as needed
+
+export const months = [
+  "enero",
+  "febrero",
+  "marzo",
+  "abril",
+  "mayo",
+  "junio",
+  "julio",
+  "agosto",
+  "septiembre",
+  "octubre",
+  "noviembre",
+  "diciembre",
+];

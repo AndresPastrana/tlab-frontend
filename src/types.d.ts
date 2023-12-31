@@ -169,3 +169,24 @@ export interface Submission {
   score: number;
   recoms: string;
 }
+
+export interface Defense {
+  _id: string;
+  doc_url: string;
+  pres_url: string;
+
+  // Fields for search
+  metadata: {
+    general_target: string;
+    functional_requirements: string[];
+    scientific_problem: string;
+    topic: string;
+    tutors: string[];
+    student: string;
+    court: { fullname: string; role: CourtRole }[];
+    key_words: string[]; // Added field
+  };
+  eval: number;
+  recomns: string;
+  date: Date;
+}

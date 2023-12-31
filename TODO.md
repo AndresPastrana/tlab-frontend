@@ -1,9 +1,11 @@
-<!--TODO: Create the defense of a proyect -->
+<!-- Manana -->
 
-<!-- UI -->
-<!-- Select proyect to create the defense Just the active proyects-->
-<!-- Insert recomendaciones -->
-<!-- Doc file and presentiation file -->
-<!-- kEY WORDS -->
+Sync the browser url with the serach list
 
-<!-- Backend -->
+<!-- Sabado -->
+
+\*\*Aprobar tema de tesis y dar opinion del tutor()
+
+<!-- Domingo -->
+
+\*\* Trabajar en Evaluaciones y Submissions

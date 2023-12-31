@@ -46,11 +46,6 @@ const links = [
     label: "Personas",
     Icon: UserIcon,
   },
-  {
-    href: "/admin/search",
-    label: "Repositorio",
-    Icon: DocumentMagnifyingGlassIcon,
-  },
 ];
 
 const AdminLayout = () => {
