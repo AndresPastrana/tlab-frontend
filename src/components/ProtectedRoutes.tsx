@@ -1,38 +1,30 @@
-import React from "react";
-import { UserRole } from "../const";
-import { useAuth } from "../hooks/useAuth";
+import React, { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import { LogedUser } from "../types";
+import { useAuth } from "../hooks/useAuth";
 
-type RoleProtectedRouteProps = {
-  allowedRoles: UserRole[]; // Array of allowed roles for this route
-  redirectTo: string; // Path to redirect if the user doesn't have the required role
-  children: React.ReactNode;
+type ProtectedRouteProps = {
+  children: ReactNode;
+  requiredRole: string;
 };
 
-const hasRequiredRole = (user: LogedUser | null, allowedRoles: UserRole[]) => {
-  return user && allowedRoles.includes(user.role as UserRole);
-};
-
-const ProtectedRoutes: React.FC<RoleProtectedRouteProps> = ({
-  allowedRoles,
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
-  redirectTo,
+  requiredRole,
 }) => {
-  // TODO: read the loged user
-  const { user, token } = useAuth();
+  const { user } = useAuth();
 
-  // No Loged user
-  if (!user || !token) {
-    return <Navigate to={redirectTo} />;
-  }
+  // Check if the user has the required role
+  const hasRequiredRole = user && user.role === requiredRole;
 
-  // has access
-  if (hasRequiredRole(user, allowedRoles)) {
+  // If the user has the required role, render the children
+  if (hasRequiredRole) {
     return <>{children}</>;
   }
-  // no access
-  return <h1>Unauthorized this router</h1>;
+
+  // If the user doesn't have the required role, redirect or render an error message
+  return <Navigate to="/unauthorized" />;
+  // Alternatively, you can render an error message component instead of redirecting
+  // return <ErrorMessage message="You don't have permission to access this page" />;
 };
 
-export default ProtectedRoutes;
+export default ProtectedRoute;

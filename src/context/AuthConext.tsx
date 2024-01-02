@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useCallback, useState } from "react";
-import { LogedUser } from "../types";
+import { DecodedToken, LogedUser } from "../types";
+import { jwtDecode } from "jwt-decode";
 
 // Define a type for the context
 type AuthContextType = {
@@ -20,14 +21,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [token, setToken] = useState<string | null>(() => {
     // Initialize token from local storage or other sources
-    return localStorage.getItem("token") || null;
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      // Check token expiration using jwt-decode
+      const tokenData = jwtDecode(storedToken) as DecodedToken;
+      if (tokenData && tokenData.exp * 1000 > Date.now()) {
+        return storedToken;
+      } else {
+        // Token has expired
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        return null;
+      }
+    }
+    return null;
   });
+
   const [user, setUser] = useState<LogedUser | null>(() => {
     // Initialize user data from local storage or other sources
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
-
   // Login function
   const login = useCallback((newToken: string, newUser: LogedUser) => {
     setToken(newToken);

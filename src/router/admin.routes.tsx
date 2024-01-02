@@ -17,10 +17,16 @@ import { EvaluationsFilterProvider } from "../context/EvaluationFilterContext";
 import { EvalSubmissions } from "../pages/admin/evaluaciones/EvalSubmissions";
 import DefenseCreationComponent from "../components/admin/defense/CreateNewDefense";
 import DefenseSearchComponent from "../components/admin/defense/Repository";
+import ProtectedRoute from "../components/ProtectedRoutes";
+import { UserRole } from "../const";
 
 export const AdminRoutes: RouteObject = {
   path: "/admin",
-  element: <AdminLayout />,
+  element: (
+    <ProtectedRoute requiredRole={UserRole.Admin}>
+      <AdminLayout />,
+    </ProtectedRoute>
+  ),
   children: [
     { path: "personas/", element: <PagePersonas /> },
     { path: "courts/", element: <CourtsView /> },

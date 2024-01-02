@@ -5,11 +5,12 @@ import { Create } from "../../../components/admin/profesores/FormsButtons";
 import { useDebouncedCallback } from "use-debounce";
 import DefenseService from "../../../services/DefenseService";
 import { CrumbItem, Defense } from "../../../types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ArrowDownCircleIcon } from "@heroicons/react/24/solid";
 import { capitalizeFirstLetterOfEachWord } from "../../../utils/others";
 import { cretateActaDefensaPDF } from "../../../utils/helpers";
 import Breadcrumbs from "../../shared/Breadcrumbs";
+import { log } from "console";
 
 interface ResultItemProps {
   result: Defense;
@@ -117,6 +118,7 @@ const DefenseSearchComponent: React.FC = () => {
   ];
   const [searchResults, setSearchResults] = useState<Defense[]>([]);
   const [loading, setLoading] = useState(false);
+  const { pathname } = useLocation();
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
@@ -124,9 +126,15 @@ const DefenseSearchComponent: React.FC = () => {
     // await new Promise((res, _rej) => setTimeout(res, 4000));
     try {
       const { value } = e.target;
+
       if (value === "") {
+        window.history.pushState(null, "", `${pathname}`);
+
         return setSearchResults([]);
       }
+
+      window.history.pushState(null, "", `/admin/defense?query=${value}`);
+
       const results = (await DefenseService.searchDefenses(value, {})) || [];
       setSearchResults(results);
     } catch (error) {
