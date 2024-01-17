@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const features = [
   {
@@ -55,9 +56,12 @@ const Header: React.FC = () => {
           <p className="text-sm">Transformando tu experiencia académica.</p>
         </div>
         <div>
-          <button className="bg-white text-green-500 px-4 py-2 rounded-md text-sm hover:bg-gray-200">
+          <Link
+            to={"/login"}
+            className="bg-white text-green-500 px-4 py-2 rounded-md text-sm hover:bg-gray-200"
+          >
             Iniciar Sesión
-          </button>
+          </Link>
         </div>
       </div>
     </header>

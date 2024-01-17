@@ -9,7 +9,7 @@ import { UserRole } from "../const";
 export const StudentRoutes: RouteObject = {
   path: "/student",
   element: (
-    <ProtectedRoute requiredRole={UserRole.Profesor}>
+    <ProtectedRoute requiredRole={UserRole.Student}>
       <StudentLayout />
     </ProtectedRoute>
   ),

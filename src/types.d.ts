@@ -102,6 +102,20 @@ export type CourtData = {
   }[];
 };
 
+type PopulatedCourtMember = {
+  profesor: {
+    id: string;
+    name: string;
+    lastname: string;
+  };
+  role: CourtRole;
+  _id: string;
+};
+
+export type PopulatedCourt = Omit<CourtType, "members"> & {
+  members: PopulatedCourtMember[];
+};
+
 interface PersonBasicInfo {
   id: string;
   name: string;
@@ -168,6 +182,8 @@ export interface Submission {
   file: string;
   score: number;
   recoms: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Defense {

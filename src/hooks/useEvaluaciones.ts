@@ -2,6 +2,7 @@ import useSWR from "swr";
 import axios, { AxiosRequestConfig } from "axios";
 import { ApiResponse, Evaluation } from "../types";
 import { useAuth } from "./useAuth"; // Adjust the import based on your actual path
+import { toast } from "sonner";
 
 const API_BASE_URL = `${import.meta.env.VITE_API}${
   import.meta.env.VITE_EVALUACIONES
@@ -87,6 +88,8 @@ export const useEvaluations = () => {
       if (response.data.success) {
         // Handle success as needed
         mutate(); // Trigger a re-fetch of the evaluations data
+
+        return toast.success("Evaluacion editada correctamente");
       }
 
       throw new Error("Failed to update evaluation");

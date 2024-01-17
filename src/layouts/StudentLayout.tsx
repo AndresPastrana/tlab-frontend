@@ -15,7 +15,7 @@ const links = [
     Icon: HomeModernIcon,
   },
   {
-    href: "/student/project",
+    href: "/student/proyecto",
     label: "Proyecto",
     Icon: DocumentTextIcon,
   },

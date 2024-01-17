@@ -4,6 +4,7 @@ import ProfessorView from "../pages/profesor/ProfessorView";
 import ProfessorLayout from "../layouts/ProfessorLayout";
 import ProtectedRoute from "../components/ProtectedRoutes";
 import { UserRole } from "../const";
+import Home from "../pages/profesor/Home";
 
 export const ProfessorRoutes: RouteObject = {
   path: "/profesors",
@@ -13,5 +14,8 @@ export const ProfessorRoutes: RouteObject = {
     </ProtectedRoute>
   ),
 
-  children: [{ path: "proyectos/", element: <ProfessorView /> }],
+  children: [
+    { path: "proyectos/", element: <ProfessorView /> },
+    { index: true, element: <Home /> },
+  ],
 };

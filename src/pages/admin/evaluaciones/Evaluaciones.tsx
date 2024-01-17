@@ -7,6 +7,7 @@ import { Header } from "../../../components/admin/evaluaciones/Header";
 import SearchResultsBadge from "../../../components/admin/evaluaciones/SearchResultsBadge";
 import { FormEvaluation } from "../../../components/admin/evaluaciones/FormEvaluation";
 import { CrumbItem, Evaluation } from "../../../types";
+import { EvalStatus } from "../../../const";
 import { toast } from "sonner";
 import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
 import Breadcrumbs from "../../../components/shared/Breadcrumbs";
@@ -72,10 +73,17 @@ const Evaluaciones = () => {
   };
 
   const setEditMode = (id: string) => {
-    const activeEval = evaluations.find((e) => e.id === id);
-    if (activeEval) {
+    const activeEval = allEvaluations.find((e) => e.id === id);
+
+    if (activeEval && activeEval.status === EvalStatus.Open) {
       setActiveEvaluation(activeEval);
       setIsDialogOpen(true);
+      return;
+    }
+
+    if (activeEval && activeEval.status === EvalStatus.Close) {
+      toast.error("No puedes editar una evaluacion que ya ha sido cerrada");
+      return;
     }
   };
 
@@ -111,7 +119,7 @@ const Evaluaciones = () => {
     try {
       if (activeEvaluation?.id) {
         await editEvaluation(newEval, activeEvaluation.id);
-        console.log("all ok");
+        return reset();
       }
     } catch (err) {
       toast.error("Error al crear la nueva evaluacion");

@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <AuthProvider>
       <MaxWidthWrapper>
         <RouterProvider router={router} />
-        <Toaster />
+        <Toaster closeButton richColors />
       </MaxWidthWrapper>
     </AuthProvider>
   </React.StrictMode>

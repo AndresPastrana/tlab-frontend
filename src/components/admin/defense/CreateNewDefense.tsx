@@ -83,7 +83,7 @@ export const DefenseCreationComponent: React.FC = () => {
     <div>
       <Breadcrumbs items={items} />
       <form
-        encType="multipart/form-data "
+        encType="multipart/form-data"
         className="flex flex-col gap-3"
         onSubmit={handleCreateDefense}
       >

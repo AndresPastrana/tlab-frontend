@@ -1,23 +1,19 @@
 // import { UserRole } from "../../const";
 // import { useAuth } from "../../hooks/useAuth";
-import { UserRole } from "../../const";
-import { useAuth } from "../../hooks/useAuth";
+
+import { TesisProjectStatus } from "../../const";
 import { Approval } from "../../types";
+import { BadgeProjectStatus } from "../shared/projects/ProyectsTables";
 
 interface ApprovalInfoProps {
   approvalInfo: Approval | null;
+  status: TesisProjectStatus;
 }
 
-const ApproveBtn = () => {
-  return (
-    <button className="btn mt-5 bg-green-700 text-gray-50 hover:bg-green-800 px-6">
-      Approved
-    </button>
-  );
-};
-
-export const ApprovalInfo: React.FC<ApprovalInfoProps> = ({ approvalInfo }) => {
-  const { user } = useAuth();
+export const ApprovalInfo: React.FC<ApprovalInfoProps> = ({
+  approvalInfo,
+  status,
+}) => {
   const formatDate = (date: Date | null) => {
     return date ? new Date(date).toLocaleDateString() : "N/A";
   };
@@ -25,20 +21,17 @@ export const ApprovalInfo: React.FC<ApprovalInfoProps> = ({ approvalInfo }) => {
   return (
     <div className="mb-4">
       <p className="text-gray-700">
-        <span className="font-bold">Approval:</span>{" "}
-        {approvalInfo?.isApprove ? "Approved" : "Not Approved"}
+        <span className="font-bold mr-2">Estado del proyecto:</span>{" "}
+        <BadgeProjectStatus projectStatus={status} />
       </p>
       <p className="text-gray-700">
-        <span className="font-bold">Approved By:</span>{" "}
-        {approvalInfo?.approvedBy ? approvalInfo.approvedBy.name : "N/A"}
+        <span className="font-bold mr-2">Aprobado por el tutor:</span>{" "}
+        {approvalInfo?.approvedBy ? approvalInfo.approvedBy : "N/A"}
       </p>
       <p className="text-gray-700">
-        <span className="font-bold">Approval Date:</span>{" "}
+        <span className="font-bold mr-2">Fecha de Aprobacion </span>{" "}
         {approvalInfo?.date && formatDate(approvalInfo?.date)}
       </p>
-      {/* {user?.role === UserRole.Student && true && <ApproveBtn />} */}
-
-      {user?.role === UserRole.Profesor && <ApproveBtn />}
     </div>
   );
 };

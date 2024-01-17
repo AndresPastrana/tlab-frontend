@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { ApiResponse } from "../../../types";
+import SubissionService from "../../../services/SubmissionService";
 
 interface PersonInfo {
   id: string;
@@ -42,37 +43,30 @@ export const EvalSubmissions: React.FC = () => {
   const apiUrl = `${import.meta.env.VITE_API}${
     import.meta.env.VITE_EVALUACIONES
   }/${id}/submissions`;
+
   const { data, error, mutate } = useSWR(
     apiUrl,
     () => fetcher(apiUrl, token as string),
     {
-      revalidateOnFocus: false,
+      revalidateOnFocus: true,
     }
   );
 
   // This method will recive the submition id the recoms and the socre
-  const handleEvalSubmission = async (
-    e: React.FormEvent<HTMLFormElement>,
-    submission: Submission
-  ) => {
+  const handleEvalSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const updatedScore = Number(
-      (e.currentTarget.elements.namedItem("score") as HTMLInputElement).value
-    );
-    const updatedRecoms = (
-      e.currentTarget.elements.namedItem("recoms") as HTMLInputElement
-    ).value;
-
     try {
-      // Solo realiza la evaluación si no hay puntaje ni recomendaciones
-      const url = "";
-      const res = await axios.put(url, {});
-      // Vuelve a cargar los datos después de la actualización
+      const formData = new FormData(e.currentTarget);
+      const id = formData.get("id") as string;
+      formData.delete("id");
+
+      await SubissionService.editSubmision(id, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       mutate();
     } catch (error) {
-      console.error("Error updating submission:", error);
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
+      console.log(error);
     }
   };
 
@@ -85,11 +79,6 @@ export const EvalSubmissions: React.FC = () => {
   if (!data) {
     return <div className="text-gray-600">Loading submissions...</div>;
   }
-
-  // const handleEvalSubmission = (e: any) => {
-  //   e.preventDefault();
-  //   // TODO: Podemos hacer algo aquí más tarde si es necesario
-  // };
 
   return (
     <div className="max-w-2xl mx-auto mt-8">
@@ -128,13 +117,21 @@ export const EvalSubmissions: React.FC = () => {
                 )}
               </div>
 
+              {/* Show the form to eval */}
               {submission.score === null && submission.recoms === null && (
                 <form onSubmit={handleEvalSubmission}>
+                  <input
+                    type="text"
+                    name="id"
+                    defaultValue={submission.id}
+                    className="hidden"
+                  />
                   <div>
                     <label htmlFor="score">Puntuacion: </label>
                     <input
-                      required
                       id="score"
+                      name="score"
+                      required={true}
                       max={5}
                       min={2}
                       type="number"
@@ -146,13 +143,15 @@ export const EvalSubmissions: React.FC = () => {
                   <div className="flex flex-col">
                     <label htmlFor="recoms">Recomendaciones: </label>
                     <textarea
-                      required
+                      minLength={11}
                       id="recoms"
                       name="recoms"
+                      required={true}
                       defaultValue={submission?.recoms || ""}
                       className="textarea input-bordered"
                     />
                   </div>
+                  {/* TODO: Botón para realizar una evaluación */}
                   <button
                     type="submit"
                     className="btn bg-green-600 text-gray-50 hover:bg-green-800 px-10 my-3"
@@ -161,8 +160,6 @@ export const EvalSubmissions: React.FC = () => {
                   </button>
                 </form>
               )}
-
-              {/* TODO: Botón para realizar una evaluación */}
             </li>
           ))}
         </ul>

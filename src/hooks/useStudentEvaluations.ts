@@ -2,6 +2,7 @@ import useSWR from "swr";
 import axios, { AxiosRequestConfig } from "axios";
 import { ApiResponse, Evaluation, Submission } from "../types";
 import { useAuth } from "./useAuth"; // Adjust the import based on your actual path
+import { toast } from "sonner";
 
 const API_BASE_URL = `${import.meta.env.VITE_API}${
   import.meta.env.VITE_EVALUACIONES
@@ -43,15 +44,33 @@ export const useStudentsEvaluations = () => {
     data: evaluationsWithSubmissions,
     error,
     isLoading,
+    mutate,
   } = useSWR(
     evalSubUrl,
     (url: string) => fetcher(url, { token: token as string }) // Pass user token as a parameter
   );
+  const addSubmission = async (data: FormData) => {
+    try {
+      const resp = await axios.post<ApiResponse<any>>(url, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (resp.data.success) {
+        return mutate();
+      }
+      toast.error("Error al crear envio");
+      console.log(error);
+
+      return { ok: true };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     evaluationsWithSubmissions: evaluationsWithSubmissions || [],
     isLoading: isLoading && !evaluationsWithSubmissions && !error,
     isError: !!error,
     error,
+    addSubmission,
   };
 };

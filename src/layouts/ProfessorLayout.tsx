@@ -12,7 +12,7 @@ const links = [
   },
   {
     href: "/profesors/proyectos",
-    label: "Proyecto",
+    label: "Proyectos",
     Icon: DocumentTextIcon,
   },
 ];

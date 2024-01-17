@@ -112,8 +112,6 @@ const EvaluacionesTables: React.FC<EvaluationListProps> = ({
   evaluations,
   handleSetEditMode,
 }) => {
-  console.log(handleSetEditMode);
-
   return (
     <>
       <EvaluationListSmall

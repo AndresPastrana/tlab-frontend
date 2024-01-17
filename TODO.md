@@ -1,11 +1,20 @@
-<!-- Manana -->
+Miercoles
+Finsih the edit submission controller
 
-Sync the browser url with the serach list
+<!--Admin ui -->
 
-<!-- Sabado -->
+- Calificar submssion
 
-\*\*Aprobar tema de tesis y dar opinion del tutor()
+<!--Student ui  -->
 
-<!-- Domingo -->
+- Edit submission file
 
-\*\* Trabajar en Evaluaciones y Submissions
+Jueves
+
+- Filter by status in the list of projects
+- Create pdf with the list of the projects
+- Opinion del tutor
+- Stadisticas
+  1- /admin
+  2- /student
+  3- /profesor

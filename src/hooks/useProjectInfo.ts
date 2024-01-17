@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { ApiResponse, PopulatedTesisResponse } from "../types"; // Adjust the import based on your actual path
 import { useAuth } from "./useAuth"; // Adjust the import based on your actual path
 import { UserRole } from "../const";
+import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API;
 
@@ -91,9 +92,41 @@ export const useProjectInfo = (active: boolean = true) => {
     }
   };
 
+  const aproveProject = async (id: string, recoms: string) => {
+    try {
+      const url = `${API_BASE_URL}${
+        import.meta.env.VITE_PROJECT
+      }/approve/${id}`;
+
+      const resp = await axios.put<ApiResponse<unknown>>(
+        url,
+        { recoms },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (resp.data.success) {
+        mutate();
+        toast.success("Proyecto aprovado exitosamente");
+      } else {
+        toast.success("Error aprovando el proyecto");
+      }
+
+      console.log(resp);
+
+      return;
+
+      //  const resp = axios.put(url)
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return {
     projects: projects || [],
     updateFrequirements,
+    aproveProject,
     isLoading: !projects && !error,
     isError: !!error,
     error,

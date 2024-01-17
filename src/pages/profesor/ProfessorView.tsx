@@ -22,7 +22,7 @@ const ProfessorView: React.FC = () => {
   // State for search query
   const [searchTearm, setSearchQuery] = useState(queryParam);
 
-  const { isLoading, projects } = useProjectInfo(true);
+  const { isLoading, projects, aproveProject } = useProjectInfo(true);
 
   const filteredProjects = useMemo(() => {
     if (Array.isArray(projects)) {
@@ -52,7 +52,7 @@ const ProfessorView: React.FC = () => {
     <div>
       <Breadcrumbs items={items} />
       <SearchBar
-        placeholder="escribe para buscar a un profesor"
+        placeholder="escribe para buscar a un proyecto"
         onSearch={(query) => setSearchQuery(query)}
       />
       {/* Render projects information in case it is an array of projects*/}
@@ -61,7 +61,11 @@ const ProfessorView: React.FC = () => {
         : Array.isArray(projects) && (
             <div className="flex flex-col gap-2">
               {filteredProjects.map((project) => (
-                <ProyectInfo key={project.id} proyect={project} />
+                <ProyectInfo
+                  aproveProject={aproveProject}
+                  key={project.id}
+                  proyect={project}
+                />
               ))}
             </div>
           )}

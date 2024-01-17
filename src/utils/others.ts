@@ -1,8 +1,10 @@
+import { AxiosInstance } from "axios";
 import {
   months,
   presentationDocumentExtensions,
   textDocumentExtensions,
 } from "../const";
+import { useAuth } from "../hooks/useAuth";
 
 export const getServerUrl = () => {
   const hostname = window.location.origin;
@@ -68,4 +70,16 @@ export function getSpanishMonthName(monthNumber: number) {
   } else {
     return "Invalid month number";
   }
+}
+
+export function AxiosRequestWithBearerToken(axios: AxiosInstance) {
+  const { token } = useAuth();
+
+  if (!token) {
+    throw new Error("No access token");
+  }
+
+  // Add the token to the Authorization header as a Bearer token
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  return axios;
 }

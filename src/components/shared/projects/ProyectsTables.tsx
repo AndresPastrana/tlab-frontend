@@ -6,7 +6,7 @@ import {
   ClockIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
-const BadgeProjectStatus = ({
+export const BadgeProjectStatus = ({
   projectStatus,
 }: {
   projectStatus: TesisProjectStatus;
@@ -16,19 +16,19 @@ const BadgeProjectStatus = ({
       {projectStatus === TesisProjectStatus.Pending && (
         <div className="badge badge-success gap-2 py-5 px-6 rounded-3xl bg-yellow-50 border-yellow-800 text-yellow-800">
           <span className="font-bold">Pendiente de Aprovacion</span>
-          <ClockIcon className="w-7 h-7 ml-1" />
+          <ClockIcon className="w-4 h-4 ml-1 font-bold" />
         </div>
       )}
       {projectStatus === TesisProjectStatus.Closed && (
         <div className="badge badge-success gap-2 py-4 px-3 rounded-3xl bg-red-50 border-red-800 text-red-800">
           <span className="font-bold">Proyecto Cerrado</span>
-          <LockClosedIcon className="w-7 h-7 ml-1" />
+          <LockClosedIcon className="w-4 h-4 ml-1 font-bold" />
         </div>
       )}
       {projectStatus === TesisProjectStatus.Approved && (
         <div className="badge badge-success gap-2 py-4 px-3 rounded-3xl bg-green-50 border-green-800 text-green-800">
           <span className="font-bold">Aprobado</span>
-          <CheckIcon className="w-7 h-7 ml-1" />
+          <CheckIcon className="w-4 h-4 ml-1 font-bold" />
         </div>
       )}
     </span>
