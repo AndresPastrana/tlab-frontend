@@ -56,7 +56,7 @@ export const FormCreateStudent = () => {
     <form onSubmit={hanldeSubmit}>
       <div className="flex flex-col my-8 gap-2">
         <h2 className="text-lg py-4 mb-5 border-b-[0.5px] border-b-neutral-300">
-          Editar información del profesor
+          Ingresa la informacion del nuevo estudiante
         </h2>
         {/* ci */}
         <div className="flex flex-col">

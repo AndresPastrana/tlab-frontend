@@ -5,7 +5,8 @@ import { useStudents } from "../../../hooks/useStudents";
 import { Delete, Edit, Historial } from "./FormsButtons";
 import { Student } from "../../../types";
 import PeopleTableSkeleton from "../../shared/skeleton/PeopleTable";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useFilteredItems } from "../../../hooks/useFilteredItem";
 
 const LanguageBadge = ({ isCertified }: { isCertified: boolean }) => {
   return (
@@ -140,18 +141,29 @@ export const TableSm = ({ students }: { students: Student[] }) => {
 // Profesors Table
 const TableStudents = () => {
   const { students, isLoading, error } = useStudents();
+  const location = useLocation();
+
+  const currentParams = new URLSearchParams(location.search);
+  const searchParam = currentParams.get("query") || "";
+  const filterParams: (keyof Student)[] = ["name", "lastname", "email"];
+
+  const filteredStudents = useFilteredItems(
+    students,
+    searchParam,
+    filterParams
+  );
 
   return (
     <>
       {isLoading && <PeopleTableSkeleton />}
       {error && <p>{JSON.stringify(error)}</p>}
-      {!error && !isLoading && students.length === 0 && (
+      {!error && !isLoading && filteredStudents.length === 0 && (
         <EmptyStudentsMessage />
       )}
-      {!isLoading && !error && students.length > 0 && (
+      {!isLoading && !error && filteredStudents.length > 0 && (
         <>
-          <TableLg students={students} />
-          <TableSm students={students} />
+          <TableLg students={filteredStudents} />
+          <TableSm students={filteredStudents} />
         </>
       )}
     </>

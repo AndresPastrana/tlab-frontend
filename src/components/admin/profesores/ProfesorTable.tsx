@@ -1,6 +1,8 @@
+import { useLocation } from "react-router-dom";
 import { useProfessors } from "../../../hooks/useProfessors";
-import { ProfesorTable } from "../../../types";
+import { Profesor, ProfesorTable } from "../../../types";
 import { Edit } from "./FormsButtons";
+import useFilteredItems from "../../../hooks/useFilteredItem";
 
 // Large Screen Table
 export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
@@ -92,7 +94,17 @@ export const TableSm = ({ profesors }: { profesors: ProfesorTable }) => {
 // Profesors Table
 const TableProfesors = () => {
   const { professors, isLoading, isError, error } = useProfessors();
+  const location = useLocation();
 
+  const currentParams = new URLSearchParams(location.search);
+  const searchParam = currentParams.get("query") || "";
+  const filterParams: (keyof Profesor)[] = ["name", "lastname", "email"];
+
+  const filteredProfessors = useFilteredItems(
+    professors,
+    searchParam,
+    filterParams
+  );
   return (
     <>
       {isLoading && <p>Loading</p>}
@@ -100,8 +112,8 @@ const TableProfesors = () => {
 
       {!isLoading && !isError && (
         <>
-          <TableLg profesors={professors || []} />
-          <TableSm profesors={professors || []} />
+          <TableLg profesors={filteredProfessors || []} />
+          <TableSm profesors={filteredProfessors || []} />
         </>
       )}
     </>
