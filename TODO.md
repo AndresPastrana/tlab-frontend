@@ -1,20 +1,31 @@
-Miercoles
-Finsih the edit submission controller
+\***\* Admin \*\*\***
 
-<!--Admin ui -->
+Domino
+1_Terminar de mostar el historial en un timeline
 
-- Calificar submssion
+2- Fix ui language labels
 
-<!--Student ui  -->
+3-Home
 
-- Edit submission file
+- Cortes Evaluativos Realizados
+- Predefensa realizadas
+- Total de estuiantes que han pasado por el sistema
+- Estdudiantes en el sistema (Activos)
 
-Jueves
+4- Personas
+
+- Agregar boton de dar de baja en ambas tablas
+
+4- Defensas
+
+- Fix UI
+
+4- Proyectos
 
 - Filter by status in the list of projects
 - Create pdf with the list of the projects
-- Opinion del tutor
-- Stadisticas
-  1- /admin
-  2- /student
-  3- /profesor
+
+6- Tribunal
+Editar tribunal
+
+Sabado

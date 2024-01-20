@@ -59,6 +59,14 @@ export interface Person {
   sex: Sex;
   ancient: boolean;
 }
+export type StudentHistory = {
+  evaluaciones: Array<{
+    type: EvalType;
+    updatedAt: Date;
+    score: number | null;
+    file: string | null;
+  }>;
+};
 
 export interface Profesor extends Person {
   academic_rank: RangoAcademico;

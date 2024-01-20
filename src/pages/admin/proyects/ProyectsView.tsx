@@ -11,7 +11,7 @@ const ProyectsView = () => {
     { label: "Proyectos" },
   ];
   return (
-    <div>
+    <div className="min-h-[80vh]">
       <Breadcrumbs items={items} />
       {/* List all proyects */}
       <Proyects />

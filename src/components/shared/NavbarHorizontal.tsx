@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import UserAvatar from "./UserAvatar";
 import Logout from "./buttons/Logout";
+import SearchNavbar from "../SearchNavbar";
+import Nav from "../../nav";
 
 const DrawerButton = () => {
   return (
@@ -43,11 +45,20 @@ const MenuBanner = () => {
 };
 const NavbarHorizontal = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="w-full navbar bg-base-100 p-0 m-0">
+    <div className="w-full navbar bg-base-100 p-0 m-0 flex justify-between">
       {/* Drawer Button */}
-      <DrawerButton />
-      <MenuBanner />
-      <div className="flex-none hidden lg:block">
+
+      <div>
+        <DrawerButton />
+
+        <MenuBanner />
+      </div>
+
+      <div className="flex-none block xl:hidden">
+        <SearchNavbar options={Nav.adminOptions} />
+      </div>
+      {/* Navegacion */}
+      <div className="hidden  xl:block">
         <ul className="menu menu-horizontal flex items-center">
           {/* Navbar menu content here */}
           {children}

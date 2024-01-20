@@ -19,15 +19,19 @@ import DefenseCreationComponent from "../components/admin/defense/CreateNewDefen
 import DefenseSearchComponent from "../components/admin/defense/Repository";
 import ProtectedRoute from "../components/ProtectedRoutes";
 import { UserRole } from "../const";
+import TesisProjectStatsComponent from "../pages/admin/Admin";
+import Footer from "../components/Footer";
 
 export const AdminRoutes: RouteObject = {
   path: "/admin",
   element: (
     <ProtectedRoute requiredRole={UserRole.Admin}>
       <AdminLayout />,
+      <Footer />
     </ProtectedRoute>
   ),
   children: [
+    { index: true, element: <TesisProjectStatsComponent /> },
     { path: "personas/", element: <PagePersonas /> },
     { path: "courts/", element: <CourtsView /> },
     { path: "personas/profesors", element: <ProfesorView /> },

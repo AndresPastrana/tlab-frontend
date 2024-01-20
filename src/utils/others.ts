@@ -1,4 +1,5 @@
-import { AxiosInstance } from "axios";
+import { ApiResponse } from "./../types.d";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import {
   months,
   presentationDocumentExtensions,
@@ -83,3 +84,30 @@ export function AxiosRequestWithBearerToken(axios: AxiosInstance) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   return axios;
 }
+
+interface FetcherOptions {
+  token: string;
+}
+
+export const fetcher = async <T>(
+  url: string,
+  options: FetcherOptions & AxiosRequestConfig
+): Promise<T> => {
+  try {
+    const { token, ...rest } = options;
+    const response = await axios.get<ApiResponse<T>>(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      ...rest,
+    });
+
+    if (response.data.success) {
+      return response.data.data;
+    } else {
+      throw new Error(response.data.msg);
+    }
+  } catch (error) {
+    throw new Error("Failed to fetch data");
+  }
+};

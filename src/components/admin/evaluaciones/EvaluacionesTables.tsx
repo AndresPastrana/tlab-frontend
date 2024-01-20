@@ -3,6 +3,7 @@ import { Evaluation } from "../../../types";
 import { EyeIcon } from "@heroicons/react/24/outline";
 import { ReactElement } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import { EvalStatus } from "../../../const";
 
 interface EvaluationListProps {
   evaluations: Evaluation[];
@@ -34,6 +35,20 @@ export const BtnWithTooltip = ({
   );
 };
 
+const StatusBadge = ({ status }: { status: EvalStatus }) => {
+  const isOpen = status === EvalStatus.Open;
+  const label = isOpen ? "Abierta" : "Cerrada";
+
+  return (
+    <div>
+      Estado:{" "}
+      <span className={isOpen ? "bg-yellow-200 px-3 px-1" : "bg-red-200"}>
+        {label}
+      </span>
+    </div>
+  );
+};
+
 const EvaluationListSmall: React.FC<EvaluationListProps> = ({
   evaluations,
 }) => {
@@ -48,7 +63,7 @@ const EvaluationListSmall: React.FC<EvaluationListProps> = ({
             >
               <p>Tipo de evaluacion: {evaluation.type}</p>
               <p>Description: {evaluation.description}</p>
-              <p>Status: {evaluation.status}</p>
+              <StatusBadge status={evaluation.status} />
               <p>Cierra en : {evaluation.endDate.toLocaleString()}</p>
             </div>
           ))}
@@ -80,7 +95,9 @@ const EvaluationListLarge: React.FC<EvaluationListProps> = ({
               <tr key={evaluation.id}>
                 <td className="border">{evaluation.type}</td>
                 <td className="border">{evaluation.description}</td>
-                <td className="border">{evaluation.status}</td>
+                <td className="border">
+                  <StatusBadge status={evaluation.status} />
+                </td>
                 <td className="border">
                   {evaluation.endDate.toLocaleString()}
                 </td>

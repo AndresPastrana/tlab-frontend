@@ -1,4 +1,4 @@
-import { CheckIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useStudents } from "../../../hooks/useStudents";
 
@@ -23,6 +23,15 @@ const LanguageBadge = ({ isCertified }: { isCertified: boolean }) => {
         </div>
       )}
     </>
+  );
+};
+const EditLgBtn = ({ href }: { href: string }) => {
+  return (
+    <Link to={href} className="snap-center">
+      <button className="m-1 btn bg-transparent border-none p-2 shadow-none bg-gray-600">
+        <PencilSquareIcon className="w-5 h-5 :w-4 md:h-4" />
+      </button>
+    </Link>
   );
 };
 
@@ -52,14 +61,15 @@ export const TableLg = ({ students }: { students: Student[] }) => {
           <tr className="[&>th]:py-8 [&>th]:px-2 [&>th]:text-left [&>th]:font-semibold text-gray-700 ">
             {/* <th className="">ID</th> */}
             <th className="">CI</th>
-            <th className="">Name</th>
-            <th className="">Lastname</th>
-            <th className="">Address</th>
-            <th className="">Email</th>
-            <th className="">Phone</th>
-            <th className="">Sex</th>
+            <th className="">Nombre(s)</th>
+            <th className="">Apellido(s)</th>
+            <th className="">Direccion</th>
+            <th className="">Correo</th>
+            <th className="">Telefono</th>
+            <th className="">Edad</th>
             <th className="">Age</th>
-            <th className="">Academic Rank</th>
+            <th className="">Rango Academico</th>
+            <th className="">Aciones</th>
           </tr>
         </thead>
         <tbody className="rounded-md">
@@ -79,6 +89,25 @@ export const TableLg = ({ students }: { students: Student[] }) => {
               <td className="py-6 px-2">{student.age}</td>
               <td className="py-6 px-2">
                 <LanguageBadge isCertified={student.language_certificate} />
+              </td>
+              <td className="">
+                <div className=" border-l flex flex-col w-fit p-2 ml-auto max-h-20 overflow-y-scroll focus:scroll-p-0 rounded-xl gap-1 scroll-smooth snap-y ">
+                  <EditLgBtn
+                    href={`/admin/personas/students/edit/${student.id}`}
+                  />
+                  <EditLgBtn
+                    href={`/admin/personas/students/edit/${student.id}`}
+                  />
+                  <EditLgBtn
+                    href={`/admin/personas/students/edit/${student.id}`}
+                  />{" "}
+                  <EditLgBtn
+                    href={`/admin/personas/students/edit/${student.id}`}
+                  />{" "}
+                  <EditLgBtn
+                    href={`/admin/personas/students/edit/${student.id}`}
+                  />
+                </div>
               </td>
             </tr>
           ))}

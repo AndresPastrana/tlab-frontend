@@ -132,7 +132,7 @@ const Evaluaciones = () => {
   ];
 
   return (
-    <div className="">
+    <div className="min-h-[80vh]">
       <Breadcrumbs items={items} />
       {isLoading && <p>Loading evaluations...</p>}
       {isError && <p>Error loading evaluations: {error.message}</p>}

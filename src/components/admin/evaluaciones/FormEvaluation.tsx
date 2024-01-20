@@ -28,9 +28,10 @@ export const FormEvaluation: FC<EvaluationForm> = ({
       <br className="divider" />
       <div>
         <label className="label" htmlFor="description">
-          Description
+          Descripcion
         </label>
         <textarea
+          placeholder="Escribe un parrafo donde le describas a los estudiantes la tarea a realizar"
           rows={2}
           required
           id="description"
@@ -42,7 +43,11 @@ export const FormEvaluation: FC<EvaluationForm> = ({
 
       <div className="flex justify-between">
         <label className="label" htmlFor="type">
-          Tipo :
+          Tipo :{" "}
+          <span className="ml-1 text-gray-500 text-sm">
+            {" "}
+            (Indique si es una Predefensa o un Corte Evaluativo)
+          </span>
         </label>
         <select
           id="type"
@@ -59,7 +64,11 @@ export const FormEvaluation: FC<EvaluationForm> = ({
 
       <div className="flex justify-between">
         <label className="label" htmlFor="status">
-          Status
+          Estado :
+          <span className="ml-1 text-gray-500 text-sm">
+            {" "}
+            (Abierta por defecto)
+          </span>
         </label>
         <select
           id="status"
@@ -68,14 +77,21 @@ export const FormEvaluation: FC<EvaluationForm> = ({
           defaultValue={evaluation?.status || EvalStatus.Open}
         >
           <option value={EvalStatus.Open}>Abierta</option>
-          <option value={EvalStatus.Close}>Cerrada</option>
+
+          <option disabled={!evaluation?.status} value={EvalStatus.Close}>
+            Cerrada
+          </option>
           {/* Add other EvalStatus options as needed */}
         </select>
       </div>
 
       <div className="flex justify-between">
         <label className="label" htmlFor="endDate">
-          End Date
+          Enviar antes de :{" "}
+          <span className="ml-1 text-gray-500 text-sm">
+            {" "}
+            (Fecha antes de la cual el estudiante debe realizar el envio)
+          </span>{" "}
         </label>
         <input
           required
@@ -92,7 +108,7 @@ export const FormEvaluation: FC<EvaluationForm> = ({
         type="submit"
         className="mt-10 btn bg-green-600 text-gray-50 hover:bg-green-800"
       >
-        Submit
+        Guardar
       </button>
     </form>
   );

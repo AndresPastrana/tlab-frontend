@@ -2,51 +2,7 @@ import NavbarHorizontal from "../components/shared/NavbarHorizontal";
 import NavbarVertical from "../components/shared/NavbarVertical";
 import { Outlet } from "react-router-dom";
 import NavigationLinks from "../components/shared/NavigationLinks";
-import {
-  HomeModernIcon,
-  UserIcon,
-  UserGroupIcon,
-  DocumentTextIcon,
-  ClipboardDocumentIcon,
-  DocumentMagnifyingGlassIcon,
-  ShieldCheckIcon,
-} from "@heroicons/react/24/solid";
-
-const links = [
-  {
-    href: "/admin",
-    label: "Home",
-    Icon: HomeModernIcon,
-  },
-
-  {
-    href: "/admin/evaluaciones",
-    label: "Evaluaciones",
-    Icon: ClipboardDocumentIcon,
-  },
-
-  {
-    href: "/admin/courts",
-    label: "Tribunales",
-    Icon: UserGroupIcon,
-  },
-
-  {
-    href: "/admin/proyectos",
-    label: "Proyectos",
-    Icon: DocumentTextIcon,
-  },
-  {
-    href: "/admin/defense/",
-    label: "Defensas",
-    Icon: ShieldCheckIcon,
-  },
-  {
-    href: "/admin/personas",
-    label: "Personas",
-    Icon: UserIcon,
-  },
-];
+import Nav from "../nav";
 
 const AdminLayout = () => {
   return (
@@ -56,7 +12,7 @@ const AdminLayout = () => {
       <div className="drawer-content flex flex-col">
         {/*Navbar */}
         <NavbarHorizontal>
-          <NavigationLinks links={links} />
+          <NavigationLinks links={Nav.adminOptions} />
         </NavbarHorizontal>
         {/* Page content here */}
         <>
@@ -64,7 +20,7 @@ const AdminLayout = () => {
         </>
       </div>
       <NavbarVertical>
-        <NavigationLinks links={links} />
+        <NavigationLinks links={Nav.adminOptions} />
       </NavbarVertical>
     </div>
   );

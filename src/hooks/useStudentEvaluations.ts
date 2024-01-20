@@ -38,7 +38,8 @@ const fetcher = async (url: string, { token, ...options }: FetcherOptions) => {
 export const useStudentsEvaluations = () => {
   const { token, user } = useAuth();
 
-  const evalSubUrl = `${API_BASE_URL}/submissions/${user?.userId}`;
+  const base_url = `${API_BASE_URL}/submissions/`;
+  const evalSubUrl = `${base_url}${user?.userId}`;
 
   const {
     data: evaluationsWithSubmissions,
@@ -51,7 +52,7 @@ export const useStudentsEvaluations = () => {
   );
   const addSubmission = async (data: FormData) => {
     try {
-      const resp = await axios.post<ApiResponse<any>>(url, data, {
+      const resp = await axios.post<ApiResponse<Submission>>(base_url, data, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (resp.data.success) {

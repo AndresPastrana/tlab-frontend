@@ -42,10 +42,10 @@ export const Edit = ({ href }: { href: string }) => {
   return (
     <Link to={href}>
       <button
-        className="tooltip btn btn-square bg-transparent border-none flex items-center justify-center shadow-none"
+        className="tooltip p-0 m-0 btn btn-square bg-transparent border-none flex items-center justify-center shadow-none"
         data-tip="Editar estudiante"
       >
-        <PencilSquareIcon className="w-5 h-5" />
+        <PencilSquareIcon className="w-5 h-5 :w-4 md:h-4" />
       </button>
     </Link>
   );
