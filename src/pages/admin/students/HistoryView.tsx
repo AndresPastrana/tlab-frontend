@@ -29,7 +29,7 @@ const HistoryView = () => {
   }, [id]);
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-gray-100 rounded-md shadow-md mt-8">
+    <div className="max-w-xl mx-auto p-4 bg-gray-100 rounded-md shadow-md mt-8 min-h-[80vh]">
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
       {history && (

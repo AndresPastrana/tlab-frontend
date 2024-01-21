@@ -13,19 +13,18 @@ Domino
 - Estdudiantes en el sistema (Activos)
 
 4- Personas
-
 - Agregar boton de dar de baja en ambas tablas
 
-4- Defensas
 
+5- Defensas
 - Fix UI
 
-4- Proyectos
 
+6- Proyectos
 - Filter by status in the list of projects
 - Create pdf with the list of the projects
 
-6- Tribunal
+7- Tribunal
+
 Editar tribunal
 
-Sabado

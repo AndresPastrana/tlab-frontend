@@ -1,5 +1,9 @@
-import { BellAlertIcon, PlusIcon, TrashIcon } from "@heroicons/react/20/solid";
-import { PencilSquareIcon, ClockIcon } from "@heroicons/react/24/outline";
+import { BellAlertIcon, PlusIcon } from "@heroicons/react/20/solid";
+import {
+  PencilSquareIcon,
+  ClockIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 export const Create = ({ href, text }: { href: string; text: string }) => {
@@ -38,26 +42,10 @@ export const Cancel = ({ href }: { href: string }) => {
   );
 };
 
-export const Edit = ({ href }: { href: string }) => {
-  return (
-    <Link to={href}>
-      <button
-        className="tooltip p-0 m-0 btn btn-square bg-transparent border-none flex items-center justify-center shadow-none"
-        data-tip="Editar estudiante"
-      >
-        <PencilSquareIcon className="w-5 h-5 :w-4 md:h-4" />
-      </button>
-    </Link>
-  );
-};
-
 export const Historial = ({ href }: { href: string }) => {
   return (
-    <Link to={href}>
-      <button
-        className="tooltip btn btn-square bg-transparent border-none flex items-center justify-center shadow-none"
-        data-tip="Ver historial"
-      >
+    <Link to={href} className="snap-center">
+      <button className="btn btn-square bg-transparent border-none shadow-none">
         <ClockIcon className="w-5 h-5" />
       </button>
     </Link>
@@ -100,5 +88,15 @@ export const Delete = ({
     >
       <TrashIcon className="w-5 h-5" />
     </button>
+  );
+};
+
+export const Edit = ({ href }: { href: string }) => {
+  return (
+    <Link to={href} className="snap-center">
+      <button className="btn btn-square bg-transparent border-none shadow-none">
+        <PencilSquareIcon className="w-5 h-5" />
+      </button>
+    </Link>
   );
 };

@@ -12,7 +12,7 @@ const StudentsView = () => {
   ];
   return (
     <>
-      <div className="mt-10">
+      <div className="mt-10 min-h-[80vh]">
         <Breadcrumbs items={items} />
         <div className="flex gap-4 mt-10 mb-5">
           <SearchBar placeholder="escribe para buscar a un estudiante" />

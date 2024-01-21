@@ -1,6 +1,9 @@
-import { PlusIcon } from "@heroicons/react/20/solid";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { BellAlertIcon, PlusIcon } from "@heroicons/react/20/solid";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+
+import { toast } from "sonner";
+import { useProfessors } from "../../../hooks/useProfessors";
 
 export const Create = ({ href, text }: { href: string; text: string }) => {
   return (
@@ -42,59 +45,46 @@ export const Edit = ({ href }: { href: string }) => {
   return (
     <Link to={href}>
       <button className="btn btn-square bg-transparent border-none">
-        <PencilSquareIcon className="w-6 h-6" />
+        <PencilSquareIcon className="w-5 h-5" />
       </button>
     </Link>
   );
 };
 
 export const Delete = ({ id }: { id: string }) => {
-  console.log(id);
+  const { deleteProfessor } = useProfessors();
 
   const handleDelete = () => {
-    // toast("Estas seguro que desea eliminar este profesor ?", {
-    //   description:
-    //     "Elimminar este prpfesor pued implicar cambios inseperados en el sistema.Un profesor puede estar vinculados a varios estudiantes y eventos",
-    //   className: "text-gray-900",
-    //   duration: 60000,
-    //   actionButtonStyle: {
-    //     color: "red",
-    //     border: "1px solid red",
-    //     background: "none",
-    //   },
-    //   action: {
-    //     label: "Estoy seguro",
-    //     // onClick: () => {deleteProfesorById(id)},
-    //   },
-    //   descriptionClassName: "py-2 ",
-    //   cancel: {
-    //     label: "Cancelar",
-    //   },
-    //   icon: <BellAlertIcon />,
-    // });
+    toast("Estas seguro que desea eliminar este profesor ?", {
+      description:
+        "Elimminar este profesor puede implicar cambios inseperados en el sistema.Un profesor puede estar vinculados a varios estudiantes y proyectos de tesis",
+      className: "text-gray-900",
+      duration: 60000,
+      actionButtonStyle: {
+        color: "red",
+        border: "1px solid red",
+        background: "none",
+      },
+      action: {
+        label: "Estoy seguro",
+        onClick: () => {
+          deleteProfessor(id);
+        },
+      },
+      descriptionClassName: "py-2 ",
+      cancel: {
+        label: "Cancelar",
+      },
+      icon: <BellAlertIcon />,
+    });
   };
 
   return (
     <button
       onClick={handleDelete}
-      className="btn btn-square bg-transparent border-none"
+      className="btn btn-square bg-transparent border-none hover:bg-transparent hover:text-red-800"
     >
-      {/* <TrashIcon className="w-6 h-6" /> */}
+      <TrashIcon className="w-5 h-5" />
     </button>
   );
 };
-// function toast(
-//   arg0: string,
-//   arg1: {
-//     description: string;
-//     className: string;
-//     duration: number;
-//     actionButtonStyle: { color: string; border: string; background: string };
-//     action: { label: string; onClick: () => any };
-//     descriptionClassName: string;
-//     cancel: { label: string };
-//     icon: React.JSX.Element;
-//   }
-// ) {
-//   throw new Error("Function not implemented.");
-// }

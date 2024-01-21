@@ -1,9 +1,8 @@
 import { useLocation } from "react-router-dom";
 import { useProfessors } from "../../../hooks/useProfessors";
 import { Profesor, ProfesorTable } from "../../../types";
-import { Edit } from "./FormsButtons";
+import { Delete, Edit } from "./FormsButtons";
 import useFilteredItems from "../../../hooks/useFilteredItem";
-
 // Large Screen Table
 export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
   return (
@@ -21,6 +20,7 @@ export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
             <th className="">Sex</th>
             <th className="">Age</th>
             <th className="">Academic Rank</th>
+            <th className="">Aciones</th>
           </tr>
         </thead>
         <tbody className="rounded-md">
@@ -39,6 +39,14 @@ export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
               <td className="py-6 px-2">{professor.sex}</td>
               <td className="py-6 px-2">{professor.age}</td>
               <td className="py-6 px-2">{professor.academic_rank}</td>
+              <td className="">
+                <div className="  flex flex-col w-fit p-2 ml-auto max-h-20 overflow-y-scroll focus:scroll-p-0 rounded-xl gap-1 scroll-smooth snap-y ">
+                  <Edit
+                    href={`/admin/personas/profesors/edit/${professor.id}`}
+                  />
+                  <Delete id={professor.id} />
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -76,12 +84,7 @@ export const TableSm = ({ profesors }: { profesors: ProfesorTable }) => {
 
               <span className="flex flex-row items-center gap-1">
                 <Edit href={`/admin/personas/profesors/edit/${professor.id}`} />
-                {/* <Edit
-                  href={`/dashboard/personas/profesores/edit/${professor.id}`}
-                /> */}
-                {/* <Delete id={professor.id} /> */}
-                {/* <p>Edit</p>
-                    <p>Remove</p> */}
+                <Delete id={professor.id} />
               </span>
             </div>
           </div>

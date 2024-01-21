@@ -11,8 +11,7 @@ const ProfesorView = () => {
     { label: "Profesores" },
   ];
   return (
-    <>
-      <h1>Profesores</h1>
+    <div className="mt-10 min-h-[80vh]">
       <Breadcrumbs items={items} />
       <div className="flex gap-4 mt-8">
         <SearchBar placeholder="escribe para buscar a un profesor" />
@@ -24,7 +23,7 @@ const ProfesorView = () => {
       <div>
         <TableProfesors />
       </div>
-    </>
+    </div>
   );
 };
 

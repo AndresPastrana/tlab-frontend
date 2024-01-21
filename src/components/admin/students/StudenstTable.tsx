@@ -1,4 +1,4 @@
-import { CheckIcon, PencilSquareIcon } from "@heroicons/react/20/solid";
+import { CheckIcon } from "@heroicons/react/20/solid";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useStudents } from "../../../hooks/useStudents";
 
@@ -25,15 +25,6 @@ const LanguageBadge = ({ isCertified }: { isCertified: boolean }) => {
     </>
   );
 };
-const EditLgBtn = ({ href }: { href: string }) => {
-  return (
-    <Link to={href} className="snap-center">
-      <button className="m-1 btn bg-transparent border-none p-2 shadow-none bg-gray-600">
-        <PencilSquareIcon className="w-5 h-5 :w-4 md:h-4" />
-      </button>
-    </Link>
-  );
-};
 
 const EmptyStudentsMessage = () => {
   return (
@@ -54,6 +45,7 @@ const EmptyStudentsMessage = () => {
 
 // Large Screen Table
 export const TableLg = ({ students }: { students: Student[] }) => {
+  const { deleteStudent } = useStudents();
   return (
     <div className="mt-5 p-4 bg-gray-100 rounded-md hidden lg:block ">
       <table className="w-full">
@@ -82,7 +74,7 @@ export const TableLg = ({ students }: { students: Student[] }) => {
               <td className="py-6 px-2">{student.ci}</td>
               <td className="py-6 px-2">{student.name}</td>
               <td className="py-6 px-2">{student.lastname}</td>
-              <td className="py-6 px-2">{student.address}</td>
+              <td className="py-6 px-2">{student.address}x</td>
               <td className="py-6 px-2">{student.email}</td>
               <td className="py-6 px-2">{student.phone}</td>
               <td className="py-6 px-2">{student.sex}</td>
@@ -91,21 +83,13 @@ export const TableLg = ({ students }: { students: Student[] }) => {
                 <LanguageBadge isCertified={student.language_certificate} />
               </td>
               <td className="">
-                <div className=" border-l flex flex-col w-fit p-2 ml-auto max-h-20 overflow-y-scroll focus:scroll-p-0 rounded-xl gap-1 scroll-smooth snap-y ">
-                  <EditLgBtn
-                    href={`/admin/personas/students/edit/${student.id}`}
+                <div className="  flex flex-col w-fit p-2 ml-auto max-h-20 overflow-y-scroll focus:scroll-p-0 rounded-xl gap-1 scroll-smooth snap-y ">
+                  <Edit href={`/admin/personas/students/edit/${student.id}`} />
+                  <Delete
+                    handleDeletebyHook={() => deleteStudent(student.id)}
                   />
-                  <EditLgBtn
-                    href={`/admin/personas/students/edit/${student.id}`}
-                  />
-                  <EditLgBtn
-                    href={`/admin/personas/students/edit/${student.id}`}
-                  />{" "}
-                  <EditLgBtn
-                    href={`/admin/personas/students/edit/${student.id}`}
-                  />{" "}
-                  <EditLgBtn
-                    href={`/admin/personas/students/edit/${student.id}`}
+                  <Historial
+                    href={`/admin/personas/students/${student.id}/historial`}
                   />
                 </div>
               </td>
