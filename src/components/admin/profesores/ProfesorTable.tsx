@@ -3,6 +3,7 @@ import { useProfessors } from "../../../hooks/useProfessors";
 import { Profesor, ProfesorTable } from "../../../types";
 import { Delete, Edit } from "./FormsButtons";
 import useFilteredItems from "../../../hooks/useFilteredItem";
+import { Sex } from "../../../const";
 // Large Screen Table
 export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
   return (
@@ -12,14 +13,14 @@ export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
           <tr className="[&>th]:py-8 [&>th]:px-2 [&>th]:text-left [&>th]:font-semibold text-gray-700 ">
             {/* <th className="">ID</th> */}
             <th className="">CI</th>
-            <th className="">Name</th>
-            <th className="">Lastname</th>
-            <th className="">Address</th>
-            <th className="">Email</th>
-            <th className="">Phone</th>
-            <th className="">Sex</th>
-            <th className="">Age</th>
-            <th className="">Academic Rank</th>
+            <th className="">Nombre(s)</th>
+            <th className="">Apellido(s)</th>
+            <th className="">Direccion</th>
+            <th className="">Correo</th>
+            <th className="">Telefono</th>
+            <th className="">Sexo</th>
+            <th className="">Edad</th>
+            <th className="">Rango Academico</th>
             <th className="">Aciones</th>
           </tr>
         </thead>
@@ -36,7 +37,9 @@ export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
               <td className="py-6 px-2">{professor.address}</td>
               <td className="py-6 px-2">{professor.email}</td>
               <td className="py-6 px-2">{professor.phone}</td>
-              <td className="py-6 px-2">{professor.sex}</td>
+              <td className="py-6 px-2">
+                {professor.sex === Sex.Male ? "Masculino" : "Femenino"}
+              </td>
               <td className="py-6 px-2">{professor.age}</td>
               <td className="py-6 px-2">{professor.academic_rank}</td>
               <td className="">

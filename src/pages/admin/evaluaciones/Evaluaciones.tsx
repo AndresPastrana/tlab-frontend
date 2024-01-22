@@ -136,33 +136,36 @@ const Evaluaciones = () => {
       <Breadcrumbs items={items} />
       {isLoading && <p>Loading evaluations...</p>}
       {isError && <p>Error loading evaluations: {error.message}</p>}
-      <Header />
 
-      <div className="max-w-5xl">
-        <SearchResultsBadge
-          results={evaluations.length}
-          total={allEvaluations.length}
-        />
-        <EvaluacionesTables
-          handleSetEditMode={setEditMode}
-          evaluations={results}
-        />
-        <ReusableButton
-          onClick={handleCreateEval}
-          Icon={
-            <ArrowUpRightIcon className="w-4 h-4 text-white-200 font-bold" />
-          }
-        />
+      <div className="border rounded-md px-3 py-2">
+        <Header />
+
+        <div className="max-w-5xl">
+          <SearchResultsBadge
+            results={evaluations.length}
+            total={allEvaluations.length}
+          />
+          <EvaluacionesTables
+            handleSetEditMode={setEditMode}
+            evaluations={results}
+          />
+          <ReusableButton
+            onClick={handleCreateEval}
+            Icon={
+              <ArrowUpRightIcon className="w-4 h-4 text-white-200 font-bold" />
+            }
+          />
+        </div>
+
+        <Modal open={isDialogOpen} onClose={onModalClose} hasCloseBtn>
+          {/*TODO:  Create a form to create a new evaluation */}
+          <FormEvaluation
+            evaluation={activeEvaluation}
+            onSubmit={activeEvaluation ? saveEditeEvaluation : saveEvaluation}
+          />
+          {/* This for will be the same for editing, so it will have default values in case that recives a evaluation.This form will also recive the action to execute when submit */}
+        </Modal>
       </div>
-
-      <Modal open={isDialogOpen} onClose={onModalClose} hasCloseBtn>
-        {/*TODO:  Create a form to create a new evaluation */}
-        <FormEvaluation
-          evaluation={activeEvaluation}
-          onSubmit={activeEvaluation ? saveEditeEvaluation : saveEvaluation}
-        />
-        {/* This for will be the same for editing, so it will have default values in case that recives a evaluation.This form will also recive the action to execute when submit */}
-      </Modal>
     </div>
   );
 };

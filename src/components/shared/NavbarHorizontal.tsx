@@ -43,31 +43,36 @@ const MenuBanner = () => {
     </div>
   );
 };
+
 const NavbarHorizontal = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="w-full navbar bg-base-100 p-0 m-0 flex justify-between">
-      {/* Drawer Button */}
+    <>
+      <div className="w-full navbar bg-base-100  p-2 m-0 flex justify-between">
+        {/* Drawer Button */}
 
-      <div>
-        <DrawerButton />
+        <div>
+          <DrawerButton />
 
-        <MenuBanner />
-      </div>
+          <MenuBanner />
+        </div>
 
-      <div className="flex-none block xl:hidden">
-        <SearchNavbar options={Nav.adminOptions} />
+        {/* Nav Mobile */}
+        <div className="flex-none block xl:hidden">
+          <SearchNavbar options={Nav.adminOptions} />
+        </div>
+        {/* Navegacion Desktop */}
+        <div className="hidden  xl:block">
+          <ul className="menu menu-horizontal flex items-center">
+            {/* Navbar menu content here */}
+            {children}
+            <Logout />
+            {/* <NavigationLinks /> */}
+            <UserAvatar />
+          </ul>
+        </div>
       </div>
-      {/* Navegacion */}
-      <div className="hidden  xl:block">
-        <ul className="menu menu-horizontal flex items-center">
-          {/* Navbar menu content here */}
-          {children}
-          <Logout />
-          {/* <NavigationLinks /> */}
-          <UserAvatar />
-        </ul>
-      </div>
-    </div>
+      <div className="divider shadow-base-content m-0 mb-5"></div>
+    </>
   );
 };
 

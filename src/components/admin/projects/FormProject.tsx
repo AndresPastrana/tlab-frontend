@@ -40,70 +40,69 @@ const FormProject: React.FC<FormProjectProps> = ({ onSubmit, children }) => {
     <div>
       <form onSubmit={submit}>
         {/* Topic of the project */}
-        <label className="form-control">
-          <div className="label">
-            <span className="label-text">Titulo del proyecto</span>
-          </div>
-          <textarea
-            required
-            minLength={10}
-            name="topic"
-            maxLength={200}
-            className="resize-none textarea textarea-bordered h-24 max-w-2xl"
-            placeholder="Titulo"
-          ></textarea>
-          <div className="label">
-            <span className="label-text-alt">Titulo</span>
-          </div>
-        </label>
-        <br />
-        {/* general_target of the project */}
-        <label className="form-control">
-          <div className="label">
-            <span className="label-text">Objetivo general del proyecto</span>
-          </div>
-          <textarea
-            name="general_target"
-            minLength={10}
-            maxLength={200}
-            className="resize-none textarea textarea-bordered h-32 max-w-2xl"
-            placeholder="Objetivo..."
-          ></textarea>
-          <div className="label">
-            <span className="label-text-alt">Objetivo</span>
-          </div>
-        </label>
-        <br />
-        {/* scientific_problem */}
-        <label className="form-control">
-          <div className="label">
-            <span className="label-text">
-              Problema cientifico que estudia el proyecto
-            </span>
-          </div>
-          <textarea
-            name="scientific_problem"
-            minLength={20}
-            maxLength={500}
-            className="resize-none textarea textarea-bordered h-32 max-w-2xl"
-            placeholder=" Problema cientifico ..."
-          ></textarea>
-          <div className="label">
-            <span className="label-text-alt">Problema cientifico</span>
-          </div>
-        </label>
-        <br />
 
-        {/* SelectStudent component */}
-        <SelectStudent />
+        <div className="flex flex-col md:flex-row gap-3">
+          <label className="form-control md:basis-3/12 lg:basis-4/12">
+            <div className="label">
+              <span className="label-text">Titulo del proyecto</span>
+            </div>
+            <textarea
+              required
+              minLength={10}
+              name="topic"
+              maxLength={200}
+              className="resize-none textarea textarea-bordered h-32 max-w-2xl"
+              placeholder="Titulo"
+            ></textarea>
+            <div className="label">
+              <span className="label-text-alt">Titulo</span>
+            </div>
+          </label>
 
-        <br />
-        {/* SelectProfessors component */}
-        <SelectProfessors />
+          {/* general_target of the project */}
+          <label className="form-control md:basis-3/12 lg:basis-4/12">
+            <div className="label">
+              <span className="label-text">Objetivo general del proyecto</span>
+            </div>
+            <textarea
+              name="general_target"
+              minLength={10}
+              maxLength={200}
+              className="resize-none textarea textarea-bordered h-32 max-w-2xl"
+              placeholder="Objetivo..."
+            ></textarea>
+            <div className="label">
+              <span className="label-text-alt">Objetivo</span>
+            </div>
+          </label>
 
-        <br />
+          {/* scientific_problem */}
+          <label className="form-control  md:basis-3/12 lg:basis-4/12">
+            <div className="label">
+              <span className="label-text">
+                Problema cientifico que estudia el proyecto
+              </span>
+            </div>
+            <textarea
+              name="scientific_problem"
+              minLength={20}
+              maxLength={500}
+              className="resize-none textarea textarea-bordered h-32 max-w-2xl "
+              placeholder=" Problema cientifico ..."
+            ></textarea>
+            <div className="label">
+              <span className="label-text-alt">Problema cientifico</span>
+            </div>
+          </label>
+        </div>
 
-        {children}
+        <div className="flex flex-col sm:flex-row gap-3">
+          {/* SelectStudent component */}
+          <SelectStudent />
+          {/* SelectProfessors component */}
+          <SelectProfessors />
+          {children}
+        </div>
       </form>
     </div>
   );

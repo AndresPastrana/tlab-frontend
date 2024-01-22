@@ -31,26 +31,31 @@ const CreateProyectView = () => {
     }
   };
   return (
-    <div>
+    <>
       <Breadcrumbs items={items} />
-      <FormProject onSubmit={handleSubmit}>
-        <button
-          disabled={loading}
-          aria-disabled={loading}
-          className={`btn w-full bg-green-700 text-gray-100 max-w-2xl hover:bg-green-800 ${
-            loading ? "cursor-not-allowed" : ""
-          }`}
-          type="submit"
-        >
-          {loading ? "Creando proyecto..." : "Crear nuevo proyecto"}
-        </button>
-      </FormProject>
-      {error && (
-        <div className="flex justify-center font-bold">
-          <ErrorMessage errors={error} />
-        </div>
-      )}
-    </div>
+      <div className="px-3 py-5 bg-neutral-50 rounded-lg ">
+        <h1 className="text-gray-700 font-medium pb-2 border-b w-fit mb-3 border-gray-400">
+          Formulario del Proyecto de Tesis
+        </h1>
+        <FormProject onSubmit={handleSubmit}>
+          <button
+            disabled={loading}
+            aria-disabled={loading}
+            className={`basis-full btn sm:basis-3/12  my-auto mx-auto w-full bg-green-700 text-gray-100 max-w-xl hover:bg-green-800 ${
+              loading ? "cursor-not-allowed" : ""
+            }`}
+            type="submit"
+          >
+            {loading ? "Creando proyecto..." : "Crear nuevo proyecto"}
+          </button>
+        </FormProject>
+        {error && (
+          <div className="flex justify-center font-bold">
+            <ErrorMessage errors={error} />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

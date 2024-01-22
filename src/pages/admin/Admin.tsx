@@ -2,6 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import { useAuth } from "../../hooks/useAuth";
 import { fetcher } from "../../utils/others";
+import { BuildingLibraryIcon } from "@heroicons/react/24/solid";
 
 interface ProjectStats {
   totalProjects: number;
@@ -64,29 +65,19 @@ const TesisProjectStatsComponent: React.FC = () => {
               {/* TODO:  Card 1*/}
               <div className="stat w-full  sm:w-46   lg:w-3/12   p-4  bg-gray-50 rounded-lg border border-gray-100 ">
                 <div className="stat-figure text-primary">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    className="inline-block w-8 h-8 stroke-current"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                    ></path>
-                  </svg>
+                  <BuildingLibraryIcon className="w-8 h8 text-gray-700" />
                 </div>
                 <div className="stat-title">Total de Tesis de la Facultad</div>
-                <div className="stat-value text-primary">{totalProjects}</div>
+                <div className="stat-value  text-green-700">
+                  {totalProjects}
+                </div>
                 <div className="stat-desc">Actualizado hoy</div>
               </div>
 
               {/* TODO:Card 2 */}
               <div className="stat w-full   sm:w-46  lg:w-5/12   p-4  bg-gray-50 rounded-lg border border-gray-100 ">
                 <div className="stat-title">Tesis Activas</div>
-                <div className="stat-value text-secondary">
+                <div className="stat-value text-yellow-200">
                   {activeProjects.total}
                 </div>
 
@@ -99,7 +90,7 @@ const TesisProjectStatsComponent: React.FC = () => {
 
               <div className="stat w-full sm:w-46 lg:w-3/12 p-4  bg-gray-50 rounded-lg border border-gray-100 ">
                 <div className="stat-title">Defensas Realizadas</div>
-                <div className="stat-value text-secondary">
+                <div className="stat-value  text-blue-800">
                   {defendedProjects}
                 </div>
                 <div className="stat-desc"></div>

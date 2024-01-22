@@ -4,8 +4,10 @@ import { PopulatedTesisResponse } from "../../../types";
 import {
   CheckIcon,
   ClockIcon,
+  DocumentArrowDownIcon,
   LockClosedIcon,
 } from "@heroicons/react/24/solid";
+import { generateProjectsReports } from "../../../utils/helpers";
 export const BadgeProjectStatus = ({
   projectStatus,
 }: {
@@ -111,16 +113,16 @@ const ProjectsTable = ({
 }: {
   projects: PopulatedTesisResponse[];
 }) => (
-  <table className="table hidden md:block min-w-full">
+  <table className="table  hidden md:block min-w-full">
     <thead>
       <tr>
-        <th>Topic</th>
-        <th>Student</th>
-        <th>Tutors</th>
-        <th>General Target</th>
-        <th>Scientific Problem</th>
-        <th>Status</th>
-        <th>Ancient</th>
+        <th>Titulo</th>
+        <th>Estudiante Vinculado</th>
+        <th>Tutores</th>
+        <th>Objetivo General</th>
+        <th>Problema Cientifico</th>
+        <th>Estado</th>
+        {/* <th>Ancient</th> */}
       </tr>
     </thead>
     <tbody>
@@ -138,7 +140,7 @@ const ProjectsTable = ({
           <td>
             <BadgeProjectStatus projectStatus={project.status} />
           </td>
-          <td>{project.ancient ? "Yes" : "No"}</td>
+          {/* <td>{project.ancient ? "Yes" : "No"}</td> */}
         </tr>
       ))}
     </tbody>

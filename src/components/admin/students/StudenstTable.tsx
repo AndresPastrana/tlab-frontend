@@ -7,6 +7,7 @@ import { Student } from "../../../types";
 import PeopleTableSkeleton from "../../shared/skeleton/PeopleTable";
 import { Link, useLocation } from "react-router-dom";
 import { useFilteredItems } from "../../../hooks/useFilteredItem";
+import { Sex } from "../../../const";
 
 const LanguageBadge = ({ isCertified }: { isCertified: boolean }) => {
   return (
@@ -58,9 +59,9 @@ export const TableLg = ({ students }: { students: Student[] }) => {
             <th className="">Direccion</th>
             <th className="">Correo</th>
             <th className="">Telefono</th>
+            <th className="">Sexo</th>
             <th className="">Edad</th>
-            <th className="">Age</th>
-            <th className="">Rango Academico</th>
+            <th className="">Certificacion de Idioma</th>
             <th className="">Aciones</th>
           </tr>
         </thead>
@@ -77,7 +78,10 @@ export const TableLg = ({ students }: { students: Student[] }) => {
               <td className="py-6 px-2">{student.address}x</td>
               <td className="py-6 px-2">{student.email}</td>
               <td className="py-6 px-2">{student.phone}</td>
-              <td className="py-6 px-2">{student.sex}</td>
+              <td className="py-6 px-2">
+                {" "}
+                {student.sex === Sex.Male ? "Masculino" : "Femenino"}
+              </td>
               <td className="py-6 px-2">{student.age}</td>
               <td className="py-6 px-2">
                 <LanguageBadge isCertified={student.language_certificate} />

@@ -8,6 +8,7 @@ const Footer = () => {
         <aside>
           <p className="text-green-900 text-sm font-medium">
             <img
+             
               src="https://moodle.upr.edu.cu/pluginfile.php/2/course/section/2/UPR_Present.PNG"
               alt="UPR"
               className=""

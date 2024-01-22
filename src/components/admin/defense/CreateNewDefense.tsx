@@ -82,30 +82,50 @@ export const DefenseCreationComponent: React.FC = () => {
   return (
     <div>
       <Breadcrumbs items={items} />
+
       <form
         encType="multipart/form-data"
-        className="flex flex-col gap-3"
+        className="flex flex-col gap-3 bg-neutral-100 px-4 py-5 rounded-lg [&_label]:font-medium "
         onSubmit={handleCreateDefense}
       >
-        <div>
-          <label className="">Seleciona el proyecto defendido</label>
-          <SelectProject />
+        <h1 className="text-gray-700 font-medium pb-2 border-b w-fit mb-3 border-gray-400">
+          Formulario de Defensa de Proyecto de Tesis
+        </h1>
+        <div className="flex flex-col sm:flex-row flex-wrap gap-4  ">
+          <div className="sm:basis-5/12 lg:basis-3/12">
+            <label className="">Seleciona el proyecto defendido</label>
+            <SelectProject />
+          </div>
+          <div className="sm:basis-5/12 lg:basis-3/12">
+            <label className="">Seleciona el tribunal de la defensa</label>
+            <SelectCourt />
+          </div>
+
+          <div className="sm:basis-8/12 lg:basis-3/12 flex flex-col  input-ghost w-full">
+            <label htmlFor="date">Selecciona la fecha de la defensa</label>
+            <input
+              required={true}
+              id="date"
+              className=" input w-full"
+              name="date"
+              type="date"
+            />
+          </div>
+
+          <div className="flex flex-col lg:basis-3/12  items-start  gap-1">
+            <label>Evaluacion:</label>
+            <input
+              type="number"
+              required
+              min={3}
+              max={5}
+              name="evaluation"
+              className="input input-bordered w-full"
+            />
+          </div>
         </div>
-        <div>
-          <label className="">Seleciona el tribunal de la defensa</label>
-          <SelectCourt />
-        </div>
-        <div className="flex flex-col gap-1 input-ghost">
-          <label htmlFor="date">Selecciona la fecha de la defensa</label>
-          <input
-            required={true}
-            id="date"
-            className="max-w-xs input"
-            name="date"
-            type="date"
-          />
-        </div>
-        <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+
+        <div className="basis-4/12 flex flex-col sm:flex-row items-center mt-6">
           <div className="flex flex-col gap-2  basis-10/12  sm:basis-full w-full">
             <label>Recomendaciones:</label>
             <textarea
@@ -114,67 +134,59 @@ export const DefenseCreationComponent: React.FC = () => {
               maxLength={300}
               placeholder="Recomendaciones para el acta de defensa..."
               name="recoms"
-              className=" textarea input-bordered textarea-sm w-full "
-            />
-          </div>
-          <div className="flex flex-row sm:flex-col w-full justify-start gap-3 mt-3 items-center ">
-            <label>Evaluacion:</label>
-            <input
-              type="number"
-              required
-              min={3}
-              max={5}
-              name="evaluation"
-              className="input input-bordered max-w-[100px]"
+              className=" textarea input-bordered textarea-sm w-full h-52 md:h-40 lg:h-36  "
             />
           </div>
         </div>
 
-        <div>
-          <p>
-            Palabras clave{" "}
-            <span className="text-gray-400 text-sm">
-              (Agregue palabras clave para mejorar la busqueda)
-            </span>
-          </p>
-          <div className="flex flex-col max-h-[200px] overflow-y-scroll max-w-md ">
-            <DynamicTextInputs
-              initialInputs={keyWords}
-              onInputsChange={handleKeyWordsChange}
-              onSubmit={handleKeyWordsSubmit}
-              showBtn={true}
-            />
-            <ErrorMessage errors={errors?.keyWords} />
+        <div className="flex flex-col items-start md:flex-row">
+          <div className="">
+            <div className="flex flex-col w-full max-w-lg">
+              <label>Documento de la defensa:</label>
+              <input
+                required
+                className="file-input w-full file-input-md file-input-bordered"
+                type="file"
+                name="docFile"
+              />
+              <ErrorMessage errors={errors?.docFile} />
+            </div>
+            <div className="flex flex-col w-full max-w-lg">
+              <label>Presentacion de la defensa:</label>
+              <input
+                required
+                className="file-input w-full file-input-bordered"
+                type="file"
+                name="presFile"
+              />
+              <ErrorMessage errors={errors?.presFile} />
+            </div>
           </div>
-        </div>
-
-        <div className="flex flex-col">
-          <label>Documento de la defensa:</label>
-          <input
-            required
-            className="file-input w-full max-w-xs file-input-bordered"
-            type="file"
-            name="docFile"
-          />
-          <ErrorMessage errors={errors?.docFile} />
-        </div>
-        <div className="flex flex-col">
-          <label>Presentacion de la defensa:</label>
-          <input
-            required
-            className="file-input w-full max-w-xs file-input-bordered"
-            type="file"
-            name="presFile"
-          />
-          <ErrorMessage errors={errors?.presFile} />
-        </div>
-        <div className="flex justify-center">
-          <button
-            className="btn my-5 w-full max-w-lg   bg-green-600 hover:bg-green-700 text-gray-50"
-            type="submit"
-          >
-            Guardar Defensa
-          </button>
+          <div className="sm:mx-5">
+            <label>
+              Palabras clave{" "}
+              <span className="text-gray-400 text-sm block">
+                (Agregue palabras clave para mejorar la busqueda)
+              </span>
+            </label>
+            <div className="flex flex-col max-h-[100px] overflow-y-scroll max-w-md ">
+              <DynamicTextInputs
+                initialInputs={keyWords}
+                onInputsChange={handleKeyWordsChange}
+                onSubmit={handleKeyWordsSubmit}
+                showBtn={true}
+              />
+              <ErrorMessage errors={errors?.keyWords} />
+            </div>
+          </div>
+          <div className="flex justify-center m-auto w-full max-w-md">
+            <button
+              className="btn my-5 w-full max-w-lg   bg-green-600 hover:bg-green-700 text-gray-50"
+              type="submit"
+            >
+              Guardar Defensa
+            </button>
+          </div>
         </div>
       </form>
     </div>

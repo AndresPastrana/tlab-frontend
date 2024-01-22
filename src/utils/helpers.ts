@@ -1,5 +1,5 @@
-import { CourtRole } from "../const";
-import { Defense } from "../types";
+import { CourtRole, TesisProjectStatus } from "../const";
+import { Defense, PopulatedTesisResponse } from "../types";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import {
   calculateAbsoluteValueWithDecimals,
@@ -279,3 +279,112 @@ export const cretateActaDefensaPDF = async (result: Defense): Promise<Blob> => {
     throw new Error("Error creating pdf");
   }
 };
+
+function getStatusText(status: TesisProjectStatus) {
+  if (status === TesisProjectStatus.Pending) {
+    return "Pendiente de aprovacion por los tutores";
+  }
+
+  if (status === TesisProjectStatus.Approved) {
+    return "Aprovada por los tutores";
+  }
+
+  return "Tesis Cerrada";
+}
+
+export async function generateProjectsReports(
+  projects: PopulatedTesisResponse[]
+) {
+  if (projects.length === 0) {
+    console.error("No projects to generate reports.");
+    return;
+  }
+
+  const pdfDoc = await PDFDocument.create();
+  const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  const projectsPerPage = 3;
+
+  for (let i = 0; i < projects.length; i += projectsPerPage) {
+    const projectsOnCurrentPage = projects.slice(i, i + projectsPerPage);
+
+    // Add a new page for each set of projects
+    const page = pdfDoc.addPage();
+    page.setFont(helveticaFont);
+
+    // Add header text at the top of each page
+    page.setFontSize(16);
+    page.drawText("UNIVERSIDAD DE PINAR DEL RIO", {
+      x: 200,
+      y: page.getHeight() - 50,
+      color: rgb(0, 0, 0),
+    });
+
+    page.setFontSize(14);
+    page.drawText(
+      "Reporte de Proyecto de Tesis del Departamento de Informatica",
+      {
+        x: 90,
+        y: page.getHeight() - 100,
+        color: rgb(0, 0, 0),
+      }
+    );
+
+    projectsOnCurrentPage.forEach((project, index) => {
+      const y = page.getHeight() - (index + 1) * 190;
+
+      // Larger font for headers
+      page.setFontSize(14);
+      page.drawText(`Proyecto ${i + index + 1}:`, {
+        x: 50,
+        y,
+        color: rgb(0, 0, 0),
+      });
+
+      // Normal font size for project details
+      page.setFontSize(12);
+
+      // Project information
+      const projectText = `
+        Tema: ${project.topic}
+        Objetivo General: ${project.general_target}
+        Problema Científico: ${project.scientific_problem}
+        Estado: ${getStatusText(project.status)}
+        Asignado al estudiante: ${capitalizeFirstLetterOfEachWord(
+          project.student.name
+        )} ${capitalizeFirstLetterOfEachWord(project.student.lastname)}
+        Tutores: ${project.tutors
+          .map((t) => `${t.name} ${t.lastname}`)
+          .join(", ")}
+        Antiguo: ${project.ancient ? "Sí" : "No"}`;
+
+      // Add project information to the page
+      page.drawText(projectText, { x: 50, y: y - 20, color: rgb(0, 0, 0) });
+
+      // Add a horizontal line for visual separation
+      page.drawLine({
+        start: { x: 50, y: y - 30 },
+        end: { x: page.getWidth() - 50, y: y - 30 },
+        thickness: 1,
+        color: rgb(0, 0, 0),
+      });
+    });
+  }
+
+  // Add the current date at the end of the PDF file
+  const lastPage = pdfDoc.getPage(pdfDoc.getPageCount() - 1);
+  lastPage.setFontSize(12);
+  const currentDate = new Date().toLocaleDateString();
+  lastPage.drawText(`${currentDate}`, {
+    x: 50,
+    y: 30,
+    color: rgb(0, 0, 0),
+  });
+
+  const pdfBytes = await pdfDoc.save();
+  const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+
+  const downloadLink = document.createElement("a");
+  downloadLink.href = URL.createObjectURL(pdfBlob);
+  downloadLink.download = "projects.pdf";
+  downloadLink.click();
+}

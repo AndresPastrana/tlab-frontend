@@ -17,7 +17,7 @@ const SelectProject = () => {
       {isLoading && <p>Cargando proyectos...</p>}
       {isError && <p>Error cargando proyectos</p>}
       {!isLoading && !isError && (
-        <select required name="project" className="select">
+        <select required name="project" className="select w-full">
           <option value="" disabled={true} selected>
             {placeholder}
           </option>

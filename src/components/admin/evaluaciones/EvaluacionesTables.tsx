@@ -4,6 +4,7 @@ import { EyeIcon } from "@heroicons/react/24/outline";
 import { ReactElement } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { EvalStatus } from "../../../const";
+import { formatDate } from "../../../utils/others";
 
 interface EvaluationListProps {
   evaluations: Evaluation[];
@@ -81,13 +82,15 @@ const EvaluationListLarge: React.FC<EvaluationListProps> = ({
     <div className="hidden md:block container mx-auto mt-8">
       {evaluations && (
         <table className="min-w-full table">
-          <thead>
+          <thead className="">
             <tr>
-              <th className="border p-2">Tipo de evaluacion</th>
-              <th className="border p-2">Description</th>
-              <th className="border p-2">Status</th>
-              <th className="border p-2">Cierra en</th>
-              <th className="border p-2">Aciones</th>
+              <th className="border p-2 text-gray-600">Tipo de evaluacion</th>
+              <th className="border p-2 text-gray-600">Descripcion</th>
+              <th className="border p-2 text-gray-600">
+                Estado de la Evaluacion
+              </th>
+              <th className="border p-2 text-gray-600">Cierra en</th>
+              <th className="border p-2 text-gray-600">Aciones</th>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +102,7 @@ const EvaluationListLarge: React.FC<EvaluationListProps> = ({
                   <StatusBadge status={evaluation.status} />
                 </td>
                 <td className="border">
-                  {evaluation.endDate.toLocaleString()}
+                  {formatDate(evaluation.endDate.toLocaleString())}
                 </td>
                 <td className="flex gap-1">
                   <BtnWithTooltip

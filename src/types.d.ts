@@ -59,13 +59,15 @@ export interface Person {
   sex: Sex;
   ancient: boolean;
 }
+
+export type EvalHistory = {
+  type: EvalType;
+  updatedAt: string;
+  score: number | null;
+  file: string | null;
+};
 export type StudentHistory = {
-  evaluaciones: Array<{
-    type: EvalType;
-    updatedAt: Date;
-    score: number | null;
-    file: string | null;
-  }>;
+  evaluaciones: Array<EvalHistory>;
 };
 
 export interface Profesor extends Person {

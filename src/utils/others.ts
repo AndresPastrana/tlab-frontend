@@ -111,3 +111,18 @@ export const fetcher = async <T>(
     throw new Error("Failed to fetch data");
   }
 };
+
+export function formatDate(inputDate: string): string {
+  // Parse the input date string into a Date object
+  const dateObject = new Date(inputDate);
+
+  // Extract year, month, and day components
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0"); // Months are 0-indexed
+  const day = String(dateObject.getDate()).padStart(2, "0");
+
+  // Create the formatted date string
+  const formattedDate = `${year}-${month}-${day}`;
+
+  return formattedDate;
+}
