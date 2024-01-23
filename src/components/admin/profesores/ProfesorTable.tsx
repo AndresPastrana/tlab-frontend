@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useProfessors } from "../../../hooks/useProfessors";
 import { Profesor, ProfesorTable } from "../../../types";
 import { Delete, Edit } from "./FormsButtons";
-import useFilteredItems from "../../../hooks/useFilteredItem";
+// import useFilteredItems from "../../../hooks/useFilteredItem";
 import { Sex } from "../../../const";
 // Large Screen Table
 export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
@@ -41,7 +41,7 @@ export const TableLg = ({ profesors }: { profesors: ProfesorTable }) => {
                 {professor.sex === Sex.Male ? "Masculino" : "Femenino"}
               </td>
               <td className="py-6 px-2">{professor.age}</td>
-              <td className="py-6 px-2">{professor.academic_rank}</td>
+              <td className="py-6 px-2">{professor.academic_rank.rank}</td>
               <td className="">
                 <div className="  flex flex-col w-fit p-2 ml-auto max-h-20 overflow-y-scroll focus:scroll-p-0 rounded-xl gap-1 scroll-smooth snap-y ">
                   <Edit
@@ -82,7 +82,7 @@ export const TableSm = ({ profesors }: { profesors: ProfesorTable }) => {
             <div className="divider my-3"></div>
             <div className="flex justify-between">
               <span className="flex flex-col justify-center">
-                <p className="font-medium">{professor.academic_rank}</p>
+                <p className="font-medium">{professor.academic_rank.rank}</p>
               </span>
 
               <span className="flex flex-row items-center gap-1">
@@ -106,11 +106,13 @@ const TableProfesors = () => {
   const searchParam = currentParams.get("query") || "";
   const filterParams: (keyof Profesor)[] = ["name", "lastname", "email"];
 
-  const filteredProfessors = useFilteredItems(
-    professors,
-    searchParam,
-    filterParams
-  );
+  //  TODO:Fix search
+
+  // const filteredProfessors = useFilteredItems(
+  //   professors,
+  //   searchParam,
+  //   filterParams
+  // );
   return (
     <>
       {isLoading && <p>Loading</p>}
@@ -118,8 +120,8 @@ const TableProfesors = () => {
 
       {!isLoading && !isError && (
         <>
-          <TableLg profesors={filteredProfessors || []} />
-          <TableSm profesors={filteredProfessors || []} />
+          <TableLg profesors={professors || []} />
+          <TableSm profesors={professors || []} />
         </>
       )}
     </>

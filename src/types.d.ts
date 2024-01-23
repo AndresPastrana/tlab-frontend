@@ -71,7 +71,10 @@ export type StudentHistory = {
 };
 
 export interface Profesor extends Person {
-  academic_rank: RangoAcademico;
+  academic_rank: {
+    id: string;
+    rank: RangoAcademico;
+  };
 }
 
 export type ProfesorTable = Array<Profesor>;
@@ -131,6 +134,11 @@ interface PersonBasicInfo {
   name: string;
   lastname: string;
 }
+
+export type AcademicRank = {
+  rank: RangoAcademico;
+  id: string;
+};
 
 type Tutors = PersonBasicInfo[];
 type Student = PersonBasicInfo;

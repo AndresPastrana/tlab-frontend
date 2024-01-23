@@ -6,6 +6,8 @@ import { RangoAcademico, Sex } from "../../../const";
 import { useNavigate } from "react-router-dom";
 import { validateProfesorData } from "../../../utils/validators";
 import ErrorMessage from "../../shared/ErrorMessage";
+import useAcademicRank from "../../../hooks/useAcademicRank";
+import { capitalizeFirstLetterOfEachWord } from "../../../utils/others";
 
 export const CreateProfessorForm = () => {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ export const CreateProfessorForm = () => {
 
   const hanldeSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const newProfessor = {
@@ -26,7 +28,7 @@ export const CreateProfessorForm = () => {
       phone: formData.get("phone") as string,
       address: formData.get("address") as string,
       sex: formData.get("sex") as Sex,
-      categoria: formData.get("categoria") as RangoAcademico,
+      categoria: formData.get("categoria") as string,
     };
 
     const { categoria, ...rest } = newProfessor;
@@ -53,6 +55,8 @@ export const CreateProfessorForm = () => {
       setIsLoading(false);
     }
   };
+
+  const { academicRanks } = useAcademicRank();
   return (
     <form onSubmit={hanldeSubmit}>
       <div className="flex flex-col  my-8 gap-2">
@@ -220,7 +224,7 @@ export const CreateProfessorForm = () => {
                 className="min-w-[100px] text-neutral-500"
                 htmlFor="categoria"
               >
-                Categoria
+                Categoria Docente
               </label>
               <select
                 name="categoria"
@@ -228,15 +232,18 @@ export const CreateProfessorForm = () => {
                 className="select select-bordered w-full  focus:outline-green-700 focus:outline-2 focus:border-none  max-w-full sm:max-w-lg"
               >
                 <option disabled defaultChecked>
-                  Seleciona la Categoria Cientifica
+                  Seleciona la Categoria Docente
                 </option>
-                {Object.values(RangoAcademico).map((r) => {
-                  return (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
-                  );
-                })}
+
+                {academicRanks &&
+                  academicRanks?.length >= 1 &&
+                  academicRanks.map((r) => {
+                    return (
+                      <option key={r.id} value={r.id}>
+                        {capitalizeFirstLetterOfEachWord(r.rank)}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
 

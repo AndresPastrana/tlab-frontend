@@ -31,7 +31,7 @@ export const useFilteredItems = <T>(
     return () => {
       // Perform cleanup if needed
     };
-  }, [itemList, searchParam, filterParams, searchRegExp]);
+  }, [searchParam, filterParams]);
 
   return filteredItems;
 };

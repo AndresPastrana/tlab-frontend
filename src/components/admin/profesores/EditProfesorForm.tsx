@@ -36,7 +36,7 @@ export const EditProfesorForm = () => {
       phone: formData.get("phone") as string,
       address: formData.get("address") as string,
       sex: formData.get("sex") as Sex,
-      categoria: formData.get("categoria") as RangoAcademico,
+      categoria: formData.get("categoria") as string,
     };
     const { categoria, ...rest } = newProfessor;
 
@@ -228,7 +228,7 @@ export const EditProfesorForm = () => {
                 Categoria
               </label>
               <select
-                defaultChecked={profesorData.academic_rank}
+                defaultValue={profesorData.academic_rank.id}
                 name="categoria"
                 id="categoria"
                 className="select select-bordered w-full  focus:outline-green-700 focus:outline-2 focus:border-none  max-w-full sm:max-w-lg"

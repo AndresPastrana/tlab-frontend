@@ -4,8 +4,8 @@ import { Root } from "./root.router";
 import { AuthRoutes } from "./auth.routes";
 import { StudentRoutes } from "./student.routes";
 import { ProfessorRoutes } from "./professor.routes";
-import CreateSubmission from "../pages/student/CreateSubmission";
 import Unauthorized from "../components/error/Unahtorized";
+import AcademicRanksComponent from "../pages/AcademicRank";
 // import PageLogin from "../pages/auth/login";
 
 export const router = createBrowserRouter([
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
   ProfessorRoutes,
   {
     path: "/test",
-    element: <CreateSubmission />,
+    element: <AcademicRanksComponent />,
   },
   {
     path: "/unauthorized",

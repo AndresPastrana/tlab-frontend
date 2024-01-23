@@ -1,4 +1,4 @@
-import { ExclamationTriangleIcon, PlusIcon } from "@heroicons/react/24/outline"; // Import Heroicons icons
+import { ExclamationTriangleIcon } from "@heroicons/react/24/outline"; // Import Heroicons icons
 import { useCourts } from "../../../hooks/useCourts";
 import { Court } from "../../../types";
 import { useState } from "react";
@@ -49,13 +49,7 @@ const CourtsGrid = () => {
   );
 };
 
-const CourtCard = ({
-  court,
-  isLastItem,
-}: {
-  court: Court;
-  isLastItem: boolean;
-}) => {
+const CourtCard = ({ court }: { court: Court; isLastItem: boolean }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleToggleMenu = () => {

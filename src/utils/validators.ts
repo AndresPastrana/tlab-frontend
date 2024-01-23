@@ -1,5 +1,4 @@
 import {
-  RangoAcademico,
   Sex,
   presentationDocumentExtensions,
   textDocumentExtensions,
@@ -9,7 +8,7 @@ import {
   isPresentationDocumentExtension,
   isTextDocumentExtension,
 } from "./others";
-const emailRegex = /^[a-zA-Z0-9._-]+@(upr\.cu|gmail\.com)$/;
+const emailRegex = /^[a-zA-Z0-9._-]+@(upr\.edu.cu|gmail\.com)$/;
 const phoneRegex = /^[0-9]{8}$/;
 
 function validateYear(year: string) {
@@ -131,23 +130,23 @@ const ProfesorSchema = z.object({
   sex: z.enum([Sex.Female, Sex.Male], {
     invalid_type_error: `Sexo debe ser uno de ${Object.values(Sex).join(",")}`,
   }),
-  categoria: z.enum(
-    [
-      RangoAcademico.GRADUADO_DE_DOCTORADO,
-      RangoAcademico.GRADUADO_DE_MAESTRIA,
-      RangoAcademico.CANDIDATO_DE_DOCTORADO,
-      RangoAcademico.CANDIDATO_DE_MAESTRIA,
-      RangoAcademico.INVESTIGADOR_POSDOCTORAL,
-      RangoAcademico.PROFESOR,
-      RangoAcademico.PROFESOR_ASISTENTE,
-      RangoAcademico.PROFESOR_ASOCIADO,
-    ],
-    {
-      invalid_type_error: `La categoria debe ser uno de :${Object.values(
-        RangoAcademico
-      ).join(", ")}`,
-    }
-  ),
+  // categoria: z.enum(
+  //   [
+  //     RangoAcademico.GRADUADO_DE_DOCTORADO,
+  //     RangoAcademico.GRADUADO_DE_MAESTRIA,
+  //     RangoAcademico.CANDIDATO_DE_DOCTORADO,
+  //     RangoAcademico.CANDIDATO_DE_MAESTRIA,
+  //     RangoAcademico.INVESTIGADOR_POSDOCTORAL,
+  //     RangoAcademico.PROFESOR,
+  //     RangoAcademico.PROFESOR_ASISTENTE,
+  //     RangoAcademico.PROFESOR_ASOCIADO,
+  //   ],
+  //   {
+  //     invalid_type_error: `La categoria debe ser uno de :${Object.values(
+  //       RangoAcademico
+  //     ).join(", ")}`,
+  //   }
+  // ),
 });
 
 const StduentSchema = z.object({
