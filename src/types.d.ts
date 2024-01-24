@@ -74,7 +74,7 @@ export interface Profesor extends Person {
   academic_rank: {
     id: string;
     rank: RangoAcademico;
-  };
+  } | null;
 }
 
 export type ProfesorTable = Array<Profesor>;

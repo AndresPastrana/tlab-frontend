@@ -13,17 +13,17 @@ const cardItems: Array<LinkCardItem> = [
     text: "Los profesores son una parte fundamental dentro de TesisLab, por tanto , la gestion de su informacion constituye una prioridad para nostros. Haz click aqui ahora para conocer los profesores dentro del Departamento de Informatica",
     href: "/admin/personas/profesors",
   },
-  // {
-  //   src: "/img/taller.jpg",
-  //   title: "Tribunales",
-  //   text: "dentro de la seccion estudiante podra blaa bla bla,dentro de la seccion estudiante podra blaa bla bla",
-  //   href: "/dashboard/personas/tribunales",
-  // },
+  {
+    src: "",
+    title: "Gestión de Categorias Docentes",
+    text: "La seccion de categorias docentes te proporciona la capicidad de organizar y mantener las categorias docentes dentro del sistema",
+    href: "/admin/personas/categorias",
+  },
 ];
 
 const Cards = () => {
   return (
-    <section className="border rounded-md bg-gray-50 p-5">
+    <section className="border rounded-md bg-gray-50 p-5 md:">
       {cardItems.map((item) => {
         return (
           <LinkCard key={`card-${item.href}${Date.now()}`} card_item={item} />

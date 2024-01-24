@@ -130,23 +130,7 @@ const ProfesorSchema = z.object({
   sex: z.enum([Sex.Female, Sex.Male], {
     invalid_type_error: `Sexo debe ser uno de ${Object.values(Sex).join(",")}`,
   }),
-  // categoria: z.enum(
-  //   [
-  //     RangoAcademico.GRADUADO_DE_DOCTORADO,
-  //     RangoAcademico.GRADUADO_DE_MAESTRIA,
-  //     RangoAcademico.CANDIDATO_DE_DOCTORADO,
-  //     RangoAcademico.CANDIDATO_DE_MAESTRIA,
-  //     RangoAcademico.INVESTIGADOR_POSDOCTORAL,
-  //     RangoAcademico.PROFESOR,
-  //     RangoAcademico.PROFESOR_ASISTENTE,
-  //     RangoAcademico.PROFESOR_ASOCIADO,
-  //   ],
-  //   {
-  //     invalid_type_error: `La categoria debe ser uno de :${Object.values(
-  //       RangoAcademico
-  //     ).join(", ")}`,
-  //   }
-  // ),
+  categoria: z.string().trim(),
 });
 
 const StduentSchema = z.object({

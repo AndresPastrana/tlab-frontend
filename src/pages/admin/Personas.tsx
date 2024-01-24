@@ -10,7 +10,7 @@ const PagePersonas = () => {
   return (
     <div>
       <Breadcrumbs items={items} />
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 md:flex-row">
         <Cards />
       </div>
     </div>

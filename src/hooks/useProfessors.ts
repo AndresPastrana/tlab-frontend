@@ -46,7 +46,12 @@ export const useProfessors = () => {
   );
 
   const createProfessor = async (
-    newProfessor: Omit<Profesor, "ancient" | "id" | "user_id" | "age">
+    newProfessor: Omit<
+      Profesor,
+      "ancient" | "id" | "user_id" | "age" | "academic_rank"
+    > & {
+      academic_rank: string;
+    }
   ) => {
     try {
       const response = await axios.post<ApiResponse<Profesor>>(
@@ -58,7 +63,7 @@ export const useProfessors = () => {
           },
         }
       );
-      mutate(); // Trigger a re-fetch of the professors data
+      mutate();
       return response.data;
     } catch (error) {
       throw new Error("Failed to create professor");
@@ -67,7 +72,12 @@ export const useProfessors = () => {
 
   const updateProfessor = async (
     id: string,
-    updatedProfessor: Omit<Profesor, "id" | "ancient" | "age">
+    updatedProfessor: Omit<
+      Profesor,
+      "id" | "ancient" | "age" | "academic_rank"
+    > & {
+      academic_rank: string;
+    }
   ) => {
     try {
       const response = await axios.put<ApiResponse<Profesor>>(

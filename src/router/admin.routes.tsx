@@ -21,6 +21,8 @@ import ProtectedRoute from "../components/ProtectedRoutes";
 import { UserRole } from "../const";
 import TesisProjectStatsComponent from "../pages/admin/Admin";
 import Footer from "../components/Footer";
+import AcademicRanksComponent from "../pages/admin/categorias/AcademicRank";
+import CategoriasConatiner from "../pages/admin/categorias/CategoriasConatiner";
 
 export const AdminRoutes: RouteObject = {
   path: "/admin",
@@ -80,5 +82,6 @@ export const AdminRoutes: RouteObject = {
       path: "personas/students/:id/historial",
       element: <HistoryView />,
     },
+    { path: "/admin/personas/categorias", element: <CategoriasConatiner /> },
   ],
 };

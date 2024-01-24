@@ -5,7 +5,7 @@ import { AuthRoutes } from "./auth.routes";
 import { StudentRoutes } from "./student.routes";
 import { ProfessorRoutes } from "./professor.routes";
 import Unauthorized from "../components/error/Unahtorized";
-import AcademicRanksComponent from "../pages/AcademicRank";
+import AcademicRanksComponent from "../pages/admin/categorias/AcademicRank";
 // import PageLogin from "../pages/auth/login";
 
 export const router = createBrowserRouter([

@@ -6,9 +6,12 @@ import { useProfessors } from "../../../hooks/useProfessors";
 import { Profesor } from "../../../types";
 import { validateProfesorData } from "../../../utils/validators";
 
-import { RangoAcademico, Sex } from "../../../const";
-import { SaveProfesor } from "./FormsButtons";
+import { Sex } from "../../../const";
+import { Cancel, SaveProfesor } from "./FormsButtons";
 import ErrorMessage from "../../shared/ErrorMessage";
+import FlexinputContainer from "../../shared/FlexinputContainer";
+import AcademicRankSelect from "../../shared/professors/SelectAcademicRannk";
+import { toast } from "sonner";
 
 export const EditProfesorForm = () => {
   const { id: profesorId } = useParams<{ id: string }>();
@@ -41,6 +44,7 @@ export const EditProfesorForm = () => {
     const { categoria, ...rest } = newProfessor;
 
     const validation = validateProfesorData(newProfessor);
+
     try {
       if (validation.isValid) {
         await updateProfessor(profesorId as string, {
@@ -49,6 +53,7 @@ export const EditProfesorForm = () => {
           user_id: profesorData.user_id,
         });
         navigate("/admin/personas/profesors");
+        toast.success("Profesor editado correctamente ");
       } else {
         setFieldErrors(validation.errors as Record<string, string[]>);
       }
@@ -60,197 +65,183 @@ export const EditProfesorForm = () => {
   };
 
   return (
-    <form onSubmit={hanldeSubmit}>
+    <form
+      className="bg-gray-100 p-4 rounded-lg [&_label]:min-w-[102px] [&_label]:font-medium text-gray-700"
+      onSubmit={hanldeSubmit}
+    >
       <div className="flex flex-col my-8 gap-2">
         <h2 className="text-lg py-4 mb-5 border-b-[0.5px] border-b-neutral-300">
           Editar información del profesor
         </h2>
-        {/* ci */}
-        <div className="flex flex-col">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-            <label className="min-w-[100px] text-neutral-500" htmlFor="ci">
-              CI
-            </label>
-            <input
-              defaultValue={profesorData.ci}
-              name="ci"
-              type="text"
-              placeholder="Escriba el CI"
-              className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
-              aria-describedby="customer-error"
-            />
-          </div>
-          <ErrorMessage errors={fieldErrors["ci"]} />
-        </div>
 
-        {/* Name  */}
-        <div className="flex flex-col">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-            <label className="min-w-[100px] text-neutral-500" htmlFor="name">
-              Nombre
-            </label>
-            <input
-              defaultValue={profesorData.name}
-              name="name"
-              type="text"
-              placeholder="Escriba el nombre"
-              className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
-            />
-          </div>
-          <ErrorMessage errors={fieldErrors["name"]} />
-        </div>
-
-        {/* Apellidos */}
-        <div className="flex flex-col">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-            <label
-              className="min-w-[100px] text-neutral-500"
-              htmlFor="lastname"
-            >
-              Apellidos
-            </label>
-            <input
-              required
-              defaultValue={profesorData.lastname}
-              id="lastname"
-              name="lastname"
-              type="text"
-              placeholder="Escriba el apellido"
-              className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
-            />
-          </div>
-          <ErrorMessage errors={fieldErrors["lastname"]} />
-        </div>
-
-        {/* Email */}
-        <div className="flex flex-col">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-            <label className="min-w-[100px] text-neutral-500" htmlFor="email">
-              Correo
-            </label>
-            <input
-              defaultValue={profesorData.email}
-              required
-              id="email"
-              name="email"
-              type="email"
-              placeholder="example@gmail.com"
-              className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
-            />
-          </div>
-          <ErrorMessage errors={fieldErrors["email"]} />
-        </div>
-
-        {/* Phone */}
-        <div className="flex flex-col">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-            <label className="min-w-[100px] text-neutral-500" htmlFor="phone">
-              Teléfono
-            </label>
-            <input
-              defaultValue={profesorData.phone}
-              required
-              id="phone"
-              name="phone"
-              type="tel"
-              placeholder="Escriba el número de teléfono"
-              className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
-            />
-          </div>
-          <ErrorMessage errors={fieldErrors["phone"]} />
-        </div>
-
-        {/* Address */}
-        <div className="flex flex-col mb-2">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-            <label className="min-w-[100px] text-neutral-500" htmlFor="address">
-              Dirección
-            </label>
-            <input
-              defaultValue={profesorData.address}
-              required
-              id="address"
-              name="address"
-              type="text"
-              placeholder="Escriba la dirección"
-              className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
-            />
-          </div>
-          <ErrorMessage errors={fieldErrors["address"]} />
-        </div>
-
-        {/* Sex */}
-        <div className="flex flex-col mb-2">
-          <div className="flex flex-row sm:flex-row items-center gap-1">
-            <label htmlFor="sex" className="sm:min-w-[100px]">
-              Sexo
-            </label>
-            <span className="flex flex-row items-center gap-1">
-              <label className="text-neutral-500" htmlFor="male">
-                Masculino
+        <FlexinputContainer>
+          {/* ci */}
+          <div>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+              <label className="" htmlFor="ci">
+                CI
               </label>
               <input
-                checked={profesorData.sex === Sex.Male}
-                id="male"
-                name="sex"
-                value={Sex.Male}
-                type="radio"
-                className="radio"
-                aria-label="Masculino"
+                defaultValue={profesorData.ci}
+                name="ci"
+                type="text"
+                placeholder="Escriba el CI"
+                className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
+                aria-describedby="customer-error"
               />
-            </span>
-
-            <span className="flex flex-row items-center gap-1">
-              <label className="text-neutral-500" htmlFor="female">
-                Femenino
-              </label>
-              <input
-                checked={profesorData.sex === Sex.Female}
-                id="female"
-                name="sex"
-                value={Sex.Female}
-                type="radio"
-                className="radio"
-                aria-label="Femenino"
-              />
-            </span>
-          </div>
-          <ErrorMessage errors={fieldErrors["sex"]} />
-        </div>
-        {/* Categoria */}
-        <div>
-          <div className="flex flex-col mb-2">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-              <label
-                className="min-w-[100px] text-neutral-500"
-                htmlFor="categoria"
-              >
-                Categoria
-              </label>
-              <select
-                defaultValue={profesorData.academic_rank.id}
-                name="categoria"
-                id="categoria"
-                className="select select-bordered w-full  focus:outline-green-700 focus:outline-2 focus:border-none  max-w-full sm:max-w-lg"
-              >
-                <option disabled defaultChecked>
-                  Seleciona la Categoria Cientifica
-                </option>
-                {Object.values(RangoAcademico).map((r) => {
-                  return (
-                    <option key={r} value={r}>
-                      {r}
-                    </option>
-                  );
-                })}
-              </select>
             </div>
-
-            <ErrorMessage errors={fieldErrors["categoria"]} />
+            <ErrorMessage errors={fieldErrors["ci"]} />
           </div>
-          {/* <p className="text-sm text-red-500">{state?.message}</p> */}
+
+          {/* Name  */}
+          <div className="flex flex-col basis-full">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+              <label className=" " htmlFor="name">
+                Nombre
+              </label>
+              <input
+                defaultValue={profesorData.name}
+                name="name"
+                type="text"
+                placeholder="Escriba el nombre"
+                className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
+              />
+            </div>
+            <ErrorMessage errors={fieldErrors["name"]} />
+          </div>
+        </FlexinputContainer>
+
+        <FlexinputContainer>
+          {/* Apellidos */}
+          <div className="">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+              <label className=" " htmlFor="lastname">
+                Apellidos
+              </label>
+              <input
+                required
+                defaultValue={profesorData.lastname}
+                id="lastname"
+                name="lastname"
+                type="text"
+                placeholder="Escriba el apellido"
+                className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
+              />
+            </div>
+            <ErrorMessage errors={fieldErrors["lastname"]} />
+          </div>
+
+          {/* Email */}
+          <div className="">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+              <label className=" " htmlFor="email">
+                Correo
+              </label>
+              <input
+                defaultValue={profesorData.email}
+                required
+                id="email"
+                name="email"
+                type="email"
+                placeholder="example@gmail.com"
+                className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
+              />
+            </div>
+            <ErrorMessage errors={fieldErrors["email"]} />
+          </div>
+        </FlexinputContainer>
+
+        <FlexinputContainer>
+          {/* Phone */}
+          <div className="flex flex-col">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+              <label className=" " htmlFor="phone">
+                Teléfono
+              </label>
+              <input
+                defaultValue={profesorData.phone}
+                required
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="Escriba el número de teléfono"
+                className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
+              />
+            </div>
+            <ErrorMessage errors={fieldErrors["phone"]} />
+          </div>
+
+          {/* Address */}
+          <div className="flex flex-col mb-2">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
+              <label className=" " htmlFor="address">
+                Dirección
+              </label>
+              <input
+                defaultValue={profesorData.address}
+                required
+                id="address"
+                name="address"
+                type="text"
+                placeholder="Escriba la dirección"
+                className="input input-bordered focus:outline-green-700 focus:outline-2 focus:border-none w-full max-w-full sm:max-w-lg"
+              />
+            </div>
+            <ErrorMessage errors={fieldErrors["address"]} />
+          </div>
+        </FlexinputContainer>
+        <FlexinputContainer>
+          {/* Categoria */}
+          <div>
+            <div className="flex flex-col mb-2">
+              <AcademicRankSelect selected={profesorData.academic_rank?.id} />
+              <ErrorMessage errors={fieldErrors["categoria"]} />
+            </div>
+            {/* <p className="text-sm text-red-500">{state?.message}</p> */}
+          </div>
+          {/* Sex */}
+          <div className="flex flex-col mb-2">
+            <div className="flex flex-row sm:flex-row items-center gap-1">
+              <label htmlFor="sex" className="sm:">
+                Sexo
+              </label>
+              <span className="flex flex-row items-center gap-1">
+                <label className="" htmlFor="male">
+                  Masculino
+                </label>
+                <input
+                  defaultChecked={profesorData.sex === Sex.Male}
+                  id="male"
+                  name="sex"
+                  value={Sex.Male}
+                  type="radio"
+                  className="radio"
+                  aria-label="Masculino"
+                />
+              </span>
+
+              <span className="flex flex-row items-center gap-1">
+                <label className="" htmlFor="female">
+                  Femenino
+                </label>
+                <input
+                  defaultChecked={profesorData.sex === Sex.Female}
+                  id="female"
+                  name="sex"
+                  value={Sex.Female}
+                  type="radio"
+                  className="radio"
+                  aria-label="Femenino"
+                />
+              </span>
+            </div>
+            <ErrorMessage errors={fieldErrors["sex"]} />
+          </div>
+        </FlexinputContainer>
+        <div className="justify-center sm:justify-end flex flex-col sm:flex-row gap-2">
+          <Cancel href="/admin/personas/profesors/" />
+          <SaveProfesor isLoading={isLoading} />
         </div>
-        <SaveProfesor isLoading={isLoading} />
       </div>
     </form>
   );
