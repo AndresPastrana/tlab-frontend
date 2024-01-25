@@ -1,13 +1,16 @@
 // DefenseSearchComponent.tsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Create } from "../../../components/admin/profesores/FormsButtons";
 import { useDebouncedCallback } from "use-debounce";
 import DefenseService from "../../../services/DefenseService";
 import { CrumbItem, Defense } from "../../../types";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowDownCircleIcon } from "@heroicons/react/24/solid";
-import { capitalizeFirstLetterOfEachWord } from "../../../utils/others";
+import {
+  capitalizeFirstLetterOfEachWord,
+  formatDate,
+} from "../../../utils/others";
 import { cretateActaDefensaPDF } from "../../../utils/helpers";
 import Breadcrumbs from "../../shared/Breadcrumbs";
 import { ShareIcon } from "@heroicons/react/20/solid";
@@ -99,6 +102,8 @@ const ResultItem: React.FC<ResultItemProps> = ({ result }) => {
           })}
         </div>
       </div>
+      <div>Fecha {formatDate(result.date.toLocaleString())}</div>
+      <div>Nota {result.eval}</div>
       <div className="flex gap-3 mt-3 justify-center md:justify-end">
         <BtnActaDefensa result={result} />
         <div>
@@ -141,11 +146,10 @@ const DefenseSearchComponent: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Defense[]>([]);
   const [loading, setLoading] = useState(false);
   const { pathname } = useLocation();
-
+  const defaultSearchParam =
+    new URLSearchParams(location.search).get("query") || "";
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
-    // delay
-    // await new Promise((res, _rej) => setTimeout(res, 4000));
     try {
       const { value } = e.target;
 
@@ -167,6 +171,7 @@ const DefenseSearchComponent: React.FC = () => {
   };
 
   const debouncedSearch = useDebouncedCallback(handleSearch, 400);
+  useEffect(() => {}, []);
 
   return (
     <div className="max-w-screen-xl mt-4 mx-auto w-full min-h-[80vh]">
@@ -174,6 +179,7 @@ const DefenseSearchComponent: React.FC = () => {
       <div className="flex items-center w-full gap-3">
         <input
           type="text"
+          defaultValue={defaultSearchParam}
           placeholder="Escribe para buscar una defensa de tesis ..."
           onChange={debouncedSearch}
           className="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-green-500"

@@ -65,6 +65,7 @@ export type EvalHistory = {
   updatedAt: string;
   score: number | null;
   file: string | null;
+  recoms: string | null;
 };
 export type StudentHistory = {
   evaluaciones: Array<EvalHistory>;
@@ -182,6 +183,7 @@ export interface Evaluation {
   status: EvalStatus;
   endDate: Date;
   description: string;
+  resourcesFile: string | null;
 }
 
 export enum EvalStatus {

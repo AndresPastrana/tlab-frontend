@@ -91,7 +91,7 @@ const PageLogin = () => {
                 </span>
               </label>
               <input
-                defaultValue="45d7peqW"
+                defaultValue="9DgBqHPx"
                 type="password"
                 name="password"
                 placeholder={loginPageTexts.passwordPlaceholder}

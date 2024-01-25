@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { useAuth } from "../../hooks/useAuth";
 import { fetcher } from "../../utils/others";
 import { BuildingLibraryIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
 
 interface ProjectStats {
   totalProjects: number;
@@ -89,11 +90,13 @@ const TesisProjectStatsComponent: React.FC = () => {
               {/* TODO:Card 3 */}
 
               <div className="stat w-full sm:w-46 lg:w-3/12 p-4  bg-gray-50 rounded-lg border border-gray-100 ">
-                <div className="stat-title">Defensas Realizadas</div>
-                <div className="stat-value  text-blue-800">
-                  {defendedProjects}
-                </div>
-                <div className="stat-desc"></div>
+                <Link to={"/admin/defense?query=all"}>
+                  <div className="stat-title">Defensas Realizadas</div>
+                  <div className="stat-value  text-blue-800">
+                    {defendedProjects}
+                  </div>
+                  <div className="stat-desc"></div>
+                </Link>
               </div>
             </div>
           </div>

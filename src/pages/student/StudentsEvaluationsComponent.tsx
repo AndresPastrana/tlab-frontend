@@ -195,21 +195,36 @@ const StudentsEvaluationsComponent = () => {
       {evaluationsWithSubmissions.map(({ evaluation, submission }) => (
         <div key={evaluation.id} className="mb-8 p-4 bg-gray-100 rounded-md">
           <p>{evaluation.id}</p>
+
           <div className=" flex  items-center justify-between mb-8">
             <h2 className="text-xl font-semibold mb-2">
               Detalles de la evaluacion
             </h2>
             <SubmissionDate date={evaluation.endDate} />
           </div>
+          <div className="divider"></div>
 
-          {/* <p>ID: {evaluation.id}</p> */}
           <p>
             <span className="font-medium">Tipo de evaluacion:</span>{" "}
             {evaluation.type.toLocaleUpperCase()}
           </p>
           <EvaluationDescription description={evaluation.description} />
 
-          <p>Status: {evaluation.status}</p>
+          <div className="flex items-center justify-between">
+            {evaluation.resourcesFile && (
+              <div className="flex items-center justify-between gap-3">
+                <p>Recursos:</p>
+                <Link
+                  to={evaluation?.resourcesFile}
+                  className="link link-secondary"
+                >
+                  Descargar Recursos
+                </Link>
+              </div>
+            )}
+            {/* <p>Status: {evaluation.status}</p> */}
+          </div>
+          <div className="divider"></div>
           <SubmissionInfo
             eval_id={evaluation.id}
             status={evaluation.status}

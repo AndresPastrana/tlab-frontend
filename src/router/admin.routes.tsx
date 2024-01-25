@@ -21,7 +21,6 @@ import ProtectedRoute from "../components/ProtectedRoutes";
 import { UserRole } from "../const";
 import TesisProjectStatsComponent from "../pages/admin/Admin";
 import Footer from "../components/Footer";
-import AcademicRanksComponent from "../pages/admin/categorias/AcademicRank";
 import CategoriasConatiner from "../pages/admin/categorias/CategoriasConatiner";
 
 export const AdminRoutes: RouteObject = {

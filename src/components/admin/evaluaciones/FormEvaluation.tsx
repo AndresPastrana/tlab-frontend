@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { EvalStatus, EvalType, Evaluation } from "../../../types.d";
+import { Link } from "react-router-dom";
 
 interface EvaluationForm {
   evaluation: Evaluation | null;
@@ -14,14 +15,15 @@ export const FormEvaluation: FC<EvaluationForm> = ({
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     onSubmit(data);
-    // TODO: Reset form fileds ehre
-    // Reset the form fields
     e.currentTarget.reset();
-    console.log("Form fields reset");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col"
+      encType="multipart/form-data"
+    >
       <h1 className="text-gray-900 text-xl font-medium">
         {evaluation ? "Editando evaluacion" : "Creando nueva evaluacion"}
       </h1>
@@ -40,10 +42,10 @@ export const FormEvaluation: FC<EvaluationForm> = ({
           defaultValue={evaluation?.description}
         />
       </div>
-
+      <div className="divider"></div>
       <div className="flex justify-between">
         <label className="label" htmlFor="type">
-          Tipo :{" "}
+          Tipo:{" "}
           <span className="ml-1 text-gray-500 text-sm">
             {" "}
             (Indique si es una Predefensa o un Corte Evaluativo)
@@ -61,7 +63,31 @@ export const FormEvaluation: FC<EvaluationForm> = ({
           {/* Add other EvalType options as needed */}
         </select>
       </div>
-
+      <div className="divider"></div>
+      {/* Recursos */}
+      <div className="flex flex-col">
+        <label className="label" htmlFor="recurso">
+          Recursos:{" "}
+          <span className="ml-1 text-gray-500 text-sm">
+            (Archivo de recursos asociados a una evaluacion)
+          </span>
+        </label>
+        <input
+          type="file"
+          id="recurso"
+          name="recurso"
+          className="input file-input file-input-md file-input-bordered max-w-sm m-0 p-0"
+        />
+        {evaluation?.resourcesFile && (
+          <Link
+            className="ml-auto link link-primary cursor-pointer"
+            to={evaluation.resourcesFile}
+          >
+            Archivo Subido Anteriormente
+          </Link>
+        )}
+      </div>
+      <div className="divider"></div>
       <div className="flex justify-between">
         <label className="label" htmlFor="status">
           Estado :
@@ -84,7 +110,7 @@ export const FormEvaluation: FC<EvaluationForm> = ({
           {/* Add other EvalStatus options as needed */}
         </select>
       </div>
-
+      <div className="divider"></div>
       <div className="flex justify-between">
         <label className="label" htmlFor="endDate">
           Enviar antes de :{" "}
@@ -102,6 +128,7 @@ export const FormEvaluation: FC<EvaluationForm> = ({
           defaultValue={(evaluation?.endDate.split("T")[0] as string) || ""}
         />
       </div>
+      <div className="divider"></div>
 
       {/* Add more fields based on your Evaluation type definition */}
       <button

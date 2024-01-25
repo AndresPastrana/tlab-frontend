@@ -93,15 +93,10 @@ const Evaluaciones = () => {
   };
 
   const saveEvaluation = async (data: FormData) => {
-    const newEval: Partial<Evaluation> = {
-      description: data.get("description"),
-      endDate: data.get("endDate"),
-      status: data.get("status"),
-      type: data.get("type"),
-    };
-
+    // TODO: Use this data for validations
+    // const dataAsJSON = Object.fromEntries(data) as Partial<Evaluation>;
     try {
-      await createEvaluation(newEval);
+      await createEvaluation(data);
       reset();
     } catch (err) {
       toast.error("Error al crear la nueva evaluacion");
@@ -109,16 +104,18 @@ const Evaluaciones = () => {
   };
 
   const saveEditeEvaluation = async (data: FormData) => {
-    const newEval: Partial<Evaluation> = {
-      description: data.get("description"),
-      endDate: data.get("endDate"),
-      status: data.get("status"),
-      type: data.get("type"),
-    };
+    // TODO: Use this json data for validations later
+    // const dataAsJSON = Object.fromEntries(data) as Partial<Evaluation>;
+
+    // Remove the recurso key from the from data if no file is selected
+    const recurso = data.get("recurso") as File | null;
+    if (recurso?.name === "") {
+      data.delete("recurso");
+    }
 
     try {
       if (activeEvaluation?.id) {
-        await editEvaluation(newEval, activeEvaluation.id);
+        await editEvaluation(data, activeEvaluation.id);
         return reset();
       }
     } catch (err) {

@@ -10,7 +10,6 @@ const API_BASE_URL = `${import.meta.env.VITE_API}${
 
 interface FetcherOptions extends AxiosRequestConfig {
   token: string;
-  // You can add any additional options you need
 }
 
 const fetcher = async (url: string, { token, ...options }: FetcherOptions) => {
@@ -48,7 +47,7 @@ export const useEvaluations = () => {
     (url: string) => fetcher(url, { token: token as string }) // Pass user token as a parameter
   );
 
-  const createEvaluation = async (newEvaluation: Partial<Evaluation>) => {
+  const createEvaluation = async (newEvaluation: FormData) => {
     try {
       const response = await axios.post<ApiResponse<Evaluation>>(
         API_BASE_URL,
@@ -71,10 +70,7 @@ export const useEvaluations = () => {
     }
   };
 
-  const editEvaluation = async (
-    updatedEvaluation: Partial<Evaluation>,
-    id: string
-  ) => {
+  const editEvaluation = async (updatedEvaluation: FormData, id: string) => {
     try {
       const response = await axios.put<ApiResponse<Evaluation>>(
         `${API_BASE_URL}/${id}`,

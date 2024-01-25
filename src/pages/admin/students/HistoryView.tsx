@@ -32,17 +32,30 @@ const EvalTimeline = ({ evaluaciones }: { evaluaciones: EvalHistory[] }) => {
         </span>
       </h3>
 
-      <ul className="timeline timeline-vertical">
+      <ul className="timeline timeline-vertical cursor-default">
         {evaluaciones.map((e, index) => {
           const { firstItem, secondItem } = getTimeLineItemStyles(index);
-          const tooltipMessage = `Nota: ${e.score} pts br Recomendaciones: `;
+
           return (
             <li>
-              <div
-                className={`${firstItem} tooltip `}
-                data-tip={tooltipMessage}
-              >
-                {e.type}
+              <div className={`${firstItem}  flex flex-col gap-2`}>
+                <div className="flex flex-col">
+                  <div className="text-gray-900 flex items-center justify-between">
+                    <span className="font-medium">{e.type}</span>
+                    <span className="text-sm">
+                      Nota:{" "}
+                      <span className="text-gray-950 font-medium">
+                        {e.score}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <p className="font-medium border-b py-1 mb-3">
+                    Recomendaciones{" "}
+                  </p>
+                  <p className="text-left">{e.recoms}</p>
+                </div>
               </div>
               <div className="timeline-middle">
                 <svg
@@ -76,13 +89,13 @@ const EvalTimeline = ({ evaluaciones }: { evaluaciones: EvalHistory[] }) => {
   );
 };
 
-const HistoryHeader = () => {
-  return <header>Historila de estudiante</header>;
-};
+// const HistoryHeader = () => {
+//   return <header>Historila de estudiante</header>;
+// };
 
-const HistoryContent = () => {
-  return;
-};
+// const HistoryContent = () => {
+//   return;
+// };
 
 const HistoryView = () => {
   const { id } = useParams<{ id: string }>();
