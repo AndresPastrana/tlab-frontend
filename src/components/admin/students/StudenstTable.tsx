@@ -1,12 +1,10 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import { useStudents } from "../../../hooks/useStudents";
-
 import { Delete, Edit, Historial } from "./FormsButtons";
 import { Student } from "../../../types";
 import PeopleTableSkeleton from "../../shared/skeleton/PeopleTable";
-import { Link, useLocation } from "react-router-dom";
-import { useFilteredItems } from "../../../hooks/useFilteredItem";
+import { Link } from "react-router-dom";
 import { Sex } from "../../../const";
 
 const LanguageBadge = ({ isCertified }: { isCertified: boolean }) => {
@@ -158,29 +156,29 @@ export const TableSm = ({ students }: { students: Student[] }) => {
 // Profesors Table
 const TableStudents = () => {
   const { students, isLoading, error } = useStudents();
-  const location = useLocation();
+  // const location = useLocation();
 
-  const currentParams = new URLSearchParams(location.search);
-  const searchParam = currentParams.get("query") || "";
-  const filterParams: (keyof Student)[] = ["name", "lastname", "email"];
+  // const currentParams = new URLSearchParams(location.search);
+  // const searchParam = currentParams.get("query") || "";
+  // const filterParams: (keyof Student)[] = ["name", "lastname", "email"];
 
-  const filteredStudents = useFilteredItems(
-    students,
-    searchParam,
-    filterParams
-  );
+  // const filteredStudents = useFilteredItems(
+  //   students,
+  //   searchParam,
+  //   filterParams
+  // );
 
   return (
     <>
       {isLoading && <PeopleTableSkeleton />}
       {error && <p>{JSON.stringify(error)}</p>}
-      {!error && !isLoading && filteredStudents.length === 0 && (
+      {!error && !isLoading && students.length === 0 && (
         <EmptyStudentsMessage />
       )}
-      {!isLoading && !error && filteredStudents.length > 0 && (
+      {!isLoading && !error && students.length > 0 && (
         <>
-          <TableLg students={filteredStudents} />
-          <TableSm students={filteredStudents} />
+          <TableLg students={students} />
+          <TableSm students={students} />
         </>
       )}
     </>

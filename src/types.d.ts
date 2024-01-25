@@ -81,6 +81,7 @@ export type ProfesorTable = Array<Profesor>;
 
 export interface Student extends Person {
   language_certificate: boolean;
+  curso: CursoType;
 }
 
 export enum CourtRole {

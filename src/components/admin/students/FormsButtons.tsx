@@ -37,7 +37,7 @@ export const Save = ({ isLoading }: { isLoading: boolean }) => {
 export const Cancel = ({ href }: { href: string }) => {
   return (
     <Link to={href}>
-      <button className="min-w-[150px] btn btn-md">Cancel</button>
+      <button className="min-w-[150px] btn btn-md">Cancelar</button>
     </Link>
   );
 };

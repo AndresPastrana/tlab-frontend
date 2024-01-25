@@ -5,11 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Student } from "../../../types";
 // import { validateProfesorData } from "../../../utils/validators";
 
-import { Save } from "./FormsButtons";
+import { Cancel, Save } from "./FormsButtons";
 import ErrorMessage from "../../shared/ErrorMessage";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import { useStudents } from "../../../hooks/useStudents";
-import { Sex } from "../../../const";
+import { CursoType, Sex } from "../../../const";
 import { validateStudentData } from "../../../utils/validators";
 
 export const EditStudentsForm = () => {
@@ -40,7 +40,6 @@ export const EditStudentsForm = () => {
 
     const formData = new FormData(e.currentTarget);
 
-    // const data = Array.from(formData.entries())
     const newStudent = {
       ci: formData.get("ci") as string,
       name: formData.get("name") as string,
@@ -52,11 +51,14 @@ export const EditStudentsForm = () => {
       language_certificate:
         formData.get("language_certificate") === "on" ? true : false,
       user_id: studentData.user_id,
+      curso: formData.get("curso"),
     };
 
     const validation = validateStudentData(newStudent);
     try {
       if (validation.isValid) {
+        setFieldErrors({});
+
         await updateStudent(studentData.id, validation.data as Student);
         navigate("/admin/personas/students");
       } else {
@@ -245,8 +247,52 @@ export const EditStudentsForm = () => {
             />
           </label>
         </div>
-        {/* Certificacion de idioma */}
-        <Save isLoading={isLoading} />
+
+        {/* Curso*/}
+        <div className="flex flex-col mb-2">
+          <div className="flex flex-row sm:flex-row items-center gap-1">
+            <label
+              htmlFor="curso"
+              className="sm:min-w-[100px] mr-4 text-gray-500"
+            >
+              Curso
+            </label>
+            <span className="flex flex-row items-center gap-1">
+              <label className="text-neutral-500" htmlFor="crd">
+                Curso Diurno
+              </label>
+              <input
+                id="crd"
+                name="curso"
+                defaultChecked={studentData.curso === CursoType.CRD}
+                value={CursoType.CRD}
+                type="radio"
+                className="radio"
+                aria-label="Curso Diurno"
+              />
+            </span>
+
+            <span className="flex flex-row items-center gap-1">
+              <label className="text-neutral-500" htmlFor="cpe">
+                Curso Por Encuentro
+              </label>
+              <input
+                id="cpe"
+                name="curso"
+                defaultChecked={studentData.curso === CursoType.CPE}
+                value={CursoType.CPE}
+                type="radio"
+                className="radio"
+                aria-label="Curso Por Encuentro"
+              />
+            </span>
+          </div>
+          <ErrorMessage errors={fieldErrors["curso"]} />
+        </div>
+        <div className="flex gap-4">
+          <Cancel href="/admin/personas/students" />
+          <Save isLoading={isLoading} />
+        </div>
       </div>
     </form>
   );

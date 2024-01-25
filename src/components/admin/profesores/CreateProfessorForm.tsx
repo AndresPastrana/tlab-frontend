@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 
 import { useProfessors } from "../../../hooks/useProfessors";
 import { SaveProfesor } from "./FormsButtons";
-import { RangoAcademico, Sex } from "../../../const";
+import { Sex } from "../../../const";
 import { useNavigate } from "react-router-dom";
 import { validateProfesorData } from "../../../utils/validators";
 import ErrorMessage from "../../shared/ErrorMessage";
@@ -17,7 +17,7 @@ export const CreateProfessorForm = () => {
 
   const hanldeSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const newProfessor = {

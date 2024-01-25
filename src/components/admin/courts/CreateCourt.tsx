@@ -4,6 +4,7 @@ import { CourtRole } from "../../../types.d.js";
 import { useCourts } from "../../../hooks/useCourts.js";
 
 import ErrorMessage from "../../shared/ErrorMessage.js";
+import { validateCourtMembers } from "../../../utils/others.js";
 
 interface NewCourtFormProps {
   onSubmit: (courtData: {
@@ -61,17 +62,19 @@ export const NewCourtForm: React.FC<NewCourtFormProps> = () => {
     };
 
     try {
+      // Validate court members
+      validateCourtMembers(courtData);
+
       await createCourt(courtData);
-      setRequesState({ ...reqState, loading: false });
+      setRequesState({ error: null, loading: false });
       return;
     } catch (error) {
-      console.log("cathc");
-
-      console.log(error);
+      const err = error as Error;
+      console.log(err);
 
       setRequesState({
         loading: false,
-        error: "Error al crear un nuevo tribunal",
+        error: `Error al crear un nuevo tribunal, ${err.message}`,
       });
       return;
     } finally {
@@ -80,8 +83,8 @@ export const NewCourtForm: React.FC<NewCourtFormProps> = () => {
   };
 
   return (
-    <div className="">
-      <h2 className="text-xl text font-semibold mb-4">Crear Nueva Corte</h2>
+    <div className="bg-gray-100 p-4 rounded-md">
+      <h2 className="text-xl text font-semibold mb-4">Crear Tribunal</h2>
       <form onSubmit={handleSubmit}>
         <FormField
           label="Nombre de la Corte"
@@ -114,7 +117,7 @@ export const NewCourtForm: React.FC<NewCourtFormProps> = () => {
           ))}
         </div>
 
-        <div className="flex justify-center font-medium my-2 py-3">
+        <div className="flex justify-start font-medium my-2 py-3">
           <ErrorMessage errors={reqState.error || ""} />
         </div>
         <button

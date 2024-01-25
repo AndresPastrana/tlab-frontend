@@ -1,4 +1,4 @@
-import { ApiResponse } from "./../types.d";
+import { ApiResponse, CourtData, CourtMember, CourtRole } from "./../types.d";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import {
   months,
@@ -125,4 +125,24 @@ export function formatDate(inputDate: string): string {
   const formattedDate = `${year}-${month}-${day}`;
 
   return formattedDate;
+}
+
+export function validateCourtMembers(court: CourtData) {
+  const { members } = court;
+
+  const oponente = members.find((m) => m.role === CourtRole.Oponente);
+  const isOtherRoleOponente = members.some(
+    (m) => m.profesor === oponente?.profesor && m.role !== CourtRole.Oponente
+  );
+
+  if (isOtherRoleOponente) {
+    throw new Error("El oponente no puede ocupar otro rol.");
+  }
+
+  const secretario = members.find((m) => m.role === CourtRole.Secretario);
+  const presidente = members.find((m) => m.role === CourtRole.Presidente);
+
+  if (secretario?.profesor === presidente?.profesor) {
+    throw new Error("El Secretario y el presidente deben ser diferentes.");
+  }
 }

@@ -115,3 +115,13 @@ export const months = [
   "noviembre",
   "diciembre",
 ];
+
+export enum CursoType {
+  CRD = "curso diurno",
+  CPE = "curso por encuentro",
+}
+
+export enum CursoAlias {
+  CRD = "CRD",
+  CPE = "CPE",
+}

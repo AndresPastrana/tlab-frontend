@@ -2,6 +2,7 @@ import {
   Sex,
   presentationDocumentExtensions,
   textDocumentExtensions,
+  CursoType,
 } from "../../src/const";
 import { ZodError, z } from "zod";
 import {
@@ -209,6 +210,9 @@ const StduentSchema = z.object({
   }),
   language_certificate: z.boolean({
     invalid_type_error: "certificacion must be a boolean value",
+  }),
+  curso: z.enum([CursoType.CRD, CursoType.CPE], {
+    invalid_type_error: `Curso debde ser ${CursoType.CPE} o ${CursoType.CRD}`,
   }),
 });
 

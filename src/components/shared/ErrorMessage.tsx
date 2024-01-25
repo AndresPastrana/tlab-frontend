@@ -7,7 +7,7 @@ const ErrorMessage = ({
     <div
       id="customer-error"
       aria-live="polite"
-      className="sm:ml-[110px]  max-w-lg mt-2 text-sm text-red-500"
+      className=" text-sm text-red-500"
     >
       {errors &&
         Array.isArray(errors) &&

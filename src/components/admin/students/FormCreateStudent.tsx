@@ -1,12 +1,13 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Save } from "./FormsButtons";
+import { Cancel, Save } from "./FormsButtons";
 import ErrorMessage from "../../shared/ErrorMessage";
 import { useStudents } from "../../../hooks/useStudents";
 import { Student } from "../../../types";
-import { Sex } from "../../../const";
+import { CursoType, Sex } from "../../../const";
 
 import { validateStudentData } from "../../../utils/validators";
+import { toast } from "sonner";
 
 export const FormCreateStudent = () => {
   const navigate = useNavigate();
@@ -33,14 +34,17 @@ export const FormCreateStudent = () => {
       language_certificate:
         formData.get("language_certificate") === "on" ? true : false,
       user_id: "",
+      curso: formData.get("curso"),
     };
 
     const validation = validateStudentData(newStudent);
+
     try {
       if (validation.isValid) {
         const { user_id, ...rest } = validation.data;
         await createStudent(rest as Student);
         navigate("/admin/personas/students");
+        toast.success("Estudiante creado correctamente");
       } else {
         setFieldErrors(validation.errors as Record<string, string[]>);
       }
@@ -219,8 +223,50 @@ export const FormCreateStudent = () => {
             />
           </label>
         </div>
-        {/* Certificacion de idioma */}
-        <Save isLoading={isLoading} />
+
+        {/* Curso*/}
+        <div className="flex flex-col mb-2">
+          <div className="flex flex-row sm:flex-row items-center gap-1">
+            <label
+              htmlFor="curso"
+              className="sm:min-w-[100px] mr-4 text-gray-500"
+            >
+              Curso
+            </label>
+            <span className="flex flex-row items-center gap-1">
+              <label className="text-neutral-500" htmlFor="crd">
+                Curso Diurno
+              </label>
+              <input
+                id="crd"
+                name="curso"
+                value={CursoType.CRD}
+                type="radio"
+                className="radio"
+                aria-label="Curso Diurno"
+              />
+            </span>
+
+            <span className="flex flex-row items-center gap-1">
+              <label className="text-neutral-500" htmlFor="cpe">
+                Curso Por Encuentro
+              </label>
+              <input
+                id="cpe"
+                name="curso"
+                value={CursoType.CPE}
+                type="radio"
+                className="radio"
+                aria-label="Curso Por Encuentro"
+              />
+            </span>
+          </div>
+          <ErrorMessage errors={fieldErrors["curso"]} />
+        </div>
+        <div>
+          <Cancel href="/admin/personas/students" />
+          <Save isLoading={isLoading} />
+        </div>
       </div>
     </form>
   );
