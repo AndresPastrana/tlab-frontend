@@ -211,7 +211,9 @@ export interface Defense {
   _id: string;
   doc_url: string;
   pres_url: string;
-
+  tutor_opinion: string;
+  oponent_report: string;
+  app_type: AppTypes;
   // Fields for search
   metadata: {
     general_target: string;

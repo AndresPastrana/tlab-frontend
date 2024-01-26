@@ -9,6 +9,7 @@ import DefenseService from "../../../services/DefenseService";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../../shared/ErrorMessage";
 import { toast } from "sonner";
+import SelectAppType from "../../shared/SelectAppType";
 
 const items: CrumbItem[] = [
   { label: "Home", href: "/admin" },
@@ -47,6 +48,10 @@ export const DefenseCreationComponent: React.FC = () => {
     //  YYYY/ MM / DD
     const date = formData.get("date");
 
+    const app_type = formData.get("app_type");
+    const tutor_opinion = formData.get("tutor_opinion");
+    const oponent_report = formData.get("oponent_report");
+
     // Stringify and append keyWords as a single value
     const keyWordsString = JSON.stringify(keyWords);
     formData.append("keyWords", keyWordsString);
@@ -62,6 +67,9 @@ export const DefenseCreationComponent: React.FC = () => {
       docFile,
       presFile,
       date,
+      app_type,
+      tutor_opinion,
+      oponent_report,
     };
 
     const validationResult = isDefenseValid(defense);
@@ -161,6 +169,26 @@ export const DefenseCreationComponent: React.FC = () => {
               />
               <ErrorMessage errors={errors?.presFile} />
             </div>
+            <div className="flex flex-col w-full max-w-lg">
+              <label>Opinion del tutor:</label>
+              <input
+                required
+                className="file-input w-full file-input-bordered"
+                type="file"
+                name="tutor_opinion"
+              />
+              {/* <ErrorMessage errors={errors?.presFile} /> */}
+            </div>
+            <div className="flex flex-col w-full max-w-lg">
+              <label>Informe del Oponente:</label>
+              <input
+                required
+                className="file-input w-full file-input-bordered"
+                type="file"
+                name="oponent_report"
+              />
+              <ErrorMessage errors={errors?.presFile} />
+            </div>
           </div>
           <div className="sm:mx-5">
             <label>
@@ -179,9 +207,11 @@ export const DefenseCreationComponent: React.FC = () => {
               <ErrorMessage errors={errors?.keyWords} />
             </div>
           </div>
-          <div className="flex justify-center m-auto w-full max-w-md">
+          <div className="flex flex-col justify-between items-stretch  w-full max-w-md">
+            <SelectAppType />
+
             <button
-              className="btn my-5 w-full max-w-lg   bg-green-600 hover:bg-green-700 text-gray-50"
+              className="btn mt-20 w-full max-w-lg   bg-green-600 hover:bg-green-700 text-gray-50"
               type="submit"
             >
               Guardar Defensa

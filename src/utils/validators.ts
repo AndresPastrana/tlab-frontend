@@ -3,6 +3,7 @@ import {
   presentationDocumentExtensions,
   textDocumentExtensions,
   CursoType,
+  AppTypes,
 } from "../../src/const";
 import { ZodError, z } from "zod";
 import {
@@ -318,9 +319,40 @@ const defenseSchema = z.object({
 
     size: z.number().refine((size) => size <= 50 * 1024 * 1024), // Maximum size is 50 MB
   }),
+  tutor_opinion: z.object({
+    name: z.string(),
+    type: z
+      .string()
+      .refine((type) => isTextDocumentExtension(type.split("/")[1]), {
+        message: `Formato no valido, Prueba ${textDocumentExtensions.join(
+          ", "
+        )}`,
+      }),
+
+    size: z.number().refine((size) => size <= 50 * 1024 * 1024), // Maximum size is 50 MB
+  }),
+  oponent_report: z.object({
+    name: z.string(),
+    type: z
+      .string()
+      .refine((type) => isTextDocumentExtension(type.split("/")[1]), {
+        message: `Formato no valido, Prueba ${textDocumentExtensions.join(
+          ", "
+        )}`,
+      }),
+
+    size: z.number().refine((size) => size <= 50 * 1024 * 1024), // Maximum size is 50 MB
+  }),
   court: z.string(),
   project: z.string(),
   date: z.string(),
+  app_type: z.enum([
+    AppTypes.DESKTOP_APPLICATION,
+    AppTypes.HYBRID_APP,
+    AppTypes.MOBILE_APP,
+    AppTypes.SERVER_SIDE_APPLICATION,
+    AppTypes.WEB_APPLICATION,
+  ]),
 });
 
 interface ValidationResult {

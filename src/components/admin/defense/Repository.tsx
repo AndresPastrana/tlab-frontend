@@ -83,6 +83,24 @@ const ResultItem: React.FC<ResultItemProps> = ({ result }) => {
           })}
         </div>
       </div>
+      <div>
+        <p className=" flex items-center">
+          <span className="font-semibold">Tipo de Software</span>
+          <span className="badge">{result.app_type}</span>
+        </p>
+        <p className=" flex items-center">
+          <span className="font-semibold mr-2">Opinion del tutor:</span>
+          <Link to={result.tutor_opinion} className="link">
+            {result.tutor_opinion}
+          </Link>
+        </p>
+        <p className=" flex items-center">
+          <span className="font-semibold mr-2">Informe del Oponente:</span>
+          <Link to={result.oponent_report} className="link">
+            {result.oponent_report}
+          </Link>
+        </p>
+      </div>
 
       <div className="text-gray-800">
         <span className="font-semibold">Tribunal:</span>{" "}
@@ -102,8 +120,22 @@ const ResultItem: React.FC<ResultItemProps> = ({ result }) => {
           })}
         </div>
       </div>
-      <div>Fecha {formatDate(result.date.toLocaleString())}</div>
-      <div>Nota {result.eval}</div>
+      <div>
+        <div className="flex items-center gap-4">
+          <div>
+            <span className="font-semibold">Nota</span> {result.eval}
+          </div>
+          <div>
+            <span className="font-semibold">Fecha de la Defensa</span>{" "}
+            {formatDate(result.date.toLocaleString())}
+          </div>
+        </div>
+        <div>
+          <span className="font-semibold">Fecha de la Defensa</span>
+          {formatDate(result.date.toLocaleString())}
+        </div>
+      </div>
+
       <div className="flex gap-3 mt-3 justify-center md:justify-end">
         <BtnActaDefensa result={result} />
         <div>
@@ -146,8 +178,7 @@ const DefenseSearchComponent: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Defense[]>([]);
   const [loading, setLoading] = useState(false);
   const { pathname } = useLocation();
-  const defaultSearchParam =
-    new URLSearchParams(location.search).get("query") || "";
+
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true);
     try {
@@ -171,15 +202,36 @@ const DefenseSearchComponent: React.FC = () => {
   };
 
   const debouncedSearch = useDebouncedCallback(handleSearch, 400);
-  useEffect(() => {}, []);
+
+  // Run a search in the firts
+  useEffect(() => {
+    const firstParam = new URLSearchParams(location.search).get("query") || "";
+    const fetchResults = async () => {
+      DefenseService.searchDefenses(firstParam, {})
+        .then((results) => setSearchResults(results))
+        .catch(() => {
+          console.log("Error loading first defenses");
+        });
+    };
+
+    fetchResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="max-w-screen-xl mt-4 mx-auto w-full min-h-[80vh]">
-      <Breadcrumbs items={items} />
+      <div className="flex justify-between items-center">
+        <Breadcrumbs items={items} />
+        <p className="">
+          Resultados{" "}
+          <span className="badge badge-neutral ml-10">
+            {searchResults.length}
+          </span>
+        </p>
+      </div>
       <div className="flex items-center w-full gap-3">
         <input
           type="text"
-          defaultValue={defaultSearchParam}
           placeholder="Escribe para buscar una defensa de tesis ..."
           onChange={debouncedSearch}
           className="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:border-green-500"
